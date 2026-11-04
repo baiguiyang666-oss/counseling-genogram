@@ -1,0 +1,15 @@
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 临时产物（本项目不依赖任何包管理器，列在这里只为防止误提交）
+__pycache__/
+*.py[cod]
+node_modules/
+*.log
+*.tmp
+
+# 本地导出的成品（截图放在 docs/ 下，需要提交，不在此忽略）
