@@ -9,6 +9,20 @@
 
 > 本工具是记录与沟通用的绘图辅助，不提供诊断、评估或治疗建议。用于临床记录时请遵守所在机构的伦理规范与来访者知情同意要求。
 
+## 为什么又造一个家谱图工具
+
+市面上常见的家族关系 / 家谱类工具，底层多半是**树**：一个节点向下分出子节点，每条边只有「上 → 下」的分支语义，没有「两条线先合成一条、再向下分开」的表达能力。
+
+而心理咨询里用的家谱图，核心结构恰恰是后者：**两个人的伴侣关系本身就是一条独立的关系线（union），子女通过亲子边挂在这条关系线上，而不是挂在某一位家长身上**。由此才可能出现这样的真实情形——同一个人有多段伴侣关系（结婚、同居、婚外情、分居、离异、再婚……），每段关系各自带自己的子女，而子女的「父 / 母」指向的是那段关系，不是某个具体的人。它不是树，而是带「合流」的有向图。这一点直接决定了三件事：
+
+- **数据层**：伴侣关系是一等实体。备份 JSON 里 `unions` 与 `persons` 平级，`parentLinks` 存的是 `{ child, union }` 而不是 `{ child, parent }`；删除一段伴侣关系时，挂在它上面的亲子边会一并清理，不留悬空引用。
+- **排版层**：不能套用「父节点居中于子节点」的树形分层。这里的规则是父母中心距等于子女首末跨度的两端对齐（左侧父母对齐第一个孩子、右侧父母对齐最后一个孩子），中继竖线落在伴侣线中点，同层兄弟姐妹共用一条横线；任意两个人物符号边到边净距 ≥ 70px，连线只走水平 / 垂直折线（离婚线中段的 `//` 是标记图元，不是布线）；增删人物、增删关系、折叠或展开之后都会重新求解，不需要手工拖线对齐。
+- **表达层**：关系语义直接画进线条本身——结构关系 16 种状态（另加「单亲」）、亲子关系 8 种、情感关系 39 类，粗细、虚实与线中图标（`//`、`⊘`、`▯▯`、`×`、`○`、`◇`、箭头等）就是含义，不靠文字标注去解释。
+
+另外把咨询实务里常用的几件事做进了同一个文件：索引咨访用双轮廓标出（全图仅一位），每位人物可挂出生 / 死亡日期与职业、重要事件经历（时间 / 地点 / 事件），年龄按出生日期实时计算；导出 PNG 1x / 2x、PDF 两页（第 1 页图形、第 2 页逐人逐关系的文字明细）、单文件 HTML、数据图例与 JSON 备份。
+
+最后是交付形态：**单文件、零依赖、不联网**。来访者信息是高度敏感的数据，「把 HTML 拷到工作电脑或 U 盘里，双击就能用，不上传任何内容」在临床场景中比「功能更多但需要登录云端」更实际；也正因为只有一个文件，它可以被归档、被审计、被长期保存。
+
 ## 截图
 
 ![主界面：三代示例家谱图](docs/screenshot-overview.png)
@@ -202,6 +216,8 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 ## English Summary
 
 A **single-file, zero-dependency, fully offline** editor for psychological genograms. Open `index.html` in any modern browser — no install, no build, no network calls.
+
+**Why another genogram tool**: most online family-tree tools are trees — a node branches downward, but two lines can never merge into one and then split again. A clinical genogram needs exactly that: the couple relationship (union) is a first-class entity, and each child's parent link points at the union rather than at a person, so one person can carry several unions (marriage, cohabitation, affair, separation, divorce, remarriage), each with its own children. The underlying model is a directed graph with merges, not a tree. That drives the layout (the parents' centre distance equals the span from the first to the last child, the relay line sits on the union's midpoint, siblings share one horizontal line, ≥70px symbol clearance, orthogonal routing with no diagonal edges, automatic re-layout after any edit or collapse) and the notation (16 couple statuses, 8 parent–child types, 39 emotional line types, where stroke widths, dash patterns and mid-line glyphs carry the meaning). It ships as one offline HTML file because client data is sensitive and clinical work often happens on machines that should not upload anything.
 
 **Features**: 8 person symbols plus overlays for index client, deceased, pregnancy/miscarriage, and auto-computed age; 16 couple/structure statuses, 8 parent–child types and 39 emotional relationship line types, all drawn as inline SVG; sibling alignment, centre-aligned couple lines, orthogonal routing with no diagonal edges, ≥70px symbol clearance, collapsible branches and drag-to-reposition with auto re-layout; per-person notes and timed life events; a searchable 63-row symbol/line legend; export to PNG (1x/2x), two-page PDF/print, self-contained HTML, or JSON backup/import, all with live preview; undo/redo, five colour themes, and autosave to `localStorage`.
 
