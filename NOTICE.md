@@ -19,20 +19,20 @@ MIT 允许你把本代码用于商业产品、内部系统、付费服务或客�
 并给出本仓库链接：
 
 ```
-https://github.com/<你的 GitHub 用户名>/counseling-genogram
+https://github.com/baiguiyang666-oss/counseling-genogram
 ```
 
 ### 推荐署名格式
 
 **网页页脚 / 应用「关于」页：**
 
-> 家谱图由 [心理咨询家谱图编辑器](https://github.com/<你的 GitHub 用户名>/counseling-genogram) 绘制
+> 家谱图由 [心理咨询家谱图编辑器](https://github.com/baiguiyang666-oss/counseling-genogram) 绘制
 > © 2025-2026 白贵阳 · MIT License
 
 **文档、报告或论文脚注：**
 
 > 图形使用开源工具「心理咨询家谱图编辑器（Counseling Genogram Editor）」生成，
-> 作者 白贵阳，MIT License，https://github.com/<你的 GitHub 用户名>/counseling-genogram
+> 作者 白贵阳，MIT License，https://github.com/baiguiyang666-oss/counseling-genogram
 
 **图片说明 / alt 文本：**
 
@@ -41,7 +41,7 @@ https://github.com/<你的 GitHub 用户名>/counseling-genogram
 **对外交付的软件（打包分发）：**
 
 > 本产品包含「心理咨询家谱图编辑器」，© 2025-2026 白贵阳，依 MIT 许可证授权使用。
-> 许可证全文见 LICENSE，项目主页 https://github.com/<你的 GitHub 用户名>/counseling-genogram
+> 许可证全文见 LICENSE，项目主页 https://github.com/baiguiyang666-oss/counseling-genogram
 
 ## 不需要署名的情况
 

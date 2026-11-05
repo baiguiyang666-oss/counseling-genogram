@@ -195,7 +195,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 最小可用的署名写法：
 
 > 家谱图由「心理咨询家谱图编辑器」绘制 · © 2025-2026 白贵阳 · MIT License
-> https://github.com/<你的 GitHub 用户名>/counseling-genogram
+> https://github.com/baiguiyang666-oss/counseling-genogram
 
 ---
 
