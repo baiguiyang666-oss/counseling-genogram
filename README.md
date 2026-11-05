@@ -191,6 +191,17 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 - **PNG 栅格化上限**：导出宽度或高度超过 8192px 时会自动降采样，超大图会损失一些细节
 - **无云同步 / 无协作**：数据不出本机是优点，也意味着换设备要手动迁移 JSON
 
+## 版本与更新
+
+每次更新的流程只有四步：修改 `index.html` → 提交 → 递增 tag（`v1.1.0` / `v1.2.0` …）→ 发新 Release。旧版本的 tag 与下载链接永久有效，不会因为新版本发布而失效：
+
+- 版本页：`https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.0.0`
+- 该版 `index.html`：`https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.0.0/index.html`
+
+| 版本 | 日期 | 说明 |
+| --- | --- | --- |
+| v1.0.0 | 2026-11-05 | 首个发布版：单文件心理咨询家谱图编辑器 |
+
 ## 贡献与反馈
 
 - 欢迎提 Issue 与 PR：请说明复现步骤、浏览器与版本、期望结果与实际结果；涉及排版的改动请附前后截图
