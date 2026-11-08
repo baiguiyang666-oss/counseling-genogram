@@ -1,3 +1,8 @@
+<!--
+  文件用途：本仓库的说明文档（中文为主，文末附英文摘要）。
+  面向使用者与二次开发者：说明这是什么工具、怎么下载与使用、功能范围、数据结构、署名规则与历史版本。
+  主下载区只放最新版本；旧版本集中放在文末「历史版本」一节。
+-->
 # 心理咨询家谱图编辑器 · Counseling Genogram Editor
 
 一张**单文件、零依赖、完全离线**的家谱图（genogram）编辑器：把 `index.html` 拖进浏览器就能画心理咨询里用的三代家谱图，人物符号、结构关系、情感关系、排版、导出全部现成。
@@ -5,9 +10,20 @@
 - **零安装**：一个 HTML 文件，无 CDN、无 npm、无构建步骤，不联网
 - **零外链**：运行时不发起任何网络请求，界面与图形全部本地渲染
 - **数据留在本机**：只用浏览器 localStorage 自动存档，作者不收集任何数据
-- **MIT 开源**：可自由使用、修改、商用；**商用时必须保留版权声明并署名「白贵阳」**，见 [LICENSE](LICENSE) 与 [NOTICE.md](NOTICE.md)
+- **MIT 开源**：可自由使用、修改、商用。**个人使用不需要署名，界面与导出物上也不会出现任何署名；商用必须保留版权声明并署名**，见 [LICENSE](LICENSE)、[LICENSE.zh-CN.md](LICENSE.zh-CN.md) 与 [NOTICE.md](NOTICE.md)
 
 > 本工具是记录与沟通用的绘图辅助，不提供诊断、评估或治疗建议。用于临床记录时请遵守所在机构的伦理规范与来访者知情同意要求。
+
+## 下载（只放最新版）
+
+**最新版本：v1.2.0（2026-11-08）**
+
+| 下载 | 说明 |
+| --- | --- |
+| [index.html](https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.2.0/index.html) | 主程序，下载后双击即可打开 |
+| [v1.2.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.2.0) | 版本说明与 Release 附件 |
+
+> 旧版本（v1.1.0 及更早）不再占用主下载位置，统一列在文末[历史版本](#历史版本)。旧 Release 与下载链接永久有效，不会被删除。
 
 ## 为什么又造一个家谱图工具
 
@@ -65,7 +81,8 @@
 
 ### 记录与界面
 
-- 每人可挂多条备注：职业、诊断、重大事件、标签、原话、备注
+- 每人可挂多条备注：职业、诊断、重大事件、标签、原话、备注；类别可自行新增 / 删除，面板按类别聚合，条目可拖拽排序
+- 顶部标签输入按逗号、顿号、分号、换行自动切成多个标签；长文本可全屏编辑
 - 每人可挂多条「重要事件 / 经历」：时间、地点、事件，可增删改
 - 撤销 / 重做、5 套主题色卡（符号填充与画布底色可手动覆盖）
 - localStorage 自动存档：文档、视图、主题分三个键保存，刷新或关掉浏览器再打开数据还在
@@ -76,16 +93,16 @@
 | 格式 | 说明 |
 | --- | --- |
 | PNG 图片 | 1x / 2x（默认 2x），与预览同一份 SVG 栅格化 |
-| PDF / 打印 | 两页：第 1 页图形，第 2 页逐人 + 逐关系的文本明细 |
-| HTML 单文件 | 两页静态文档，带主题样式，可直接分享或归档 |
+| PDF / 打印 | 第 1 页为关系图；「附明细页」开关打开时追加第 2 页，逐人 + 逐关系文字明细。关系图固定单页，按 A4 横向自动缩放 |
+| HTML 单文件 | 同上两页的静态文档（明细页可关闭），带主题样式，可直接分享或归档 |
 | 数据图例 | 一份独立的线型对照表 HTML，适合打印贴在案头 |
 | JSON 备份 / 导入 | 全量数据，可跨设备迁移，也可导入旧备份 |
 
-除打印外，导出前都会先弹出预览，**预览即所得**：预览与最终文件走同一份 SVG 序列化路径。
+导出面板里可以预览第 2 页明细；除打印外，导出前都会先弹出预览，**预览即所得**：预览与最终文件走同一份 SVG 序列化路径。
 
 ## 怎么用
 
-1. 下载本仓库的 `index.html`（就一个文件）
+1. 从上面[「下载」](#下载只放最新版)一节拿到最新版 `index.html`（就一个文件）
 2. **双击打开**，或在浏览器里把文件**拖进窗口**
 3. 首次打开会载入一张三代示例图，可以直接在它上面改；想从零开始就点「导出 → 新建空白图」（会二次确认）
 
@@ -169,7 +186,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 ## 关于「单文件零依赖」
 
-- 全部 HTML / CSS / JS / SVG 都在 `index.html` 里，约 210 KB，**没有第二个文件**
+- 全部 HTML / CSS / JS / SVG 都在 `index.html` 里，约 360 KB，**没有第二个文件**
 - 没有 CDN、没有 `import`、没有 `fetch`、没有 Web Font、没有外部图片；源码里搜不到任何外链
 - 源码中 SVG 命名空间常量写作 `'http' + '://www.w3.org/2000/svg'`（拼接而非字面量）：这是为了让静态检查脚本不把这串字符误判成「外部链接」，运行时行为与字面量完全一致
 - 因此断网、内网、离线 U 盘环境都能用；也不存在「某个依赖包更新把页面搞坏」的风险
@@ -181,7 +198,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 - **前半是需求规格**：硬约束、符号体系（人物、伴侣 16 型、亲子 8 型、情感 39 型）、数据模型与一致性约束、排版与布线（含全部数值阈值）、拖动、交互、输入设备、信息条目、导出、主题与持久化
 - **后半是验收清单**：73 项可勾选检查，每项都写了「怎么测」与「什么算通过」，可以直接当交付验收表用
 - **数值与当前实现一致**：符号 56px、相邻净距 70px、有连线直连 84px、代间 96px、求解收敛 0.02px / 最多 24 轮、刷新后坐标逐位相同
-- **写成需求而不是源码解说**：通篇不出现本仓库的文件名、路径与行号，换一个模型、换一种实现方式也能照着做
+- **写成需求而不是源码解说**：正文不出现本仓库的文件名、路径与行号（仅文件头的用途注释除外），换一个模型、换一种实现方式也能照着做
 
 三种用法：想改出自己的一版但不想先读完整份代码；想给团队 / 机构定一套家谱图工具的功能口径；想验证某个模型能不能一次生成可用的单文件应用。
 
@@ -204,13 +221,26 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 ## 版本与更新
 
-每次更新的流程只有四步：修改 `index.html` → 提交 → 递增 tag（`v1.1.0` / `v1.2.0` …）→ 发新 Release。旧版本的 tag 与下载链接永久有效，不会因为新版本发布而失效：
+每次更新的流程只有四步：修改 `index.html` → 提交 → 递增 tag（`v1.2.0` / `v1.3.0` …）→ 发新 Release。**最新版本只出现在顶部[「下载」](#下载只放最新版)一节**；旧版本的 tag、Release 与下载链接永久有效，统一列在下方[「历史版本」](#历史版本)，不会因为新版本发布而失效。
 
-- 最新版本页：`https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.1.0`
-- 最新 `index.html`：`https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.1.0/index.html`
-- v1.0.0（首个发布版）：`https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.0.0`
+### v1.2.0 更新要点
 
-### v1.1.0 更新要点
+- **字号与行高整体上调**：全局 13.5px 统一改为 14px，面板字段、分区标题、空状态与提示文字的字号层级重新梳理，长文本与姓名在面板里更易读
+- **统一颜色令牌**：新增 19 个主题变量——面板二级底色 `--panel-2`、悬停 / 按下（`--surface-hover` / `--surface-pressed`）、开关（`--switch-*`）、预览浮层（`--peek-*` / `--preview-bg`）、行内编辑框（`--gx-pick` / `--gx-neg`）、滚动条与提示条等；工具栏、面板、弹层共用同一套取值，并移除了旧的 `--accent-ring`
+- **视觉细节收口**：预览浮层、开关控件、行内编辑框、通用按钮的描边 / 圆角 / 阴影统一到新的色板
+- **方向键分层导航修复**：新增工具栏 / 面板 / 画布之间的分层导航（`layerNav` / `enterPanelNav`），方向键与手柄只在当前层内移动，走到层边界不再跳到另一区
+- **本版以视觉与键盘导航为主**：数据模型、导出格式、快捷键与文件结构均与 v1.1.0 一致，v1.2.0 可直接打开 v1.1.0 的 JSON 备份与 localStorage 数据
+
+## 历史版本
+
+主下载区只放最新版；下面这些版本已从主位撤下，Release 页与下载链接永久保留。
+
+| 版本 | 日期 | 说明 | Release |
+| --- | --- | --- | --- |
+| v1.1.0 | 2026-11-08 | 交互与编辑重构：性别符号合并、完整日期、信息条目、跨代吸附、手柄 / 触屏、导出单页 | [v1.1.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.1.0) |
+| v1.0.0 | 2026-11-05 | 首个发布版：单文件心理咨询家谱图编辑器 | [v1.0.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.0.0) |
+
+### v1.1.0 更新要点（存档）
 
 - **性别与符号合并为一个下拉**：选项直接带对应符号缩略图，覆盖男性、女性、性别未明、非二元、间性、跨性别男 / 女、宠物共 8 种
 - **出生 / 死亡日期改为完整日期**：支持 `YYYY`、`YYYY-MM`、`YYYY-MM-DD` 三种精度，年 / 月 / 日三段自绘下拉，按真实日历裁剪当月天数（闰年 2 月 29 日可用）；填写死亡日期会自动置「已故」，清空则自动撤销
@@ -222,30 +252,40 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 - **工具栏图标化**：新建、缩放、撤销、重做、导出、主题、图例改为内联 SVG 图标，其余操作保留文字按钮
 - **导出**：「附明细页」开关控制 PDF 与单文件 HTML 是否带第 2 页明细，导出面板可预览第 2 页；PDF 关系图固定单页，按 A4 横向自动缩放
 
-| 版本 | 日期 | 说明 |
-| --- | --- | --- |
-| v1.1.0 | 2026-11-08 | 交互与编辑重构：性别符号合并、完整日期、信息条目、跨代吸附、手柄 / 触屏、导出单页 |
-| v1.0.0 | 2026-11-05 | 首个发布版：单文件心理咨询家谱图编辑器 |
-
 ## 贡献与反馈
 
 - 欢迎提 Issue 与 PR：请说明复现步骤、浏览器与版本、期望结果与实际结果；涉及排版的改动请附前后截图
+- 每个文件是干什么的，见 [docs/README.md](docs/README.md)（含 docs 下三张截图的用途登记）
 - 代码全部在一个文件里，修改前建议先读顶部的文件头注释（有分区说明）
 - 请保持这几个硬约束：**单文件、零依赖、无 CDN、无构建步骤、不改变既有行为**
 - 提交前请自测：控制台 0 报错、结构线无斜线、导出的 PNG / HTML 能正常打开、刷新后数据还在
 
 ## 许可证与署名
 
-本项目以 **MIT License** 发布，版权归 **白贵阳**（2025-2026）。
+本项目以 **MIT License** 发布，版权归 **白贵阳**（2025-2026）。署名规则分两件事，互不冲突：
 
-- 你可以自由地使用、修改、分发，**包括商业用途**
-- **商用时必须保留版权声明与许可全文**，并在网站 / 产品 / 文档的显著位置署名、附本仓库链接
-- 推荐署名格式与更多示例见 [NOTICE.md](NOTICE.md)
+### 1. 本项目自身怎么署名
 
-最小可用的署名写法：
+- **个人使用（零署名）**：界面、导出 PNG / PDF / HTML、打印页上**一律不出现**作者名、项目名、`MIT`、`License`、`Copyright`、`©` 等字样——使用者完全看不出这是谁做的；个人自己用、在机构内部用，都不需要额外署名。
+- **商业使用（必须署名）**：保留 `LICENSE` 全文与版权声明（`Copyright (c) 2025-2026 白贵阳`），并在网站、产品界面、文档或交付物的**显著位置**署名、附本仓库链接；推荐写法见 [NOTICE.md](NOTICE.md)。
+- 「界面零署名」不等于「放弃署名」：署名与许可写在 [`index.html` 顶部注释](index.html)、[LICENSE](LICENSE)、[LICENSE.zh-CN.md](LICENSE.zh-CN.md) 与 [NOTICE.md](NOTICE.md) 里，随代码一起分发。
+
+### 2. 用 `docs/genogram-ai-prompt.md` 生成的新工具怎么署名
+
+[`docs/genogram-ai-prompt.md`](docs/genogram-ai-prompt.md) 是一份**开发提示词**，不是本项目代码的再分发。照它让 AI 生成的新工具，版权归生成者自己，不强制套用本仓库的署名内容。但这份提示词要求生成的工具遵守同一口径：
+
+- 生成的工具**界面与全部导出产物**不显示任何署名（个人使用看不出作者）；
+- 生成的工具**必须在源码顶部注释里写清作者与许可**，并在 `LICENSE` / `NOTICE` 里给出可执行的商用署名方式；
+- 验收口径：界面与导出物中署名类字样命中数为 **0**，源码注释里**必须**能读到"商用须署名"的要求。
+
+如果你把生成的工具再对外分发，建议在它的文档里注明「需求口径参考 `counseling-genogram` 的 `docs/genogram-ai-prompt.md`」。
+
+### 商用时的最小署名写法
 
 > 家谱图由「心理咨询家谱图编辑器」绘制 · © 2025-2026 白贵阳 · MIT License
 > https://github.com/baiguiyang666-oss/counseling-genogram
+
+更多格式（网页页脚、文档脚注、图片 alt、打包分发）见 [NOTICE.md](NOTICE.md)。
 
 ---
 
@@ -257,6 +297,8 @@ A **single-file, zero-dependency, fully offline** editor for psychological genog
 
 **Features**: 8 person symbols plus overlays for index client, deceased, pregnancy/miscarriage, and auto-computed age; 16 couple/structure statuses, 8 parent–child types and 39 emotional relationship line types, all drawn as inline SVG; sibling alignment, centre-aligned couple lines, orthogonal routing with no diagonal edges, ≥70px symbol clearance, collapsible branches and drag-to-reposition with auto re-layout; per-person notes and timed life events; a searchable 63-row symbol/line legend; export to PNG (1x/2x), two-page PDF/print, self-contained HTML, or JSON backup/import, all with live preview; undo/redo, five colour themes, and autosave to `localStorage`.
 
-**Licence**: MIT, © 2025-2026 白贵阳 (Bai Guiyang). Free for commercial use, but you **must keep the copyright notice and attribution**, and credit the author with a link to this repository. See [NOTICE.md](NOTICE.md) for the recommended attribution format.
+**Licence**: MIT, © 2025-2026 白贵阳 (Bai Guiyang). Personal use is attribution-free by design — the UI, exported PNG / PDF / HTML and print pages show no author, project or licence marks. Commercial use **must** keep the copyright notice and the full licence text, and credit the author with a link to this repository (see [NOTICE.md](NOTICE.md)). The rule itself lives in the source header of `index.html`; a Chinese reference translation is in [LICENSE.zh-CN.md](LICENSE.zh-CN.md), while the English [LICENSE](LICENSE) prevails.
+
+**Tools generated from `docs/genogram-ai-prompt.md`**: those belong to whoever generates them; the prompt only requires the same split — nothing visible in the UI or in any export, but the author/licence plus the commercial-attribution requirement written into the source comments and LICENSE / NOTICE.
 
 **Disclaimer**: a drawing aid for documentation and communication — not a diagnostic or assessment tool.
