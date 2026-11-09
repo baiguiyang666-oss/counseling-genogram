@@ -1,34 +1,8 @@
 <!doctype html>
 <!--
-  心理咨询家谱图编辑器 · Counseling Genogram Editor
-  版本 1.2.0 · 2026-11-08 · 单文件、零依赖、完全离线
-
-  【这是什么】
-  给心理咨询、家庭治疗、社工与医学工作者使用的家谱图（genogram）绘制工具：
-  用符号与线型记录家族结构、伴侣关系、亲子关系与情感关系，支持三代以上嵌套。
-
-  【怎么用】
-  1. 把本文件下载到本地；
-  2. 双击打开，或直接拖进浏览器窗口，即可完整使用；
-  3. 不需要安装、不需要联网、不需要本地服务器；
-  4. 首次打开会载入一张三代示例图，可直接在它上面修改；想从零开始用「导出 → 新建空白图」。
-
-  【数据在哪】
-  全部数据只写入本机浏览器的 localStorage（三个键：genogram.v1.doc / .view / .theme），
-  刷新或重开浏览器后仍在；不上传、不埋点、不请求任何远端。
-  清除浏览器数据会一并清空，重要个案请用「导出 → JSON 备份」另存。
-
-  【署名规则（重要）】
+  家谱图 Genogram · 单文件应用
   MIT License · Copyright (c) 2025-2026 白贵阳
-  · 个人使用：界面、导出 PNG / PDF / HTML 与打印页一律不显示作者名、项目名与许可证字样，
-    使用者看不出这是谁做的，个人使用也不需要署名。
-  · 商业使用：必须保留 LICENSE 全文与本段版权声明，并按 NOTICE.md 的署名要求，
-    在网站、产品界面、文档或交付物的显著位置署名并附本仓库链接。
-  一句话：界面与导出物永远零署名；商用必须署名。同一规则也写在 LICENSE 与 NOTICE.md 里。
-
-  【实现说明】
-  本项目为独立自绘的 SVG 实现，图形语言参考 McGoldrick 等公开家谱图传统，
-  不含任何商业家谱图软件的代码、素材或模板。本文件运行时不发起任何网络请求。
+  本文件可自由使用、修改、分发；保留本段声明即可。
 -->
 <html lang="zh-CN">
 <head>
@@ -135,8 +109,8 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
   outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-weak);background:var(--panel);
 }
 .chk{display:flex;align-items:center;gap:7px;font-size:14px;margin:0 0 9px;color:var(--ink-2);cursor:pointer}
-.row-2{display:flex;gap:8px}
-.row-2 .fld{flex:1;margin-bottom:8px}
+.row-2{display:flex;flex-wrap:wrap;gap:8px}
+.row-2 .fld{flex:1 1 136px;min-width:0;margin-bottom:8px}
 .row-2 .fld>span{flex:0 0 42px}
 .yr-row{display:flex;align-items:center;gap:8px}
 .yr-row input[type=number]{flex:1;min-width:0}
@@ -298,7 +272,9 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .dp .dd-pop{max-height:210px;min-width:96px;right:auto;left:0}
 /* 信息条目 */
 .chipbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-bottom:7px}
-.chip{font-size:12px;padding:1px 7px;border-radius:10px;background:var(--accent-weak);color:var(--accent);border:1px solid var(--chip-border)}
+.chip{display:inline-flex;align-items:center;font-size:12px;padding:1px 7px;border-radius:10px;background:var(--accent-weak);color:var(--accent);border:1px solid var(--chip-border)}
+.chip-x{margin-left:2px;border:0;background:none;padding:0 2px;font:inherit;line-height:1;color:inherit;cursor:pointer;opacity:.72}
+.chip-x:hover,.chip-x:focus-visible{opacity:1}
 .chip-in{flex:1 1 76px;min-width:64px;font-family:inherit;font-size:12px;line-height:1.5;padding:1px 6px;border:1px dashed var(--hair);border-radius:10px;background:var(--panel);color:var(--ink);outline:none}
 .chip-in:focus{border-color:var(--accent);border-style:solid}
 .addnote{display:flex;align-items:center;gap:6px;margin-top:6px}
@@ -516,6 +492,7 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
           .gx-inner{fill:none;stroke:var(--gx-ink);stroke-width:1.3}
           .gx-dead{stroke:var(--gx-ink);stroke-width:1.4;fill:none;opacity:.55}
           .gx-age{font:500 14px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-ink);text-anchor:middle;dominant-baseline:middle;font-variant-numeric:tabular-nums;paint-order:stroke;stroke:var(--gx-halo);stroke-width:3;stroke-linecap:round}
+          .gx-age-preg{font-size:12px}
           .gx-nm{font:500 14px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-ink);text-anchor:middle;letter-spacing:.01em;paint-order:stroke;stroke:var(--gx-halo);stroke-width:3.2;stroke-linecap:round}
           .gx-it{font:400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-t2);text-anchor:middle;paint-order:stroke;stroke:var(--gx-halo);stroke-width:3;stroke-linecap:round}
           .gx-yr{font:400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-t3);font-variant-numeric:tabular-nums;paint-order:stroke;stroke:var(--gx-halo);stroke-width:3;stroke-linecap:round}
@@ -1545,6 +1522,46 @@ function relayout(){
     y += maxH + ROW_GAP;
   }
 
+  /* ---- R26-2：代间净距按「实际文字占位」自适应 ----
+     每代的下边界取该代人真实文字占位底（符号中心 + h - 28，含姓名/年龄/关系名/明细条目）；
+     下一代的顶框线取「出生/死亡年份文字上缘」与「兄弟横线上缘」中更高的一条
+     （中继线错层最多 3 档 ×9px → 行线上方 66+27=93）。
+     只有净距不足 GEN_MIN_CLEAR 的那一对相邻代才补差，补完即止，其余代保持原紧凑度。
+     已被用户拖离本代带（拖到下一代线以下）的人不参与本对净距，避免排版把他们/整行来回推。 */
+  var INK_TOP = 50, INK_BOT = 28, GEN_MIN_CLEAR = 20;
+  var rowShift = 0;
+  for(var gi = 1; gi <= maxGen; gi++){
+    if(rowShift){ rowY[gi] += rowShift; rowsGen[gi].y = rowY[gi]; }
+    var hasIncoming = false;
+    doc.parentLinks.forEach(function(l){
+      if(hasIncoming) return;
+      if(visible[l.child] && gen[l.child] === gi) hasIncoming = true;
+    });
+    var nextTopFrame = rowY[gi] - (hasIncoming ? 93 : INK_TOP);
+    var prevBot = -Infinity;
+    rowsGen[gi-1].persons.forEach(function(p){
+      var oy = (p.offset && p.offset.y) || 0;
+      if(rowY[gi-1] + oy > rowY[gi]) return;   /* 已被拖到下一代线以下，不参与 */
+      var hh = (met[p.id] || { h: 77 }).h;
+      prevBot = Math.max(prevBot, rowY[gi-1] + oy + hh - INK_BOT);
+    });
+    if(prevBot === -Infinity) continue;
+    var lack = GEN_MIN_CLEAR - (nextTopFrame - prevBot);
+    if(lack > 0.5){
+      rowY[gi] += lack; rowsGen[gi].y += lack;
+      rowShift += lack;
+    }
+  }
+
+  /* ---- R26-1：吸附行 = 实际代数（0..maxGen 全在）+ 最高代上方 2 条 + 最低代下方 2 条 ----
+     空层与实际代同口径取行距（最近一对真实代的行距），无人也留带，拖过去能吸住并对齐。 */
+  var pitchTop = (maxGen >= 1) ? (rowY[1] - rowY[0]) : (SYMBOL + ROW_GAP);
+  var pitchBot = (maxGen >= 1) ? (rowY[maxGen] - rowY[maxGen-1]) : (SYMBOL + ROW_GAP);
+  rowY[-1] = rowY[0] - pitchTop;
+  rowY[-2] = rowY[0] - pitchTop * 2;
+  rowY[maxGen + 1] = rowY[maxGen] + pitchBot;
+  rowY[maxGen + 2] = rowY[maxGen] + pitchBot * 2;
+
   // 初始化 x
   var X = {};
   /* 水平最小中心距按关系层级分档，写进求解里，所有行内相邻关系都走它，不靠默认值碰巧成立 */
@@ -1966,7 +1983,7 @@ function relayout(){
       var mm = met[p.id] || { w: SYMBOL, h: 77, nameLines: [''], itemLines: [], extra: 0 };
       nodes[p.id] = {
         id: p.id, x: X[p.id], y: rowY[gen[p.id]] + (p.offset.y || 0),
-        rowY: rowY[gen[p.id]], gen: gen[p.id], w: mm.w, h: mm.h,
+        rowY: rowY[gen[p.id]], gen: gen[p.id], w: mm.w, h: mm.h, out: symbolOuterPx(p), code: personCode(p),
         m: mm
       };
     });
@@ -2333,11 +2350,27 @@ function normalAt(pts, i){
   var tx = b.x-a.x, ty = b.y-a.y, L = Math.hypot(tx,ty) || 1;
   return { x: ty/L, y: -tx/L };
 }
-function offsetPts(pts, o){
-  return pts.map(function(p,i){
+function offsetPts(pts, o, anchors){
+  var out = pts.map(function(p,i){
     var n = normalAt(pts, i);
     return { x: p.x + n.x*o, y: p.y + n.y*o };
   });
+  /* R27：双线/三线的端点若原本贴在圆形符号外缘，偏移后会被推离或压进符号。
+     这里按射线把首尾点投回符号真实外缘，保证每条线都接在边上。 */
+  if(anchors && anchors.length && pts.length > 1){
+    if(anchors[0]) out[0] = reprojectToSymbol(anchors[0], out[0]);
+    if(anchors[1]) out[out.length-1] = reprojectToSymbol(anchors[1], out[out.length-1]);
+  }
+  return out;
+}
+function reprojectToSymbol(node, p){
+  if(!node) return p;
+  var code = node.code || '';
+  if(!(code === 'person_female' || code === 'person_trans_female' || code === 'person_intersex')) return p;
+  var o = node.out || 28.8;
+  var dx = p.x - node.x, dy = p.y - node.y, d = Math.sqrt(dx*dx + dy*dy);
+  if(d < 1) return p;
+  return { x: node.x + dx/d*o, y: node.y + dy/d*o };
 }
 function arcLen(pts){
   var L = 0;
@@ -2360,18 +2393,52 @@ function edgePoint(A, B){ return portOf(A, sideOf(A, B)); }
 
 /* ---- 正交布线：所有关系线只允许水平/垂直段，锚定符号边框 ---- */
 var ORTHO_STUB = 14;
-function symRect(n){ return { x:n.x-28, y:n.y-28, w:56, h:56 }; }
+/* R27：接点按符号实际外缘取。基础轮廓半径 28 再叠加 1.6 描边的半宽 0.8；
+   索引双框（proband）外圈画在 31、描边 1.3，外缘 31.65。
+   方块/圆圈/菱形/叉/怀孕三角在四个正方向的外缘都落在同一半径，故只需按符号类型取该值 */
+function symbolOuterPx(p){
+  if(!p) return 28.8;
+  return isProband(p.id) ? 31.65 : 28.8;
+}
+function symRect(n){
+  var o = n.out || 28.8;
+  return { x:n.x-o, y:n.y-o, w:2*o, h:2*o };
+}
+/* R27：切向偏移（±18 槽位）必须落在符号真实轮廓上，否则圆圈/菱形会悬空。
+   这里按符号轮廓给出“在切向偏移 s 处的另一轴半宽”，保证接点贴外缘：
+   · 圆类：sqrt(o²-s²)（外缘即含描边的半径 o）
+   · 菱类：o-|s|（菱形边 |x|+|y|=o，误差 <0.5px）
+   · 半圆(非二元)：上沿取圆弧、下沿取矩形底边
+   · 方块/矩形类：o（含索引双框外的矩形环） */
+function portHalfAt(code, o, slot, side){
+  var s = Math.abs(slot || 0);
+  if(s > o - 6) s = Math.max(0, o - 6);
+  if(code === 'person_female' || code === 'person_trans_female' || code === 'person_intersex'){
+    return Math.sqrt(Math.max(1, o*o - s*s));
+  }
+  if(code === 'person_unknown' || code === 'person_pet'){
+    /* 菱形边 |x|+|y|=R 是 45° 斜边，描边沿法线外扩 0.8/0.65，投影到轴向约 +0.3 */
+    return Math.max(1, o + 0.3 - s);
+  }
+  if(code === 'person_nonbinary'){
+    if(side === 't') return Math.sqrt(Math.max(1, o*o - s*s));
+    if(side === 'b') return o;
+    return (slot >= 0) ? o : Math.sqrt(Math.max(1, o*o - s*s));
+  }
+  return o;
+}
 function sideOf(n, t){
   var dx = t.x - n.x, dy = t.y - n.y;
   if(Math.abs(dx) >= Math.abs(dy)) return dx >= 0 ? 'r' : 'l';
   return dy >= 0 ? 'b' : 't';
 }
 function portOf(n, side, slot){
-  var r = symRect(n), slotv = slot || 0;
-  if(side === 'r') return { x: r.x + r.w, y: clamp(n.y + slotv, r.y + 9, r.y + r.h - 9), dir: { x:1, y:0 } };
-  if(side === 'l') return { x: r.x, y: clamp(n.y + slotv, r.y + 9, r.y + r.h - 9), dir: { x:-1, y:0 } };
-  if(side === 'b') return { x: clamp(n.x + slotv, r.x + 9, r.x + r.w - 9), y: r.y + r.h, dir: { x:0, y:1 } };
-  return { x: clamp(n.x + slotv, r.x + 9, r.x + r.w - 9), y: r.y, dir: { x:0, y:-1 } };
+  var r = symRect(n), slotv = slot || 0, o = n.out || 28.8;
+  var half = portHalfAt(n.code || 'person_male', o, slotv, side);
+  if(side === 'r') return { x: n.x + half, y: clamp(n.y + slotv, r.y + 9, r.y + r.h - 9), dir: { x:1, y:0 } };
+  if(side === 'l') return { x: n.x - half, y: clamp(n.y + slotv, r.y + 9, r.y + r.h - 9), dir: { x:-1, y:0 } };
+  if(side === 'b') return { x: clamp(n.x + slotv, r.x + 9, r.x + r.w - 9), y: n.y + half, dir: { x:0, y:1 } };
+  return { x: clamp(n.x + slotv, r.x + 9, r.x + r.w - 9), y: n.y - half, dir: { x:0, y:-1 } };
 }
 function segHits(a, b, R, pad){
   pad = pad == null ? 8 : pad;
@@ -2586,7 +2653,7 @@ function emoRoute(A, B, others){
     var vlo = Math.max(upN.x - 19, dnN.x - 19), vhi = Math.min(upN.x + 19, dnN.x + 19);
     if(vhi - vlo > 0.5){
       for(var vx = Math.ceil(vlo); vx <= vhi; vx += 4){
-        var vp = { x:vx, y:upN.y + 28 }, vq = { x:vx, y:dnN.y - 28 };
+        var vp = { x:vx, y:upN.y + (upN.out || 28.8) }, vq = { x:vx, y:dnN.y - (dnN.out || 28.8) };
         cands.push(A.y < B.y ? [vp, vq] : [vq, vp]);
       }
     }
@@ -2783,7 +2850,7 @@ function drawEmo(pts0, spec, opt){
   if(opt.halo) out += '<path d="' + polyD(pts0) + '" stroke="' + col + '" stroke-width="9" opacity=".16" fill="none"/>';
   var dashAttr = spec.dash ? ' stroke-dasharray="' + spec.dash + '"' : '';
   if(spec.lines){
-    spec.lines.forEach(function(o){ out += pathOf(o ? offsetPts(pts, o) : pts, w, col, dashAttr); });
+    spec.lines.forEach(function(o){ out += pathOf(o ? offsetPts(pts, o, opt.anchors) : pts, w, col, dashAttr); });
   }else if(!spec.zig && !spec.wave){
     out += pathOf(pts, w, col, dashAttr);
   }
@@ -2815,6 +2882,8 @@ function buildEmotional(A, B, code, opt){
     pts = opt.route ? opt.route.pts : [a0, { x:b0.x, y:a0.y }, b0];
   }
   if(arcLen(pts) < 10) return '';
+  /* R27：把两端节点交给 drawEmo，双线/三线端点据此贴回符号外缘 */
+  opt = opt.anchors ? opt : { halo: opt.halo, pts: pts, anchors: [A, B], route: opt.route };
   return drawEmo(pts, emoOf(code), opt);
 }
 
@@ -3012,7 +3081,7 @@ function structureSVG(){
       var k = layout.nodes[l.child];
       var ks = KID_BY_KIND[l.kind] || KID_BY_KIND.biological;
       var dash = ks.dash ? ' stroke-dasharray="' + ks.dash + '"' : '';
-      var ty = k.y - 28;
+      var ty = k.y - (k.out || 28.8);
       pushStructSegs('stub', t.u.id, [{x:k.x,y:sibY},{x:k.x,y:ty}]);
       out += '<g class="gx-lkin" data-lid="'+esc(l.id)+'" style="cursor:pointer">' +
         '<path d="M'+r2(k.x)+' '+r2(sibY)+'L'+r2(k.x)+' '+r2(ty)+'" stroke="var(--gx-edge)" stroke-width="1.5" fill="none" '+dash +
@@ -3029,10 +3098,10 @@ function structureSVG(){
     var u = unionById(l.union);
     if(!u || !layout.visible[u.a] || (u.b && !layout.visible[u.b])) return;
     var A = layout.nodes[u.a], B = u.b ? layout.nodes[u.b] : null;
-    var pm2 = B ? pathMid(orthoRoute(A, B, 0, 0).pts) : { x:A.x, y:A.y + 28 };
+    var pm2 = B ? pathMid(orthoRoute(A, B, 0, 0).pts) : { x:A.x, y:A.y + (A.out || 28.8) };
     var sx = pm2.x, sy = pm2.y;
     var k = layout.nodes[l.child];
-    var cy = k.y - 28;
+    var cy = k.y - (k.out || 28.8);
     var laneY = cy > sy ? sy + 20 : sy - 20;
     var pts2 = [{ x:sx, y:sy }, { x:sx, y:laneY }, { x:k.x, y:laneY }, { x:k.x, y:cy }];
     pushStructSegs('extra', u.id, pts2);
@@ -3188,8 +3257,13 @@ function symbolSVG(p){
   }else if(p.pregnancy === 'miscarriage'){
     s += '<circle class="gx-preg" cx="' + r2(R*0.52) + '" cy="' + r2(R*0.52) + '" r="' + r2(R*0.17) + '"/>';
   }
-  /* 未出生不显示数字：避免把孕周误读成年龄；孕周只在面板里显示 */
-  if(!p.unborn) s += '<text class="gx-age' + (age == null ? ' gx-age-unk' : '') + '" x="0" y="0">' + (age == null ? '?' : age) + '</text>';
+  /* R22：未出生的人物，年龄位置改显怀胎月数（紧凑写法，孕周明细仍在面板/明细页） */
+  if(p.unborn){
+    var gmU = num(p.gestationMonths);
+    s += '<text class="gx-age gx-age-preg" x="0" y="0">' + (gmU == null || gmU < 0 ? '孕?' : '孕' + gmU + '月') + '</text>';
+  }else{
+    s += '<text class="gx-age' + (age == null ? ' gx-age-unk' : '') + '" x="0" y="0">' + (age == null ? '?' : age) + '</text>';
+  }
   return s;
 }
 
@@ -3382,6 +3456,9 @@ function emptyPanel(){
 }
 
 var showMeaning = false;
+/* R27：长按松手只出便捷动作条，不许详情面板同时/随后弹出。
+   onLongPress 期间置 true，下一次新的指针/键盘/右键交互开始即解除。 */
+var panelHold = false;
 var panelVis = false;   /* 上一帧属性面板是否可见：开/合切换时决定要不要重新居中 */
 var viewMuteUntil = 0;  /* R16-1：删除人物后的一小段时间内，面板收起不得重新居中改变 pan */
 function personMeaning(p){
@@ -3483,11 +3560,28 @@ function udateFld(label, u, field, ph){
       '<button class="mini" data-act="udpClear" data-f="' + field + '" data-u="' + esc(u.id) + '">清空</button>' +
     '</div></div></div>';
 }
+/* 标签分隔：中英文标点与换行；命中即提交前面的文本，标点本身丢弃 */
+var TAG_SEP = /[\n\r，。、；：？！“”‘’（）【】《》〈〉「」『』〔〕〖〗…—～·,.;:?!"'()\[\]{}<>\/\\|_+=*&^%$#@~`\-！＂＃＄％＆＇＊＋－．／＜＝＞＠［＼］＾＿｀｛｜｝～]/;
+function chipHTML(t){
+  return '<span class="chip">' + esc(t) +
+    '<button type="button" class="chip-x" data-act="delTag" data-tag="' + esc(t) + '" aria-label="删除标签">×</button></span>';
+}
+/* 删除标签文本：跨条目清除所有同名片段，片段清空的条目一并移除 */
+function removeTag(p, text){
+  var out = [];
+  (p.notes || []).forEach(function(n){
+    if(!n || n.type !== 'tag'){ out.push(n); return; }
+    var parts = String(n.value || '').split(TAG_SEP).map(function(x){ return x.trim(); })
+      .filter(Boolean).filter(function(x){ return x !== text; });
+    if(parts.length){ n.value = parts.join('\n'); out.push(n); }
+  });
+  p.notes = out;
+}
 function tagsOf(p){
   var out = [];
   (p.notes || []).forEach(function(n){
     if(!n || n.type !== 'tag') return;
-    String(n.value || '').split(/[\n,，、;；]+/).forEach(function(x){
+    String(n.value || '').split(TAG_SEP).forEach(function(x){
       x = x.trim();
       if(x && out.indexOf(x) < 0) out.push(x);
     });
@@ -3502,13 +3596,13 @@ function paintTags(p){
   var box = bar.querySelector('.chips');
   if(!box) return;
   var tags = tagsOf(p);
-  box.innerHTML = tags.map(function(t){ return '<span class="chip">' + esc(t) + '</span>'; }).join('');
+  box.innerHTML = tags.map(chipHTML).join('');
   bar.removeAttribute('hidden');
 }
 /* ---- 标签输入：逗号/顿号/分号/回车切分，与微信一致 ---- */
 function addTags(p, text){
   var existing = tagsOf(p), added = false;
-  String(text || '').split(/[,，、;；\n]+/).forEach(function(x){
+  String(text || '').split(TAG_SEP).forEach(function(x){
     x = x.trim();
     if(!x || existing.indexOf(x) >= 0) return;
     existing.push(x);
@@ -3529,7 +3623,10 @@ function catPopClose(){
   catPopDel = false;
 }
 function catPopBody(p, cur){
-  return '<div class="cp-list">' + catsOf(p).map(function(c){
+  /* R27：新增条目的文本输入框放到下拉顶部（展开后最先出现），下面才是已有类别与删除/新增入口 */
+  return '<div class="cp-new" hidden><input class="cp-input" type="text" placeholder="类别名称" maxlength="12">' +
+    '<button type="button" data-cpact="confirm">确定</button></div>' +
+    '<div class="cp-list">' + catsOf(p).map(function(c){
     if(catPopDel){
       return '<div class="cp-item cp-row" data-cpid="' + esc(c.id) + '"><span>' + esc(c.name) +
         '</span><span class="cp-x" data-cpx="' + esc(c.id) + '" title="删除">✕</span></div>';
@@ -3540,9 +3637,7 @@ function catPopBody(p, cur){
     '<div class="cp-acts">' +
     '<button type="button" class="cp-item cp-add" data-cpact="add">＋ 新增类别</button>' +
     '<button type="button" class="cp-item cp-del" data-cpact="del">' + (catPopDel ? '退出删除' : '删除类目') + '</button>' +
-    '</div></div>' +
-    '<div class="cp-new" hidden><input class="cp-input" type="text" placeholder="类别名称" maxlength="12">' +
-    '<button type="button" data-cpact="confirm">确定</button></div>';
+    '</div></div>';
 }
 function catPopPaint(){
   var p = personById(catPopPid);
@@ -3550,7 +3645,15 @@ function catPopPaint(){
   catPopEl.innerHTML = catPopBody(p, draftCat(p));
   catPopEl.removeAttribute('hidden');
   catPopBindLong();
+  catPopReveal();
   if(catPopPos){ catPopEl.style.left = catPopPos.left + 'px'; catPopEl.style.top = catPopPos.top + 'px'; }
+}
+/* R27：展开后滚到已选项，保证列表中当前类别可见（长列表时不再需要手动找） */
+function catPopReveal(){
+  if(!catPopEl) return;
+  var sel = catPopEl.querySelector('.cp-item.sel');
+  if(!sel || !sel.scrollIntoView) return;
+  try{ sel.scrollIntoView({ block:'nearest' }); }catch(e){}
 }
 function catPopBindLong(){
   if(!catPopEl) return;
@@ -3648,6 +3751,7 @@ function catPopOpen(btn, pid){
   catPopEl.style.left = left + 'px';
   catPopEl.style.top = top + 'px';
   catPopPos = { left:left, top:top };
+  catPopReveal();
 }
 function catDelete(cid){
   if(catDeleteBusy) return;   /* 防重入：连点/长按叠加时不重复删同一项 */
@@ -3827,7 +3931,7 @@ function personPanel(p){
   var tags = tagsOf(p);
   /* 最后一个标签后紧跟输入框：整排随标签数量左右延伸（微信式） */
   h += '<div class="chipbar"><span class="chips">' +
-    tags.map(function(t){ return '<span class="chip">' + esc(t) + '</span>'; }).join('') +
+    tags.map(chipHTML).join('') +
     '</span><input class="chip-in" type="text" data-chiptag placeholder="标签"></div>';
   var cats = catsOf(p);
   var catOpts = cats.map(function(c){ return '<option value="' + esc(c.id) + '">' + esc(c.name) + '</option>'; }).join('');
@@ -4062,7 +4166,7 @@ function syncPanelOpen(){
   var panel = $('#panel');
   /* 没有选中对象时面板必须完全退出布局：hidden 走 display:none!important，
      同时清掉 .open（小屏 .open 会把空面板从底部推上来盖住画布） */
-  var want = !!selection.type;
+  var want = !!selection.type && !panelHold;
   var narrow = window.innerWidth <= 760;
   var was = document.body.classList.contains('pnl');
   var wasOpen = panelVis;
@@ -4133,6 +4237,8 @@ function placeActBar(){
 function showActBar(items, anchorEl){
   var bar = $('#actbar');
   if(!bar) return;
+  /* 拖动中/拖动刚结束：任何浮层都不许冒出来 */
+  if(popSuppressed()) return;
   actBarItems = items; actBarAnchor = anchorEl;
   bar.innerHTML = items.map(function(it, i){
     if(it === '-') return '';
@@ -4448,13 +4554,13 @@ function onPanelInput(ev){
     return;
   }
   var p = selection.type === 'person' ? personById(selection.id) : null;
-  /* 标签输入：遇到逗号/顿号/分号/换行就把前面一段切成新标签，剩余留在输入框里 */
+  /* 标签输入：任意中英文标点/换行都提交前面的文本，标点与换行本身丢弃，剩余留在输入框 */
   if(t.hasAttribute && t.hasAttribute('data-chiptag') && p){
+    if(ev.isComposing) return;
     var raw = t.value || '';
-    var sep = /[,，、;；\n]/;
-    if(sep.test(raw)){
-      var cut = -1;
-      for(var ci = 0; ci < raw.length; ci++){ if(sep.test(raw.charAt(ci))) cut = ci; }
+    var cut = -1, msep, reSep = new RegExp(TAG_SEP.source, 'g');
+    while((msep = reSep.exec(raw)) !== null) cut = msep.index;
+    if(cut >= 0){
       addTags(p, raw.slice(0, cut));
       t.value = raw.slice(cut + 1);
     }
@@ -4820,6 +4926,15 @@ function onPanelClick(ev){
     p.notes = p.notes.filter(function(n){ return n.id !== b.getAttribute('data-nid'); });
     commit(true); return;
   }
+  if(act === 'delTag' && p){
+    var dtag = b.getAttribute('data-tag');
+    if(dtag){
+      pushHistory();
+      removeTag(p, dtag);
+      commit(true);
+    }
+    return;
+  }
   /* 类别的增删不在面板上单独开口，统一收敛到「添加条目」的类别下拉里 */
   if(act === 'noteFull' && p){
     openNoteFull(b.getAttribute('data-nid'));
@@ -5095,10 +5210,36 @@ function startInertia(vx, vy){
   }
   inertiaRAF = requestAnimationFrame(step);
 }
-/* R21：长按判定 —— 阈值 550ms，位移超过 6px（与现有触屏拖动阈值一致）即取消 */
-var LP_MS = 550, LP_MOVE = 6;
+/* R22：触屏三态判定 —— 短按 / 拖动 / 长按不动，三者互斥
+   · 短按：松手时位移 ≤6px 且时长 <1000ms → 选中该对象并出详情
+   · 拖动：位移超过 6px → 人物框跟手 + 代带磁吸；期间与松手后都不弹任何浮层
+   · 长按：1000ms 内没有位移 → 只置 longReady，等松手那一刻才出动作条 */
+var LP_MS = 1000, LP_MOVE = 6;
 var lpTimer = null, lpEl = null;
 function cancelLP(){ if(lpTimer){ clearTimeout(lpTimer); lpTimer = null; } }
+/* 拖动抑制窗口：覆盖 pointerdown→pointermove→pointerup 全链路。
+   拖动进行中 popBlocked=true；松手后再留 320ms，挡住同一手势合成的 click/dblclick；
+   新的独立手势一开始（touchstart / 鼠标 pointerdown）立即解除，不吃掉正常短按与长按松手 */
+var popBlocked = false, popBlockedUntil = 0;
+function enterDragBlock(){ popBlocked = true; hideActBar(); hideMenu(); }
+function endDragBlock(){
+  if(!popBlocked) return;
+  popBlocked = false;
+  popBlockedUntil = Date.now() + 320;
+}
+function clearDragBlock(){ if(!popBlocked) popBlockedUntil = 0; }
+function popSuppressed(){ return popBlocked || Date.now() < popBlockedUntil; }
+function startLongPress(el){
+  cancelLP();
+  if(!longPressTarget(el) || actBarIsOpen()) return;
+  lpEl = el;
+  lpTimer = setTimeout(function(){
+    lpTimer = null;
+    /* 阈值内出现位移 = 拖动，长按作废；只有「按住不动」才置位，动作条等松手再弹 */
+    if(!touchG || touchG.moved) return;
+    touchG.longReady = true;
+  }, LP_MS);
+}
 function longPressTarget(el){
   if(!el || !el.closest) return null;
   return el.closest('.gx-node') || el.closest('.gx-elink') || el.closest('.gx-ulink') || el.closest('.gx-lkin');
@@ -5113,6 +5254,9 @@ function freshAnchor(sel){
   return null;
 }
 function onLongPress(el){
+  if(popSuppressed()) return;
+  /* 长按只给动作条：置 panelHold，commit 时详情面板保持收起 */
+  panelHold = true;
   var nodeEl = el && el.closest ? el.closest('.gx-node') : null;
   var anchor = longPressTarget(el);
   if(!anchor) return;
@@ -5133,6 +5277,9 @@ function onLongPress(el){
   }
 }
 function onTouchStart(ev){
+  /* 新的独立手势开始：先解除上一段拖动留下的抑制窗口，短按/长按松开照常可用 */
+  panelHold = false;
+  if(!touchG) clearDragBlock();
   /* 点空白：动作条先收起（点在动作条自身则保留，交给按钮 click 处理） */
   if(actBarIsOpen() && ev.touches[0]){
     var at = document.elementFromPoint(ev.touches[0].clientX, ev.touches[0].clientY);
@@ -5141,6 +5288,8 @@ function onTouchStart(ev){
   if(ev.touches.length >= 2){
     stopInertia();
     cancelLP();
+    /* 单指拖动中落下第二根手指：先把这次人物拖动收口（磁吸落位），再转双指缩放 */
+    if(pnTouchDrag) finishTouchPointerDrag();
     var r = canvasRect();
     var a = ev.touches[0], c = ev.touches[1];
     var mx = (a.clientX + c.clientX)/2 - r.left, my = (a.clientY + c.clientY)/2 - r.top;
@@ -5148,22 +5297,15 @@ function onTouchStart(ev){
     touchG = { mode:'pinch', d0:d, s0:view.scale, ax:(mx - view.x)/view.scale, ay:(my - view.y)/view.scale,
       vx:view.x, vy:view.y, samples:[{ t:Date.now(), x:mx, y:my }] };
   }else if(ev.touches.length === 1){
+    /* 人物框上的手势已由指针链路独占：touch 只挡默认行为，不再重复处理 */
+    if(pnTouchDrag){ if(ev.cancelable) ev.preventDefault(); return; }
     stopInertia();
     var r2 = canvasRect(), t = ev.touches[0];
     var hitEl = document.elementFromPoint(t.clientX, t.clientY);
     touchG = { mode:'pan', sx:t.clientX - r2.left, sy:t.clientY - r2.top,
-      vx:view.x, vy:view.y, moved:false, hit:hitEl, t0:Date.now(),
+      vx:view.x, vy:view.y, moved:false, longReady:false, hit:hitEl, t0:Date.now(),
       samples:[{ t:Date.now(), x:t.clientX, y:t.clientY }] };
-    cancelLP();
-    if(longPressTarget(hitEl) && !actBarIsOpen()){
-      lpEl = hitEl;
-      lpTimer = setTimeout(function(){
-        lpTimer = null;
-        if(!touchG || touchG.mode !== 'pan' || touchG.moved) return;
-        touchG.longPressed = true;
-        onLongPress(lpEl);
-      }, LP_MS);
-    }
+    startLongPress(hitEl);
   }
   if(touchG) $('#canvas').classList.add('panning');
   if(ev.cancelable) ev.preventDefault();
@@ -5188,7 +5330,7 @@ function onTouchMove(ev){
     var t = ev.touches[0], r2 = canvasRect();
     var p = { x:t.clientX - r2.left, y:t.clientY - r2.top };
     var dx = p.x - touchG.sx, dy = p.y - touchG.sy;
-    if(!touchG.moved && Math.hypot(dx, dy) > LP_MOVE){ touchG.moved = true; cancelLP(); }
+    if(!touchG.moved && Math.hypot(dx, dy) > LP_MOVE){ touchG.moved = true; touchG.longReady = false; cancelLP(); }
     if(touchG.moved){
       view.x = touchG.vx + dx; view.y = touchG.vy + dy;
       userPanned = true;
@@ -5201,6 +5343,7 @@ function onTouchMove(ev){
   if(ev.cancelable) ev.preventDefault();
 }
 function touchSelect(el){
+  if(popSuppressed()) return;
   var nodeEl = el && el.closest ? el.closest('.gx-node') : null;
   var lEl = el && el.closest ? el.closest('.gx-lkin') : null;
   var uEl = el && el.closest ? el.closest('.gx-ulink') : null;
@@ -5211,7 +5354,20 @@ function touchSelect(el){
     setTimeout(function(){ tapEl.classList.remove('gx-tap'); }, 700);
   }
   if(nodeEl){
-    selection = { type:'person', id:nodeEl.getAttribute('data-id') };
+    var nid = nodeEl.getAttribute('data-id');
+    /* 点选模式（触屏与鼠标同一口径）：点人物 = 以起点建伴侣/情感线，完成后回到正常面板 */
+    if(pickTarget){
+      var from = pickTarget.from, kind = pickTarget.kind;
+      pickTarget = null;
+      if(nid !== from){
+        if(kind === 'partner') createUnionBetween(from, nid);
+        else createEmotion(from, nid);
+      }
+      syncPickbar();
+      commit(false, {noSave:true});
+      return;
+    }
+    selection = { type:'person', id:nid };
     showMeaning = true;
     commit(false, { noSave:true });
     return;
@@ -5219,6 +5375,12 @@ function touchSelect(el){
   if(eEl){ selection = { type:'emotion', id:eEl.getAttribute('data-eid') }; showMeaning = true; commit(false,{noSave:true}); return; }
   if(uEl){ selection = { type:'union', id:uEl.getAttribute('data-uid') }; showMeaning = true; commit(false,{noSave:true}); return; }
   if(lEl){ selection = { type:'link', id:lEl.getAttribute('data-lid') }; showMeaning = true; commit(false,{noSave:true}); return; }
+  /* 点选状态下点空白：只收起选择状态，不改变当前选中（与鼠标一致） */
+  if(pickTarget){
+    pickTarget = null;
+    commit(false, {noSave:true});
+    return;
+  }
   selection = { type:null, id:null };
   showMeaning = false;
   commit(false, { noSave:true });
@@ -5235,9 +5397,9 @@ function onTouchEnd(ev){
   var g = touchG; touchG = null;
   cancelLP();
   $('#canvas').classList.remove('panning');
-  /* 长按已弹动作条：松手不再当作点击，避免误触发选中/双击 */
-  if(g.longPressed) return;
-  if(g.mode === 'pan' && !g.moved && Date.now() - g.t0 < 700){
+  /* 线/空白上的长按：松手才出动作条 */
+  if(g.longReady){ onLongPress(g.hit); return; }
+  if(g.mode === 'pan' && !g.moved && Date.now() - g.t0 < LP_MS){
     touchSelect(g.hit);
     return;
   }
@@ -5255,6 +5417,9 @@ function onTouchEnd(ev){
 }
 
 var drag = null;
+/* 触屏落在人物框上时，由指针链路独占这次手势（pointer capture 挂在 #canvas 上，
+   重排替换 #world 子节点也不会中断手势；touch 链路此时只负责双指缩放） */
+var pnTouchDrag = null;
 var activeDragId = null;   /* 当前指针正在拖的节点：排版里唯一不可让位的固定点 */
 var popupSwallow = false;  // 本次 pointerdown 只用于收起浮层
 var lastSnapInfo = null;   /* 最近一次松手贴合重排的诊断信息（调试/验收用） */
@@ -5304,23 +5469,142 @@ function gapPairAt(wp){
   }
   return best;
 }
+/* 人物框拖动的三个公共步骤：触屏与鼠标共用同一套磁吸/联动/撤销逻辑，避免两套实现漂移 */
+function makeNodeDrag(pid, sx, sy, pointerId){
+  var p = personById(pid);
+  if(!p || !layout || !layout.nodes[pid]) return null;
+  var unit = singleChildUnitOf(pid), unitOx = {}, unitBase = {};
+  if(unit) unit.ids.forEach(function(id){
+    var q = personById(id), nn = layout.nodes[id];
+    if(q) unitOx[id] = q.offset.x || 0;
+    if(nn && q) unitBase[id] = nn.x - (q.offset.x || 0);
+  });
+  activeDragId = pid;
+  /* 拖动一开始就收掉所有浮层，保证拖动期间不会有东西挂在那 */
+  hideActBar();
+  hideMenu();
+  return { mode:'node', id:pid, sx:sx, sy:sy, ox:p.offset.x, oy:p.offset.y,
+    moved:false, pointerId:pointerId, pre:snapshot(), unit:unit, unitOx:unitOx, unitBase:unitBase };
+}
+function applyNodeDragMove(dr, dx, dy){
+  var p = personById(dr.id);
+  if(!p) return;
+  /* 需求一：不再做 ±600 钳制；只受世界坐标有限值保护，任何框都能拖到任意其他框附近 */
+  var nx = dr.ox + dx / view.scale, ny = dr.oy + dy / view.scale;
+  if(!isFinite(nx)) nx = dr.ox;
+  if(!isFinite(ny)) ny = dr.oy;
+  /* R17-2：硬钳制降级为软吸附。靠近代带时磁力随距离衰减（越近越强），
+     拖得够远就能越过并落到任意代；两代之间与没有任何人的空带都不做限制。
+     直系只在自身代带附近有磁力（松手终归本代）；非直系吸最近代线。
+     MAG_R 为磁力半径（世界坐标），超出后跟手、不吸。 */
+  var lq = layout.nodes[p.id];
+  if(lq && lq.rowY != null && layout.rowY){
+    var MAG_R = 46, magT = null, magD = Infinity;
+    if(isCorePerson(p.id)){
+      magT = 0; magD = Math.abs(ny);          /* 本代线在 offset 坐标里恒为 0 */
+    }else{
+      /* R19-1：非直系按「代带」磁力——带半径与松手吸附同一口径（28–130），
+         带内线性吸向最近代线，越界即跟手不吸。 */
+      var magG = null;
+      for(var gk in layout.rowY){
+        var magY = layout.rowY[gk] - lq.rowY, magA = Math.abs(ny - magY);
+        if(magA < magD){ magD = magA; magT = magY; magG = gk; }
+      }
+      if(magG != null) MAG_R = bandOfGen(layout.rowY, magG);
+    }
+    if(magT != null && magD < MAG_R){
+      ny = magT + (ny - magT) * (magD / MAG_R);
+    }
+  }
+  /* R14：独子单元不再「整组横移」——那会把伴侣一起搬走，两人净距永远不变
+     · 拖父母中的一位：只让独子跟到新中点，另一位伴侣原地不动 → 伴侣净距可自由改变；
+     · 拖独子本人：两位父母成对平移（保持彼此净距），竖线仍然竖直。 */
+  if(dr.unit && dr.unit.ids && dr.unitBase){
+    var uids = dr.unit.ids, ua = uids[0], ub = uids[1], uc = uids[2];
+    var dxu = nx - dr.ox;
+    if(isFinite(dr.unitBase[ua]) && isFinite(dr.unitBase[ub]) && isFinite(dr.unitBase[uc])){
+      if(p.id === uc){
+        [ua, ub].forEach(function(id){
+          var q = personById(id); if(!q) return;
+          q.offset = { x: (dr.unitOx[id] || 0) + dxu, y: (q.offset && q.offset.y) || 0 };
+        });
+      }else{
+        var xa2 = dr.unitBase[ua] + (p.id === ua ? nx : (dr.unitOx[ua] || 0));
+        var xb2 = dr.unitBase[ub] + (p.id === ub ? nx : (dr.unitOx[ub] || 0));
+        var qc2 = personById(uc);
+        if(qc2) qc2.offset = { x: (xa2 + xb2) / 2 - dr.unitBase[uc], y: (qc2.offset && qc2.offset.y) || 0 };
+      }
+    }
+  }
+  p.offset = { x: nx, y: ny };
+  p.dragX = nx;
+  commit(false, {skipPanel:true, noSave:true});
+  $('#canvas').classList.add('panning');
+}
+function finishNodeDrag(dr){
+  if(!dr) return null;
+  /* 拖动 + 贴合重排算一步：入栈的是"拖动前"快照，Ctrl+Z 一次回拖动前 */
+  var pre = dr.pre, pid = dr.id;
+  pushHistoryOf(pre);
+  /* 重排期间 activeDragId 仍指向被拖者：落点固定、邻居让位；重排完成后再解除 */
+  var sinfo = snapAndRelayout(pid);
+  lastSnapInfo = sinfo;
+  activeDragId = null;
+  return sinfo;
+}
+/* 双指落下/手势被打断时，把触屏指针拖动收口（磁吸落位），并关掉抑制窗口 */
+function finishTouchPointerDrag(){
+  var d = pnTouchDrag;
+  pnTouchDrag = null;
+  if(!d) return;
+  if(drag === d) drag = null;
+  try{ $('#canvas').releasePointerCapture(d.pointerId); }catch(e){}
+  if(d.moved){
+    finishNodeDrag(d);
+    endDragBlock();
+  }else{
+    activeDragId = null;
+  }
+}
 function onPointerDown(ev){
   /* 这一次按下已经被「点击浮层外部」消费：只收起浮层，不再触发取消选中/平移 */
   if(popupSwallow){ popupSwallow = false; return; }
   if(ev.button === 2) return;
-  /* 触摸走 15b 的原生手势，避免和单指平移/双指缩放抢指针 */
-  if(ev.pointerType === 'touch') return;
+  /* 新的独立手势：解除上一段拖动留下的抑制窗口 */
+  clearDragBlock();
   hideMenu();
+  /* 触屏：只有落在人物框上才由指针链路接管（拖动 / 短按 / 长按）；
+     空白与线仍走原生 touch 手势，避免和单指平移、双指缩放抢事件 */
+  if(ev.pointerType === 'touch'){
+    /* 已经有手势在进行（单指平移/双指缩放/已有人物指针拖动）：新落的手指不再抢管 */
+    if(pnTouchDrag || touchG) return;
+    var tHit = document.elementFromPoint(ev.clientX, ev.clientY);
+    var tNode = tHit && tHit.closest ? tHit.closest('.gx-node') : null;
+    var tPid = tNode ? tNode.getAttribute('data-id') : null;
+    if(!tPid || !personById(tPid)) return;
+    var tDrag = makeNodeDrag(tPid, ev.clientX, ev.clientY, ev.pointerId);
+    if(!tDrag) return;
+    tDrag.touch = true;
+    tDrag.hit = tHit;
+    tDrag.longReady = false;
+    drag = tDrag;
+    pnTouchDrag = tDrag;
+    try{ $('#canvas').setPointerCapture(ev.pointerId); }catch(e){}
+    /* 长按：按住不动 1000ms 只置位，动作条等松手才弹 */
+    cancelLP();
+    lpEl = tHit;
+    lpTimer = setTimeout(function(){
+      lpTimer = null;
+      if(!pnTouchDrag || pnTouchDrag.moved) return;
+      pnTouchDrag.longReady = true;
+    }, LP_MS);
+    ev.preventDefault();
+    return;
+  }
   var nodeEl = ev.target.closest ? ev.target.closest('.gx-node') : null;
   var linkEl = ev.target.closest ? ev.target.closest('.gx-elink') : null;
   var uEl = ev.target.closest ? ev.target.closest('.gx-ulink') : null;
   var lEl = ev.target.closest ? ev.target.closest('.gx-lkin') : null;
-  /* 触屏没有 hover：按下时短暂打上 .gx-tap，给出和 hover 一样的反馈 */
-  var tapEl = nodeEl || linkEl || uEl || lEl;
-  if(ev.pointerType === 'touch' && tapEl){
-    tapEl.classList.add('gx-tap');
-    setTimeout(function(){ tapEl.classList.remove('gx-tap'); }, 700);
-  }
   /* 交叉/重叠的线：按住 Alt 点击，在这一点上的线里循环切换，否则只能选中 z 序最上层那条 */
   if(ev.altKey && !nodeEl && (linkEl || uEl || lEl) && edgeStackAt && edgeSelOf){
     var st = edgeStackAt(ev.clientX, ev.clientY);
@@ -5340,31 +5624,13 @@ function onPointerDown(ev){
   }
   if(nodeEl){
     var pid = nodeEl.getAttribute('data-id');
-    if(pickTarget){
-      var from = pickTarget.from, kind = pickTarget.kind;
-      pickTarget = null;
-      if(pid !== from){
-        if(kind === 'partner') createUnionBetween(from, pid);
-        else createEmotion(from, pid);
-      }
-      /* 成功路径内部已 commit；被拒（直系/重复）也要收掉点选态与提示条，且不入撤销栈 */
-      syncPickbar();
-      commit(false, {noSave:true});
-      return;
-    }
     /* R11-P2：按下不立即弹详情。按下→松手位移 ≤4px 才算点击（松手时才开面板）；
        超过阈值只走拖动，全程不打开详情 */
     var p = personById(pid);
     if(!p) return;
-    var unit = singleChildUnitOf(pid), unitOx = {}, unitBase = {};
-    if(unit) unit.ids.forEach(function(id){
-      var q = personById(id), nn = layout.nodes[id];
-      if(q) unitOx[id] = q.offset.x || 0;
-      if(nn && q) unitBase[id] = nn.x - (q.offset.x || 0);
-    });
-    drag = { mode:'node', id:pid, sx:ev.clientX, sy:ev.clientY, ox:p.offset.x, oy:p.offset.y,
-      moved:false, pointerId:ev.pointerId, pre:snapshot(), unit:unit, unitOx:unitOx, unitBase:unitBase };
-    activeDragId = pid;
+    drag = makeNodeDrag(pid, ev.clientX, ev.clientY, ev.pointerId);
+    if(!drag) return;
+    drag.hit = nodeEl;
     try{ $('#canvas').setPointerCapture(ev.pointerId); }catch(e){}
     ev.preventDefault();
     return;
@@ -5487,10 +5753,19 @@ function snapAndRelayout(pid){
      这里用「不含个人偏移的基准 y」实测每代真实水平线，避免把 PAD 位移算进去。 */
   var baseVis = n.y - (p.offset.y || 0);
   var visRows = {};
+  var rowDy = null;
   for(var vid in layout.nodes){
     var vq = layout.nodes[vid], vp = personById(vid);
     var vby = vq.y - ((vp && vp.offset.y) || 0);
     if(visRows[vq.gen] == null || vby < visRows[vq.gen]) visRows[vq.gen] = vby;
+    if(rowDy == null) rowDy = vby - layout.rowY[vq.gen];
+  }
+  /* R26-1：吸附行 = 真实代行 + 上下各 2 条空层。空层同样参与「落点带内吸附」，
+     无人也吸得住；PAD 平移量从任一实节点反解（rowDy）。 */
+  if(rowDy != null && layout.rowY){
+    for(var ek in layout.rowY){
+      if(visRows[ek] == null) visRows[ek] = layout.rowY[ek] + rowDy;
+    }
   }
 
   if(blood){
@@ -5501,7 +5776,8 @@ function snapAndRelayout(pid){
     p.offset.y = 0;
     info.snapY = +ownY.toFixed(1);
     info.keptFree = false;
-    commit(false);
+    /* R27：拖动落位不是「选择」，收尾不得因残留 selection 重开详情面板 */
+    commit(false, { skipPanel: true });
     info.persisted = { x:+layout.nodes[pid].x.toFixed(1), y:+layout.nodes[pid].y.toFixed(1) };
     info.gap = gapsOfRow(layout.nodes[pid].gen);
     return info;
@@ -5531,7 +5807,7 @@ function snapAndRelayout(pid){
     info.snapDelta = null;
     info.keptFree = true;
   }
-  commit(false);
+  commit(false, { skipPanel: true });
   info.persisted = { x:+layout.nodes[pid].x.toFixed(1), y:+layout.nodes[pid].y.toFixed(1) };
   info.gap = gapsOfRow(layout.nodes[pid].gen);
   return info;
@@ -5557,6 +5833,8 @@ function onPointerMove(ev){
     return;
   }
   if(drag.mode === 'link'){ return; }
+  /* 移动人物（含两框之间的间距拖动）进入抑制窗口：拖动期间与松手后都不弹浮层 */
+  if((drag.mode === 'node' || drag.mode === 'gap') && !popBlocked) enterDragBlock();
   /* R14：拖两人之间的空白——右侧那位跟指针横移，最小净距仍由分离器兜底 */
   if(drag.mode === 'gap'){
     var gp2 = personById(drag.id);
@@ -5568,63 +5846,14 @@ function onPointerMove(ev){
     $('#canvas').classList.add('panning');
     return;
   }
-  var p = personById(drag.id);
-  if(!p) return;
-  /* 需求一：不再做 ±600 钳制；只受世界坐标有限值保护，任何框都能拖到任意其他框附近 */
-  var nx = drag.ox + dx / view.scale, ny = drag.oy + dy / view.scale;
-  if(!isFinite(nx)) nx = drag.ox;
-  if(!isFinite(ny)) ny = drag.oy;
-  /* R17-2：硬钳制降级为软吸附。靠近代带时磁力随距离衰减（越近越强），
-     拖得够远就能越过并落到任意代；两代之间与没有任何人的空带都不做限制。
-     直系只在自身代带附近有磁力（松手终归本代）；非直系吸最近代线。
-     MAG_R 为磁力半径（世界坐标），超出后跟手、不吸。 */
-  var lq = layout.nodes[p.id];
-  if(lq && lq.rowY != null && layout.rowY){
-    var MAG_R = 46, magT = null, magD = Infinity;
-    if(isCorePerson(p.id)){
-      magT = 0; magD = Math.abs(ny);          /* 本代线在 offset 坐标里恒为 0 */
-    }else{
-      /* R19-1：非直系按「代带」磁力——带半径与松手吸附同一口径（28–130），
-         带内线性吸向最近代线，越界即跟手不吸。 */
-      var magG = null;
-      for(var gk in layout.rowY){
-        var magY = layout.rowY[gk] - lq.rowY, magA = Math.abs(ny - magY);
-        if(magA < magD){ magD = magA; magT = magY; magG = gk; }
-      }
-      if(magG != null) MAG_R = bandOfGen(layout.rowY, magG);
-    }
-    if(magT != null && magD < MAG_R){
-      ny = magT + (ny - magT) * (magD / MAG_R);
-    }
-  }
-  /* R14：独子单元不再「整组横移」——那会把伴侣一起搬走，两人净距永远不变
-     · 拖父母中的一位：只让独子跟到新中点，另一位伴侣原地不动 → 伴侣净距可自由改变；
-     · 拖独子本人：两位父母成对平移（保持彼此净距），竖线仍然竖直。 */
-  if(drag.unit && drag.unit.ids && drag.unitBase){
-    var uids = drag.unit.ids, ua = uids[0], ub = uids[1], uc = uids[2];
-    var dxu = nx - drag.ox;
-    if(isFinite(drag.unitBase[ua]) && isFinite(drag.unitBase[ub]) && isFinite(drag.unitBase[uc])){
-      if(p.id === uc){
-        [ua, ub].forEach(function(id){
-          var q = personById(id); if(!q) return;
-          q.offset = { x: (drag.unitOx[id] || 0) + dxu, y: (q.offset && q.offset.y) || 0 };
-        });
-      }else{
-        var xa2 = drag.unitBase[ua] + (p.id === ua ? nx : (drag.unitOx[ua] || 0));
-        var xb2 = drag.unitBase[ub] + (p.id === ub ? nx : (drag.unitOx[ub] || 0));
-        var qc2 = personById(uc);
-        if(qc2) qc2.offset = { x: (xa2 + xb2) / 2 - drag.unitBase[uc], y: (qc2.offset && qc2.offset.y) || 0 };
-      }
-    }
-  }
-  p.offset = { x: nx, y: ny };
-  p.dragX = nx;
-  commit(false, {skipPanel:true, noSave:true});
-  $('#canvas').classList.add('panning');
+  applyNodeDragMove(drag, dx, dy);
 }
 function onPointerUp(ev){
+  /* 指针链路收口时，触屏独占标记一并释放（touchend 随后到来自会发现 touchG 为空） */
+  pnTouchDrag = null;
   if(!drag){ activeDragId = null; return; }
   $('#canvas').classList.remove('panning');
+  cancelLP();
   if(drag.mode === 'link'){
     drag = null; activeDragId = null;
     return;
@@ -5633,30 +5862,46 @@ function onPointerUp(ev){
   if(drag.mode === 'gap'){
     var preG = drag.pre, gMoved = drag.moved, gHit = drag.hit;
     drag = null;
-    if(gMoved){ pushHistoryOf(preG); commit(false); }
-    else if(gHit){ selection = gHit; showMeaning = true; commit(false, {noSave:true}); }
+    if(gMoved){ pushHistoryOf(preG); commit(false, { skipPanel: true }); endDragBlock(); }
+    else if(gHit){ selection = gHit; showMeaning = true; panelHold = false; commit(false, {noSave:true}); }
     activeDragId = null;
     return;
   }
   if(drag.moved && drag.mode === 'node'){
-    /* 拖动 + 贴合重排算一步：入栈的是"拖动前"快照，Ctrl+Z 一次回拖动前 */
-    var pre = drag.pre, pidMoved = drag.id;
+    var drEnd = drag;
     drag = null;
-    pushHistoryOf(pre);
-    /* 重排期间 activeDragId 仍指向被拖者：落点固定、邻居让位；重排完成后再解除 */
-    var sinfo = snapAndRelayout(pidMoved);
-    lastSnapInfo = sinfo;
-    activeDragId = null;
+    /* 拖动松手：磁吸落位；不收尾成任何弹层 */
+    finishNodeDrag(drEnd);
+    endDragBlock();
     return;
   }
   /* 纯点击（按下到松手位移 ≤4px）：松手时才选中并打开详情面板 */
   if(drag.mode === 'node' && !drag.moved){
-    var pidClick = drag.id;
+    var pidClick = drag.id, hitClick = drag.hit, wasLong = !!drag.longReady;
     drag = null; activeDragId = null;
+    /* 长按不动 + 松手：只有这一种情况才弹便捷动作条 */
+    if(wasLong){
+      onLongPress(hitClick || document.querySelector('#world .gx-node[data-id="' + pidClick + '"]'));
+      return;
+    }
+    /* 点选模式（触屏与鼠标同一口径）：点人物 = 以起点建伴侣/情感线，完成后回到正常面板；
+       被拒（直系/重复）时也要收掉点选态，避免卡在选择界面 */
+    if(pickTarget){
+      var from = pickTarget.from, kind = pickTarget.kind;
+      pickTarget = null;
+      if(pidClick !== from){
+        if(kind === 'partner') createUnionBetween(from, pidClick);
+        else createEmotion(from, pidClick);
+      }
+      syncPickbar();
+      commit(false, {noSave:true});
+      return;
+    }
     selection = { type:'person', id:pidClick };
     navFocusId = pidClick;
     applyNavFocus();
     showMeaning = true;
+    panelHold = false;
     commit(false, {noSave:true});
     return;
   }
@@ -5696,6 +5941,7 @@ function canvasMenuItems(){
 }
 function onContextMenu(ev){
   ev.preventDefault();
+  panelHold = false;
   var nodeEl = ev.target.closest ? ev.target.closest('.gx-node') : null;
   hideMenu();
   if(nodeEl){
@@ -6108,6 +6354,7 @@ var DOC_CSS = '.pg{background:var(--panel);color:var(--ink);font:13px/1.55 -appl
   '.gx-dead{stroke:var(--gx-ink);stroke-width:1.4;fill:none;opacity:.55}' +
   '.gx-preg{fill:var(--gx-ink);stroke:none;opacity:.9}' +
   '.gx-age{font:500 14px "PingFang SC","Microsoft YaHei",sans-serif;fill:var(--gx-ink);text-anchor:middle;dominant-baseline:middle}' +
+  '.gx-age-preg{font-size:12px}' +
   '.gx-nm{font:500 14px "PingFang SC","Microsoft YaHei",sans-serif;fill:var(--gx-ink);text-anchor:middle}' +
   '.gx-it{font:400 12px "PingFang SC","Microsoft YaHei",sans-serif;fill:var(--gx-t2);text-anchor:middle}' +
   '.gx-yr{font:400 12px "PingFang SC","Microsoft YaHei",sans-serif;fill:var(--gx-t3);text-anchor:middle}' +
@@ -6893,6 +7140,8 @@ function bindEvents(){
   cv.addEventListener('wheel', onWheel, { passive:false });
   cv.addEventListener('contextmenu', onContextMenu);
   cv.addEventListener('dblclick', function(ev){
+    /* 拖动静止窗口内的合成 dblclick 不算编辑入口，避免拖动松手误开输入框 */
+    if(popSuppressed()) return;
     var el = ev.target;
     var n = el.closest && el.closest('.gx-node');
     var t = el.closest && el.closest('.gx-yr[data-ef], .gx-nm[data-ef]');
@@ -7045,6 +7294,7 @@ function bindEvents(){
   });
 
   document.addEventListener('keydown', function(ev){
+    panelHold = false;
     var tag = (ev.target.tagName || '').toLowerCase();
     var typing = tag === 'input' || tag === 'textarea' || tag === 'select' || ev.target.isContentEditable;
     var inTB = !!(ev.target.closest && ev.target.closest('#toolbar'));
@@ -7086,6 +7336,26 @@ function bindEvents(){
       ev.preventDefault();
       var pp = selection.type === 'person' ? personById(selection.id) : null;
       if(pp && ev.target.value){ addTags(pp, ev.target.value); ev.target.value = ''; }
+      return;
+    }
+    /* 输入框无文本时退格：最后一个标签回到输入框可编辑，光标停在末尾；再删空继续往前退 */
+    if(typing && ev.target && ev.target.hasAttribute && ev.target.hasAttribute('data-chiptag') &&
+       ev.key === 'Backspace' && !ev.ctrlKey && !ev.metaKey && !ev.altKey && !(ev.target.value || '')){
+      var bp = selection.type === 'person' ? personById(selection.id) : null;
+      if(bp){
+        var btags = tagsOf(bp);
+        if(btags.length){
+          ev.preventDefault();
+          var lastTag = btags[btags.length - 1];
+          pushHistory();
+          removeTag(bp, lastTag);
+          commit(false, { skipPanel: true });
+          paintTags(bp);
+          var cin = ev.target;
+          cin.value = lastTag;
+          try{ cin.focus(); cin.setSelectionRange(lastTag.length, lastTag.length); }catch(e){}
+        }
+      }
       return;
     }
     /* 文本类字段（输入框）不参与分区导航：按键留给输入法/光标，不卡住焦点 */
