@@ -16,14 +16,14 @@
 
 ## 下载（只放最新版）
 
-**最新版本：v1.3.0（2026-11-09）**
+**最新版本：v1.4.0（2026-11-10）**
 
 | 下载 | 说明 |
 | --- | --- |
-| [index.html](https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.3.0/index.html) | 主程序，下载后双击即可打开 |
-| [v1.3.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.3.0) | 版本说明与 Release 附件 |
+| [index.html](https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.4.0/index.html) | 主程序，下载后双击即可打开 |
+| [v1.4.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.4.0) | 版本说明与 Release 附件 |
 
-> 旧版本（v1.2.0 及更早）不再占用主下载位置，统一列在文末[历史版本](#历史版本)。旧 Release 与下载链接永久有效，不会被删除。
+> 旧版本（v1.3.0 及更早）不再占用主下载位置，统一列在文末[历史版本](#历史版本)。旧 Release 与下载链接永久有效，不会被删除。
 
 ## 为什么又造一个家谱图工具
 
@@ -41,13 +41,13 @@
 
 ## 截图
 
-> 三张截图均于 2026-11-09 用 v1.3.0 当前构建重新生成（1440×900），字号、配色、工具栏、线型接点与现在的界面一致。
+> 三张截图均于 2026-11-10 用 v1.4.0 当前构建重新生成（1440×900），44px 控件、左上角删除按钮、工具栏形态与现在的界面一致。
 
 ![主界面：三代示例家谱图](docs/screenshot-overview.png)
 *首次打开载入的三代示例（12 人、4 组伴侣关系、7 条亲子关系、4 条情感线），符号内的数字是依出生年份实时计算的年龄；已故者打叉并显示寿年。*
 
 ![右侧人物面板](docs/screenshot-person-panel.png)
-*点选人物后右侧展开属性面板：姓名、性别、符号、生卒、孕产状态，以及可增删改的备注条目与事件列表；被选中的索引咨访用双轮廓标出。*
+*点选人物后右侧展开属性面板：左上角一个 44px 高的删除按钮，其余是姓名、性别、符号、生卒、孕产状态，以及可增删改的备注条目与事件列表；被选中的索引咨访用双轮廓标出。*
 
 ![图例与关系对照表](docs/screenshot-legend.png)
 *图例共 63 行真实线型，可搜索、可点击某一行直接应用到当前选中的关系——看到的就是画出来会得到的效果。*
@@ -78,6 +78,10 @@
 - 中继竖线居中，**全部正交布线，不出现斜线**
 - **接点贴合符号外缘**：伴侣线、亲子竖线、情感线与锯齿线的端点按符号实际轮廓投影，方块、圆圈、菱形、双轮廓索引咨访各自取到自己的外缘，不压线、不留缝
 - 两个人物符号边到边净距 ≥ **70px**，文字块之间 ≥ 28px，文字不会被线穿过
+- **关系线之间留 17px 净距**：同一区域里并行多条线时不叠画、不贴线；线太多时自动加宽这一段所在的两代间距，只加宽需要的那一对
+- **关系线上的描述文字与日期合成一个整体块**，贴着关系线外侧摆放；折线时落在路径长度的中点，整块可以点击，点后进入这条关系的详情
+- 线、关系线文字、线上符号、人物框**四类两两不重叠**：线不穿字、不穿人物框；关系线不会从其他人物框中间穿过去
+- 交叉、净距、绕框三项目标放进同一套加权打分里整体重排，不是按其中一项贪心选路
 - 代间净距按实际文字占位自适应：只有净距不足 **20px** 的那一对相邻代才补差，其余代保持紧凑
 - 拖动人物做微调后，连线自动贴合重排；「排版」一键复位
 - 支持一对多子女、多段婚姻、跨代嵌套；子树可**折叠 / 展开**，画布实时自适应
@@ -86,13 +90,16 @@
 
 ### 记录与界面
 
+- **控件尺寸统一到 44px**：工具栏按钮、输入框、下拉与下拉项、日期字段、chip 的 ×、浮动动作条、菜单项、勾选框的点击区一律不小于 44×44px，遥控器与触屏下都按得准
+- 删除按钮改为面板**左上角**一个 44px 高的短按钮，不再占满一行
 - 每人可挂多条备注：职业、诊断、重大事件、标签、原话、备注；类别可自行新增 / 删除（新增输入框在下拉顶部），面板按类别聚合，条目可拖拽排序
 - 标签输入按微信的方式：中英文标点与换行都会切成标签，标签以 chip 展示、点 chip 上的 × 即可删除并立即持久化；输入框为空时按退格，最后一个标签回到输入框继续编辑
 - 每人可挂多条「重要事件 / 经历」：时间、地点、事件，可增删改
 - 撤销 / 重做、5 套主题色卡（符号填充与画布底色可手动覆盖）
 - localStorage 自动存档：文档、视图、主题分三个键保存，刷新或关掉浏览器再打开数据还在
 - 键盘可达：Tab 可聚焦到人物符号，Enter / 空格 即选中
-- 触屏三态互斥：短按出详情页；按住 1000ms 不动、松手只出工具栏动作条；拖动全程（含松手后）都不弹任何浮层
+- 遥控器 / 手柄全链路：确定键能勾选复选框、进文本框输入、展开下拉、切换开关、展开日期；返回键每次只回退一层，面板内单次返回即收起
+- 触屏三态互斥：短按出详情页；按住超过 1 秒不动、松手只出工具栏动作条；拖动全程（含松手后）都不弹任何浮层
 
 ### 导出
 
@@ -141,8 +148,15 @@
 触屏：
 
 - 短按（位移 ≤ 6px、时长 < 1000ms）＝ 选中并展开详情页
-- 按住不动 1000ms 后松手 ＝ 只出横向动作条，不出详情页
+- 按住不动超过 1 秒后松手 ＝ 只出横向动作条，不出详情页
 - 拖动（位移超过 6px）＝ 人物跟手 + 代带磁吸，全程与松手后都不弹浮层
+
+遥控器 / 手柄（没有鼠标也能完整用）：
+
+- 方向键 / 摇杆移动焦点，确定键（OK / A）＝ 点击：可以勾选复选框、进文本框打字、展开下拉选一项、开关切换、展开日期
+- 返回键（返回 / B）每次只回退一层：动作条 → 输入框 → 下拉 → 面板 → 工具栏 → 画布
+- 长按返回 0.9 秒 ＝ 删除当前焦点人物（可撤销）；肩键 / LB·RB 缩放
+- 所有控件不小于 44px，隔着一两米也能对准
 
 ## 数据结构与备份
 
@@ -198,7 +212,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 ## 关于「单文件零依赖」
 
-- 全部 HTML / CSS / JS / SVG 都在 `index.html` 里，约 370 KB（381,367 字节），**没有第二个文件**
+- 全部 HTML / CSS / JS / SVG 都在 `index.html` 里，约 417 KB（426,694 字节），**没有第二个文件**
 - 没有 CDN、没有 `import`、没有 `fetch`、没有 Web Font、没有外部图片；源码里搜不到任何外链
 - 源码中 SVG 命名空间常量写作 `'http' + '://www.w3.org/2000/svg'`（拼接而非字面量）：这是为了让静态检查脚本不把这串字符误判成「外部链接」，运行时行为与字面量完全一致
 - 因此断网、内网、离线 U 盘环境都能用；也不存在「某个依赖包更新把页面搞坏」的风险
@@ -208,8 +222,8 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 [`docs/genogram-ai-prompt.md`](docs/genogram-ai-prompt.md) 是一份**可以直接整段粘给任意 AI** 的开发提示词：别人拿到它，用 AI 就能从零复刻出一个结构、行为与本项目等价的家谱图工具。
 
 - **前半是需求规格**：硬约束、符号体系（人物、伴侣 16 型、亲子 8 型、情感 39 型）、数据模型与一致性约束、排版与布线（含全部数值阈值）、拖动、交互、输入设备、信息条目、导出、主题与持久化
-- **后半是验收清单**：76 项可勾选检查，每项都写了「怎么测」与「什么算通过」，可以直接当交付验收表用
-- **数值与当前实现一致**：符号 56px、相邻净距 70px、有连线直连 84px、代间 96px、代间净距下限 20px、接点贴符号外缘、求解收敛 0.02px / 最多 24 轮、刷新后坐标逐位相同
+- **后半是验收清单**：83 项可勾选检查，每项都写了「怎么测」与「什么算通过」，可以直接当交付验收表用
+- **数值与当前实现一致**：符号 56px、相邻净距 70px、有连线直连 84px、代间 96px、代间净距下限 20px、控件 44px 下限、关系线之间 17px、接点贴符号外缘、求解收敛 0.02px / 最多 24 轮、刷新后坐标逐位相同
 - **写成需求而不是源码解说**：正文不出现本仓库的文件名、路径与行号（仅文件头的用途注释除外），换一个模型、换一种实现方式也能照着做
 
 三种用法：想改出自己的一版但不想先读完整份代码；想给团队 / 机构定一套家谱图工具的功能口径；想验证某个模型能不能一次生成可用的单文件应用。
@@ -235,7 +249,18 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 每次更新的流程只有四步：修改 `index.html` → 提交 → 递增 tag（`v1.3.0` / `v1.4.0` …）→ 发新 Release。**最新版本只出现在顶部[「下载」](#下载只放最新版)一节**；旧版本的 tag、Release 与下载链接永久有效，统一列在下方[「历史版本」](#历史版本)，不会因为新版本发布而失效。
 
-### v1.3.0 更新要点
+### v1.4.0 更新要点
+
+- **控件全部放大到 44px**：工具栏按钮、输入框、下拉与下拉项、日期字段、chip 的 ×、浮动动作条、菜单项、勾选框的点击区一律不小于 44×44px，触屏和遥控器下都更容易按准，界面也因此整体更疏朗
+- **删除按钮挪到面板左上角**：从原先占满一行的宽按钮改成左上角一个 44px 高的短按钮，误触面小了很多，面板内容也不再被一个大红块切开展示
+- **遥控器 / 手柄全链路可用**：确定键能勾选复选框、进文本框打字、展开下拉并选中、切换开关、展开日期；返回键每次只回退一层，在面板里单次返回即收起面板。隔着一两米用遥控器也能完整录入
+- **关系线不再打架**：关系线之间保留 17px 净距，线多时自动加宽那一段的代间距；线、关系线文字、线上符号、人物框四类两两不重叠，「线穿字」已归零；关系线不会从其他人物框中间穿过去。交叉、净距、绕框三项目标一起加权重排，不再只顾其中一项
+- **关系描述变成一整块贴线文字**：关系名称与开始 / 结束日期合成一个不可分割的块，贴着关系线外侧摆放，折线时落在路径长度的中点；整块可以点击，点后直接进入这条关系的详情
+- **修掉「＋子女」没反应**：关系面板里的「＋ 子女」此前点击无响应，现在会立刻新建一个子女挂到当前这段关系上
+- **触摸三态沿用**：短按出详情、按住超过 1 秒松手只出工具栏、拖动全程不出任何浮层
+- **兼容性**：数据模型、导出格式、快捷键与三个 localStorage 键均与 v1.3.0 一致，可直接打开 v1.3.0 及更早版本的 JSON 备份
+
+### v1.3.0 更新要点（存档）
 
 - **结构线接点贴合符号外缘**：伴侣线、亲子竖线、情感线、锯齿线的端点改为按符号实际轮廓投影，方块 / 圆圈 / 菱形 / 双轮廓各自算到自己的外缘（实测端点误差在 0.11px 以内），不再出现线头压在符号上或差一截的情况
 - **触屏三态互斥**：短按出详情页；按住 1000ms 不动、松手只出工具栏动作条；拖动全程不弹任何浮层，松手后也一样
@@ -251,6 +276,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 | 版本 | 日期 | 说明 | Release |
 | --- | --- | --- | --- |
+| v1.3.0 | 2026-11-09 | 接点贴轮廓、触屏三态、标签 chip 输入、7 条吸附带 | [v1.3.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.3.0) |
 | v1.2.0 | 2026-11-08 | 视觉与键盘导航：14px 字号、19 个颜色令牌、方向键分层导航 | [v1.2.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.2.0) |
 | v1.1.0 | 2026-11-08 | 交互与编辑重构：性别符号合并、完整日期、信息条目、跨代吸附、手柄 / 触屏、导出单页 | [v1.1.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.1.0) |
 | v1.0.0 | 2026-11-05 | 首个发布版：单文件心理咨询家谱图编辑器 | [v1.0.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.0.0) |
@@ -318,7 +344,7 @@ A **single-file, zero-dependency, fully offline** editor for psychological genog
 
 **Why another genogram tool**: most online family-tree tools are trees — a node branches downward, but two lines can never merge into one and then split again. A clinical genogram needs exactly that: the couple relationship (union) is a first-class entity, and each child's parent link points at the union rather than at a person, so one person can carry several unions (marriage, cohabitation, affair, separation, divorce, remarriage), each with its own children. The underlying model is a directed graph with merges, not a tree. That drives the layout (the parents' centre distance equals the span from the first to the last child, the relay line sits on the union's midpoint, siblings share one horizontal line, ≥70px symbol clearance, orthogonal routing with no diagonal edges, automatic re-layout after any edit or collapse) and the notation (16 couple statuses, 8 parent–child types, 39 emotional line types, where stroke widths, dash patterns and mid-line glyphs carry the meaning). It ships as one offline HTML file because client data is sensitive and clinical work often happens on machines that should not upload anything.
 
-**Features**: 8 person symbols plus overlays for index client, deceased, pregnancy/miscarriage, and auto-computed age (unborn children show gestational months/weeks); 16 couple/structure statuses, 8 parent–child types and 39 emotional relationship line types, all drawn as inline SVG; sibling alignment, centre-aligned couple lines, orthogonal routing with no diagonal edges, ≥70px symbol clearance, edge terminals projected onto each symbol's actual outline, collapsible branches and drag-to-reposition with auto re-layout; per-person notes and timed life events, with WeChat-style tag chips that split on any Chinese or English punctuation; a searchable 63-row symbol/line legend; export to PNG (1x/2x), two-page PDF/print, self-contained HTML, or JSON backup/import, all with live preview; undo/redo, five colour themes, and autosave to `localStorage`. On touch screens the three gestures are mutually exclusive: a short tap opens the detail panel, a 1000 ms press-and-release opens only the action bar, and dragging never raises any overlay.
+**Features**: 8 person symbols plus overlays for index client, deceased, pregnancy/miscarriage, and auto-computed age (unborn children show gestational months/weeks); 16 couple/structure statuses, 8 parent–child types and 39 emotional relationship line types, all drawn as inline SVG; sibling alignment, centre-aligned couple lines, orthogonal routing with no diagonal edges, ≥70px symbol clearance, edge terminals projected onto each symbol's actual outline, ≥17px clearance between parallel relationship lines, a single unbreakable label block (name plus dates) hugging the line at the path-length midpoint, and weights that resolve crossings, clearance and obstacle avoidance together so that lines, labels, glyphs and person boxes never overlap; collapsible branches and drag-to-reposition with auto re-layout; per-person notes and timed life events, with WeChat-style tag chips that split on any Chinese or English punctuation; a searchable 63-row symbol/line legend; export to PNG (1x/2x), two-page PDF/print, self-contained HTML, or JSON backup/import, all with live preview; undo/redo, five colour themes, and autosave to `localStorage`. Every control is at least 44×44px, which keeps the UI usable with a TV remote or gamepad (OK activates checkboxes, text fields, dropdowns, switches and date pickers; Back unwinds one layer at a time). On touch screens the three gestures are mutually exclusive: a short tap opens the detail panel, a 1000 ms press-and-release opens only the action bar, and dragging never raises any overlay.
 
 **Licence**: MIT, © 2025-2026 白贵阳 (Bai Guiyang). Personal use is attribution-free by design — the UI, exported PNG / PDF / HTML and print pages show no author, project or licence marks. Commercial use **must** keep the copyright notice and the full licence text, and credit the author with a link to this repository (see [NOTICE.md](NOTICE.md)). The rule itself lives in the source header of `index.html`; a Chinese reference translation is in [LICENSE.zh-CN.md](LICENSE.zh-CN.md), while the English [LICENSE](LICENSE) prevails.
 

@@ -32,7 +32,7 @@ body{
 }
 #app{display:flex;flex-direction:column;height:100%}
 #toolbar{
-  display:flex;align-items:center;gap:8px;padding:0 14px;min-height:50px;background:var(--panel);
+  display:flex;align-items:center;gap:8px;padding:0 14px;min-height:58px;background:var(--panel);
   border-bottom:1px solid var(--hair);flex:0 0 auto;overflow-x:auto;overflow-y:hidden;
   white-space:nowrap;scrollbar-width:thin;box-shadow:0 1px 0 rgba(20,30,40,.02);z-index:5;
 }
@@ -40,16 +40,16 @@ body{
 .brand .sub{font-weight:400;color:var(--muted);font-size:9px;margin-left:7px;letter-spacing:.08em}
 #title{
   flex:0 0 auto;width:156px;border:1px solid transparent;background:transparent;border-radius:var(--r-sm);
-  padding:4px 8px;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink);
+  padding:10px 10px;min-height:44px;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink);
   transition:border-color .15s,background .15s;
 }
 #title:hover{border-color:var(--hair)}
 #title:focus{border-color:var(--accent);outline:none;background:var(--panel);box-shadow:0 0 0 2px var(--accent-weak)}
 .tb-group{display:flex;align-items:center;gap:2px;flex:0 0 auto}
 button.tb{
-  font-family:inherit;font-size:14px;font-weight:450;padding:0 11px;height:30px;border-radius:var(--r-sm);
+  font-family:inherit;font-size:14px;font-weight:450;padding:0 14px;height:44px;border-radius:var(--r-sm);
   border:1px solid transparent;background:transparent;color:var(--ink-2);cursor:pointer;
-  min-height:30px;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  min-height:44px;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
 }
 button.tb:hover:not(:disabled){background:var(--surface-hover);color:var(--ink);border-color:transparent}
 button.tb:active:not(:disabled){background:var(--surface-pressed)}
@@ -59,10 +59,10 @@ button.tb.primary{background:var(--accent);border-color:var(--accent);color:var(
 button.tb.primary:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover);color:var(--panel)}
 .sep{width:1px;height:18px;background:var(--hair);margin:0 6px;flex:0 0 auto}
 /* R21：纯动作型按钮改用内联 SVG（零外部依赖）。高度/圆角/hover 与文字按钮完全一致；
-   ::after 把命中区上下各扩 1px，30px 视觉高度对应 32px 触控高度，不改变工具栏整体高度 */
-button.tb.icon{position:relative;width:32px;padding:0;display:inline-flex;align-items:center;justify-content:center}
-button.tb.icon svg{width:16px;height:16px;display:block;pointer-events:none}
-button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px;bottom:-2px}
+   命中区即按钮本体（44×44），不再靠 ::after 补足触控高度 */
+button.tb.icon{position:relative;width:44px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+button.tb.icon svg{width:17px;height:17px;display:block;pointer-events:none}
+button.tb.icon::after{content:"";position:absolute;inset:0}
 #stage{position:relative;flex:1 1 auto;display:flex;min-height:0}
 #view{position:relative;flex:1 1 auto;min-width:0;min-height:0}
 #canvas{
@@ -97,10 +97,10 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
   margin:0 0 10px;font-size:17px;font-weight:600;color:var(--ink-2);letter-spacing:.06em;
   display:block;text-align:center;line-height:1.45;
 }
-.fld{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.fld{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .fld>span{flex:0 0 58px;color:var(--muted);font-size:12px}
 .fld input[type=text],.fld input[type=number],.fld select,.fld input[type=date]{
-  flex:1;min-width:0;font-family:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--hair);
+  flex:1;min-width:0;min-height:44px;font-family:inherit;font-size:14px;padding:10px 10px;border:1px solid var(--hair);
   border-radius:var(--r-sm);background:var(--panel-2);color:var(--ink);transition:border-color .15s,box-shadow .15s;
   font-variant-numeric:tabular-nums;
 }
@@ -108,27 +108,39 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .fld input:focus,.fld select:focus,.note-row input:focus,.note-row select:focus{
   outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-weak);background:var(--panel);
 }
-.chk{display:flex;align-items:center;gap:7px;font-size:14px;margin:0 0 9px;color:var(--ink-2);cursor:pointer}
+.chk{display:flex;align-items:center;gap:9px;font-size:14px;margin:0 0 8px;min-height:44px;color:var(--ink-2);cursor:pointer}
+.chk input[type=checkbox],.chk input[type=radio]{width:20px;height:20px;flex:0 0 auto;margin:0;accent-color:var(--accent);cursor:pointer}
 .row-2{display:flex;flex-wrap:wrap;gap:8px}
 .row-2 .fld{flex:1 1 136px;min-width:0;margin-bottom:8px}
 .row-2 .fld>span{flex:0 0 42px}
 .yr-row{display:flex;align-items:center;gap:8px}
 .yr-row input[type=number]{flex:1;min-width:0}
-.yr-row .chk{margin:0;font-size:12px;white-space:nowrap}
+.yr-row .chk{margin:0;font-size:12px;white-space:nowrap;min-height:44px}
 .note-row,.urec,.crec{
   border:1px solid var(--hair);border-radius:var(--r-md);padding:9px;margin-bottom:8px;background:var(--canvas);
 }
 .note-row .nr-top{display:flex;gap:6px;margin-bottom:6px}
-.note-row select{flex:0 0 76px;font-size:12px;padding:4px 4px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);font-family:inherit;color:var(--ink-2)}
-.note-row input{flex:1;min-width:0;font-size:12px;padding:4px 6px;border:1px solid var(--hair);border-radius:var(--r-sm);font-family:inherit;background:var(--panel)}
+.note-row select{flex:0 0 84px;font-size:13px;min-height:44px;padding:6px 4px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);font-family:inherit;color:var(--ink-2)}
+.note-row input{flex:1;min-width:0;font-size:13px;min-height:44px;padding:6px 8px;border:1px solid var(--hair);border-radius:var(--r-sm);font-family:inherit;background:var(--panel)}
 .note-row .nr-bot{display:flex;gap:6px}
 .note-row .nr-bot input{flex:1}
 .mini{
-  font-family:inherit;font-size:12px;padding:3px 8px;border-radius:var(--r-sm);border:1px solid var(--hair);
-  background:var(--panel);cursor:pointer;color:var(--ink-2);height:auto;min-height:26px;transition:border-color .15s,color .15s,background .15s;
+  font-family:inherit;font-size:13px;padding:7px 10px;border-radius:var(--r-sm);border:1px solid var(--hair);
+  background:var(--panel);cursor:pointer;color:var(--ink-2);height:auto;min-height:44px;min-width:44px;
+  transition:border-color .15s,color .15s,background .15s;
 }
 .mini:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-weak)}
 .mini.danger:hover{border-color:var(--danger);color:var(--danger);background:var(--danger-weak)}
+/* R57：删除按钮固定在面板左上角，高度不超过一行（44），实底危险色，明显重于普通按钮 */
+.dangerbar{display:flex;justify-content:flex-start;margin:0 0 14px}
+button.big{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;width:auto;min-height:44px;padding:0 20px;
+  font-family:inherit;font-size:14px;font-weight:600;letter-spacing:.03em;color:#fff;
+  background:var(--danger);border:1px solid var(--danger);border-radius:var(--r-md);cursor:pointer;
+  box-shadow:0 2px 7px rgba(178,58,52,.20);transition:background .15s,border-color .15s;
+}
+button.big:hover{background:#9c312c;border-color:#9c312c;color:#fff}
+button.big:active{background:#8a2a26;border-color:#8a2a26}
 /* R21：遥控器/手柄焦点分区 —— 工具栏与面板内的焦点环与键盘一致 */
 #panel button:focus-visible,#panel select:focus-visible,#panel input:focus-visible,#panel textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #toolbar .navring,#panel .navring{outline:2px solid var(--accent);outline-offset:2px}
@@ -155,7 +167,7 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 }
 #menu.open{display:block}
 #menu button{
-  display:block;width:100%;text-align:left;font-family:inherit;font-size:14px;padding:7px 10px;
+  display:flex;align-items:center;width:100%;text-align:left;font-family:inherit;font-size:14px;min-height:44px;padding:10px 12px;
   border:0;background:transparent;border-radius:var(--r-sm);cursor:pointer;color:var(--ink-2);
 }
 #menu button:hover,#menu button:focus{background:var(--accent-weak);color:var(--ink);outline:none}
@@ -169,7 +181,7 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 }
 #actbar.open{display:flex}
 #actbar button{
-  font-family:inherit;font-size:12px;line-height:1.2;padding:0 9px;height:34px;min-height:34px;
+  font-family:inherit;font-size:13px;line-height:1.2;padding:0 12px;height:44px;min-height:44px;
   border:0;background:transparent;border-radius:var(--r-sm);cursor:pointer;color:var(--ink-2);white-space:nowrap;
 }
 #actbar button:hover,#actbar button:focus{background:var(--accent-weak);color:var(--ink);outline:none}
@@ -220,12 +232,12 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .meaning p{margin:0 0 3px;font-size:12px;line-height:1.6;color:var(--ink-2)}
 .meaning .m-tag{font-size:12px;color:var(--muted);border:1px solid var(--hair);border-radius:4px;padding:0 5px}
 .pick{margin-top:6px}
-.pick .pk-q{width:100%;font-size:12px;padding:5px 8px;border:1px solid var(--hair);border-radius:var(--r-sm);font-family:inherit;background:var(--panel);color:var(--ink)}
-.pk-list{max-height:196px;overflow:auto;margin-top:5px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel)}
+.pick .pk-q{width:100%;font-size:13px;min-height:44px;padding:10px 10px;border:1px solid var(--hair);border-radius:var(--r-sm);font-family:inherit;background:var(--panel);color:var(--ink)}
+.pk-list{max-height:264px;overflow:auto;margin-top:5px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel)}
 .pk-item{
   display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;
-  border:0;border-bottom:1px solid var(--line-soft);background:var(--panel);font-family:inherit;font-size:12px;
-  padding:6px 9px;cursor:pointer;color:var(--ink-2);
+  border:0;border-bottom:1px solid var(--line-soft);background:var(--panel);font-family:inherit;font-size:13px;
+  min-height:44px;padding:9px 10px;cursor:pointer;color:var(--ink-2);
 }
 .pk-item:last-child{border-bottom:0}
 .pk-item{justify-content:flex-start;align-items:center}
@@ -237,7 +249,7 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .pk-item:hover{background:var(--accent-weak);color:var(--ink)}
 .pk-item.sel{background:var(--accent-weak);color:var(--accent);font-weight:500}
 /* 性别 / 符号合并下拉 */
-.pt-btn{display:flex;align-items:center;gap:7px;width:100%;font-family:inherit;font-size:14px;padding:5px 8px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel-2);color:var(--ink);cursor:pointer}
+.pt-btn{display:flex;align-items:center;gap:7px;width:100%;font-family:inherit;font-size:14px;min-height:44px;padding:9px 10px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel-2);color:var(--ink);cursor:pointer}
 .pt-btn i{margin-left:auto;font-style:normal;color:var(--muted)}
 .pt-sv{display:block;flex:0 0 auto}
 .pt-list{max-height:224px;overflow:auto;margin-top:5px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel)}
@@ -246,43 +258,43 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 /* R18-3：长枚举自绘下拉（>8 项）。原生 select 仅作隐藏取值源 */
 .dd{position:relative}
 .dd-src{display:none}
-.dd-btn{display:flex;align-items:center;gap:6px;width:100%;font-family:inherit;font-size:12px;padding:5px 8px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel-2);color:var(--ink);cursor:pointer;text-align:left;min-height:28px}
+.dd-btn{display:flex;align-items:center;gap:6px;width:100%;font-family:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel-2);color:var(--ink);cursor:pointer;text-align:left;min-height:44px}
 .dd-cur{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dd-ar{flex:0 0 auto;margin-left:auto;font-style:normal;color:var(--muted);font-size:12px}
-.dd-pop{position:absolute;left:0;right:0;top:calc(100% + 3px);z-index:72;max-height:236px;overflow:auto;
+.dd-pop{position:absolute;left:0;right:0;top:calc(100% + 3px);z-index:72;max-height:280px;overflow:auto;
   background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-sm);box-shadow:0 8px 24px rgba(20,30,40,.16);padding:3px}
 .dd-pop[hidden]{display:none}
-.dd-it{display:block;width:100%;text-align:left;border:0;background:var(--panel);font-family:inherit;font-size:12px;
-  padding:5px 8px;border-radius:4px;color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dd-it{display:flex;align-items:center;width:100%;text-align:left;border:0;background:var(--panel);font-family:inherit;font-size:13px;
+  min-height:44px;padding:9px 10px;border-radius:4px;color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dd-it:hover{background:var(--accent-weak);color:var(--ink)}
 .dd-it.sel{background:var(--accent-weak);color:var(--accent);font-weight:500}
-.dd-tight{flex:0 1 auto;min-width:104px;max-width:46%}
-.dd-tight .dd-btn{font-size:12px;padding:3px 6px;min-height:24px}
-.dd-tight .dd-pop{min-width:220px;right:auto}
+.dd-tight{flex:0 1 auto;min-width:112px;max-width:48%}
+.dd-tight .dd-btn{font-size:13px;padding:7px 8px;min-height:44px}
+.dd-tight .dd-pop{min-width:240px;right:auto}
 /* 日期 */
 .dfield{align-items:flex-start}
 .dfield>span{padding-top:6px}
 .dcol{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
 .dp{display:flex;gap:4px;align-items:center}
 .dp[hidden]{display:none}
-.dsel{flex:1;min-width:0;font-family:inherit;font-size:12px;padding:3px 3px;border:1px solid var(--hair);border-radius:4px;background:var(--panel);color:var(--ink-2)}
+.dsel{flex:1;min-width:0;font-family:inherit;font-size:13px;min-height:44px;padding:6px 6px;border:1px solid var(--hair);border-radius:4px;background:var(--panel);color:var(--ink-2)}
 .dp .dd{flex:1;min-width:0}
-.dp .dd-btn{font-size:12px;padding:3px 6px;min-height:25px;gap:3px}
-.dp .dd-ar{font-size:9px}
-.dp .dd-pop{max-height:210px;min-width:96px;right:auto;left:0}
+.dp .dd-btn{font-size:13px;padding:7px 8px;min-height:44px;gap:3px}
+.dp .dd-ar{font-size:10px}
+.dp .dd-pop{max-height:250px;min-width:104px;right:auto;left:0}
 /* 信息条目 */
-.chipbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-bottom:7px}
-.chip{display:inline-flex;align-items:center;font-size:12px;padding:1px 7px;border-radius:10px;background:var(--accent-weak);color:var(--accent);border:1px solid var(--chip-border)}
-.chip-x{margin-left:2px;border:0;background:none;padding:0 2px;font:inherit;line-height:1;color:inherit;cursor:pointer;opacity:.72}
+.chipbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px}
+.chip{display:inline-flex;align-items:center;font-size:13px;min-height:44px;padding:0 0 0 12px;border-radius:14px;background:var(--accent-weak);color:var(--accent);border:1px solid var(--chip-border)}
+.chip-x{display:inline-flex;align-items:center;justify-content:center;margin-left:2px;border:0;background:none;padding:0;min-width:44px;min-height:44px;font:inherit;font-size:15px;line-height:1;color:inherit;cursor:pointer;opacity:.72;border-radius:0 13px 13px 0}
 .chip-x:hover,.chip-x:focus-visible{opacity:1}
-.chip-in{flex:1 1 76px;min-width:64px;font-family:inherit;font-size:12px;line-height:1.5;padding:1px 6px;border:1px dashed var(--hair);border-radius:10px;background:var(--panel);color:var(--ink);outline:none}
+.chip-in{flex:1 1 96px;min-width:80px;font-family:inherit;font-size:13px;line-height:1.5;min-height:44px;padding:7px 10px;border:1px dashed var(--hair);border-radius:12px;background:var(--panel);color:var(--ink);outline:none}
 .chip-in:focus{border-color:var(--accent);border-style:solid}
-.addnote{display:flex;align-items:center;gap:6px;margin-top:6px}
-.ncp-btn{flex:0 0 auto;max-width:110px;font-family:inherit;font-size:12px;padding:4px 7px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.addnote{display:flex;align-items:center;gap:8px;margin-top:8px}
+.ncp-btn{flex:0 0 auto;max-width:132px;font-family:inherit;font-size:13px;min-height:44px;padding:8px 9px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ncp-btn:hover{border-color:var(--accent);color:var(--accent)}
-.cat-pop{position:fixed;z-index:80;width:150px;background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-sm);box-shadow:0 8px 24px rgba(20,30,40,.16);padding:3px;max-height:240px;overflow:auto}
+.cat-pop{position:fixed;z-index:80;width:168px;background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-sm);box-shadow:0 8px 24px rgba(20,30,40,.16);padding:3px;max-height:280px;overflow:auto}
 .cat-pop[hidden]{display:none}
-.cp-item{display:block;width:100%;text-align:left;border:0;background:var(--panel);font-family:inherit;font-size:12px;padding:5px 8px;border-radius:4px;color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-item{display:flex;align-items:center;width:100%;text-align:left;border:0;background:var(--panel);font-family:inherit;font-size:13px;min-height:44px;padding:9px 10px;border-radius:4px;color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp-item:hover{background:var(--accent-weak);color:var(--ink)}
 .cp-item.sel{background:var(--accent-weak);color:var(--accent);font-weight:500}
 .cp-add{border-top:1px solid var(--line-soft)}
@@ -290,20 +302,20 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .cp-acts .cp-item{flex:1;text-align:center;border-top:0;white-space:nowrap}
 .cp-item.cp-del{color:var(--danger)}
 .cp-row{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.cp-x{color:var(--danger);font-weight:700;padding:0 3px;flex:0 0 auto;cursor:pointer}
-.cp-new{display:flex;gap:4px;padding:5px 4px 3px}
+.cp-x{display:inline-flex;align-items:center;justify-content:center;color:var(--danger);font-weight:700;min-width:44px;min-height:44px;padding:0;border:0;background:transparent;font-family:inherit;font-size:16px;flex:0 0 auto;cursor:pointer}
+.cp-new{display:flex;gap:6px;padding:6px 4px 4px}
 .cp-new[hidden]{display:none}
-.cp-new input{flex:1;min-width:0;font-family:inherit;font-size:12px;padding:3px 5px;border:1px solid var(--hair);border-radius:4px}
-.cp-new button{flex:0 0 auto;font-family:inherit;font-size:12px;padding:3px 7px;border:1px solid var(--hair);border-radius:4px;background:var(--panel-2);cursor:pointer;color:var(--ink-2)}
-.ntgroup{margin-bottom:6px}
-.ntcat{font-size:12px;color:var(--muted);margin:0 0 4px}
-.ntrow{display:flex;align-items:flex-start;gap:5px;border:1px solid var(--hair);border-radius:var(--r-sm);padding:5px 6px;margin-bottom:5px;background:var(--panel)}
-.ntgrip{cursor:grab;color:var(--muted);font-size:12px;line-height:22px;user-select:none;flex:0 0 auto;touch-action:none}
-.ntsel{flex:0 0 74px;font-size:12px;padding:3px 2px;border:1px solid var(--hair);border-radius:4px;font-family:inherit;color:var(--ink-2);background:var(--panel)}
+.cp-new input{flex:1;min-width:0;font-family:inherit;font-size:13px;min-height:44px;padding:7px 8px;border:1px solid var(--hair);border-radius:4px}
+.cp-new button{flex:0 0 auto;font-family:inherit;font-size:13px;min-height:44px;padding:7px 10px;border:1px solid var(--hair);border-radius:4px;background:var(--panel-2);cursor:pointer;color:var(--ink-2)}
+.ntgroup{margin-bottom:8px}
+.ntcat{font-size:12px;color:var(--muted);margin:0 0 6px}
+.ntrow{display:flex;align-items:flex-start;gap:6px;border:1px solid var(--hair);border-radius:var(--r-sm);padding:6px 7px;margin-bottom:6px;background:var(--panel)}
+.ntgrip{cursor:grab;color:var(--muted);font-size:13px;line-height:44px;min-height:44px;padding:0 3px;user-select:none;flex:0 0 auto;touch-action:none}
+.ntsel{flex:0 0 84px;font-size:13px;min-height:44px;padding:6px 3px;border:1px solid var(--hair);border-radius:4px;font-family:inherit;color:var(--ink-2);background:var(--panel)}
 .ntbox{position:relative;flex:1;min-width:0}
-.nta{width:100%;box-sizing:border-box;font-family:inherit;font-size:12px;line-height:1.45;padding:4px 18px 4px 6px;border:1px solid var(--hair);border-radius:4px;background:var(--panel);color:var(--ink);resize:vertical;overflow:auto}
+.nta{width:100%;box-sizing:border-box;font-family:inherit;font-size:13px;line-height:1.45;min-height:44px;padding:8px 46px 8px 8px;border:1px solid var(--hair);border-radius:4px;background:var(--panel);color:var(--ink);resize:vertical;overflow:auto}
 .nta::placeholder{opacity:.55}
-.ntmore{position:absolute;right:2px;top:2px;padding:1px 4px;font-size:12px;line-height:14px;border:0;background:transparent;color:var(--accent);cursor:pointer}
+.ntmore{position:absolute;right:0;top:0;height:44px;padding:0;font-size:13px;line-height:44px;min-width:44px;min-height:44px;border:0;background:transparent;color:var(--accent);cursor:pointer}
 .ntmore[hidden]{display:none}
 /* 下拉展开：已选项临时高亮 */
 .peek,.flash{animation:peekflash 1.05s ease}
@@ -317,10 +329,10 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 /* 情感线目标选择中的取消 */
 #pickbar{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--hair);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:3px 5px 3px 10px;font-size:12px;color:var(--ink-2)}
 #pickbar[hidden]{display:none}
-#pickbar button{border:0;background:transparent;font-size:17px;line-height:1;cursor:pointer;color:var(--muted);padding:1px 4px}
+#pickbar button{border:0;background:transparent;font-size:18px;line-height:1;cursor:pointer;color:var(--muted);padding:0;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 .legend-row{
   display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;
-  border-bottom:1px solid var(--line-soft);padding:7px 4px;cursor:pointer;border-radius:4px;
+  border-bottom:1px solid var(--line-soft);padding:7px 4px;cursor:pointer;border-radius:4px;min-height:44px;
 }
 .legend-row:hover{background:var(--accent-weak)}
 .legend-row .lr-tags{font-size:9px;color:var(--muted);margin-top:2px;letter-spacing:.01em}
@@ -331,19 +343,19 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .legend-row .lr-apply{border:0;background:none;color:var(--accent);font-family:inherit;font-size:12px;cursor:pointer;padding:0;margin-top:3px}
 .legend-row .lr-apply:hover{text-decoration:underline}
 .legend-sec{font-size:12px;color:var(--muted);letter-spacing:.05em;margin:16px 0 4px;font-weight:500}
-.legend-search{width:100%;padding:8px 10px;border:1px solid var(--hair);border-radius:var(--r-sm);font-family:inherit;font-size:14px;margin-bottom:6px}
+.legend-search{width:100%;padding:10px 10px;min-height:44px;border:1px solid var(--hair);border-radius:var(--r-sm);font-family:inherit;font-size:14px;margin-bottom:6px}
 .person-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
 .person-cell{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-2)}
 .theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
-.theme-card{border:1px solid var(--hair);border-radius:var(--r-md);background:var(--panel);padding:10px;cursor:pointer;font-family:inherit;text-align:left}
+.theme-card{border:1px solid var(--hair);border-radius:var(--r-md);background:var(--panel);padding:10px;cursor:pointer;font-family:inherit;text-align:left;min-height:44px}
 .theme-card:hover{border-color:var(--accent)}
 .theme-card.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-weak)}
 .theme-card .sw{display:flex;gap:4px;margin-bottom:7px}
 .theme-card .sw i{width:18px;height:18px;border-radius:4px;display:block;border:1px solid rgba(0,0,0,.08)}
 .theme-card b{font-size:12px;font-weight:500;color:var(--ink)}
 .color-rows{display:grid;gap:6px;margin-top:10px}
-.color-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink-2)}
-.color-row input[type=color]{width:38px;height:26px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);padding:2px}
+.color-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink-2);min-height:44px}
+.color-row input[type=color]{width:52px;height:38px;border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);padding:2px}
 .guide-step{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line-soft)}
 .guide-step:last-child{border:0}
 .guide-num{flex:0 0 24px;height:24px;border-radius:50%;background:var(--accent-weak);color:var(--accent);font-size:12px;display:flex;align-items:center;justify-content:center}
@@ -355,11 +367,11 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
 .xp-bar{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--panel);border-bottom:1px solid var(--hair);flex-wrap:wrap}
 .xp-title{font-weight:500;font-size:14px}
 .xp-extra{font-size:12px;color:var(--muted)}
-.xp-sw{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-2);cursor:pointer;user-select:none}
+.xp-sw{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2);cursor:pointer;user-select:none;min-height:44px}
 .xp-sw[hidden]{display:none}
-.xp-sw input{margin:0;width:14px;height:14px;accent-color:var(--accent);cursor:pointer}
+.xp-sw input{margin:0;width:20px;height:20px;accent-color:var(--accent);cursor:pointer}
 .xp-tabs{display:flex;gap:4px;margin-left:auto}
-.xp-tabs button{border:1px solid var(--hair);background:var(--panel);border-radius:var(--r-sm);font-family:inherit;font-size:12px;padding:4px 10px;cursor:pointer;color:var(--ink-2)}
+.xp-tabs button{border:1px solid var(--hair);background:var(--panel);border-radius:var(--r-sm);font-family:inherit;font-size:13px;padding:0 14px;min-height:44px;cursor:pointer;color:var(--ink-2)}
 .xp-tabs button.on{background:var(--accent-weak);border-color:var(--accent);color:var(--accent);font-weight:500}
 .xp-tabs button:disabled{opacity:.4;cursor:default}
 .xp-body{flex:1 1 auto;overflow:auto;padding:16px;background:var(--preview-bg)}
@@ -422,18 +434,18 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
   #panel.open{transform:translateY(0)}
   /* 面板展开时给画布留出底部 56vh（margin 参与 flex 计算，画布正好等于可见区） */
   body.pnl #stage{margin-bottom:56vh}
-  button.tb{height:32px}
+  button.tb{height:44px}
   #panelBtn{display:inline-block}
 }
-/* R21：≤430 窄屏把 12 个按钮压进单行视口内（不折行、不横向溢出）；标题栏让位给操作按钮 */
+/* R21：≤430 窄屏单行横向滚动；R32 触控尺寸不缩水（44×44），靠滚动而非压缩换取可点性 */
 @media (max-width:430px){
-  #toolbar{gap:0;padding:6px;overflow-x:visible}
+  #toolbar{gap:2px;padding:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
   .brand{display:none}
   #title{display:none}
   #toolbar .sep{display:none}
-  #toolbar .tb-group{gap:0}
-  #toolbar button.tb{height:32px;padding:0 3px;font-size:12px;border-radius:6px}
-  #toolbar button.tb.icon{width:32px;padding:0}
+  #toolbar .tb-group{gap:2px}
+  #toolbar button.tb{height:44px;min-height:44px;padding:0 8px;font-size:13px;border-radius:8px}
+  #toolbar button.tb.icon{width:44px;padding:0}
   #toolbar button.tb.icon::after{left:0;right:0;top:0;bottom:0}
 }
 @media (min-width:761px){#panelBtn{display:none}}
@@ -497,6 +509,9 @@ button.tb.icon::after{content:"";position:absolute;left:-1px;right:-1px;top:-2px
           .gx-it{font:400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-t2);text-anchor:middle;paint-order:stroke;stroke:var(--gx-halo);stroke-width:3;stroke-linecap:round}
           .gx-yr{font:400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-t3);font-variant-numeric:tabular-nums;paint-order:stroke;stroke:var(--gx-halo);stroke-width:3;stroke-linecap:round}
           .gx-relname{font:400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--gx-t2);opacity:.9;text-anchor:middle;paint-order:stroke;stroke:var(--gx-halo);stroke-width:2.6;stroke-linecap:round;pointer-events:none}
+          .gx-relblock,.gx-relblock tspan{text-anchor:start}
+          /* R59：标签块整块可点，命中后由事件代理冒泡到所属关系组（线/块同目标） */
+          .gx-relblock{pointer-events:painted}
           .gx-badge-t{font:500 9px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;fill:var(--panel);text-anchor:middle}
           .gx-badge-c{fill:var(--gx-acc)}
           .gx-selglow{fill:none;stroke:var(--gx-acc);stroke-width:6;opacity:.14}
@@ -1497,6 +1512,377 @@ function computeOrder(visible){
   return order;
 }
 
+/* R33：关系线中间提示文字（年份/关系名）的实际行高。用于并行关系线的净距与兄弟横线错层。
+   取当前字号下的字体度量（不写死数字），缩放画布也不会漂。 */
+var lineClearPx = 0, lineClearCache = 0;
+function hintLineHeight(){
+  if(lineClearCache) return lineClearCache;
+  /* 用字体度量而不是 DOM bbox：画布会随 fit 缩放，getBBox 的取整结果会跟着缩放漂移
+     （同一段 12px 文字在 1.0 倍量到 16.0、在 0.2 倍能到 19.5），排版净距不能用会漂的数字 */
+  var font = '400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif';
+  var el = document.querySelector('#world .gx-yr');
+  if(el){
+    var cs = getComputedStyle(el);
+    if(cs && cs.fontSize) font = (cs.fontWeight || 400) + ' ' + cs.fontSize + ' ' + (cs.fontFamily || 'sans-serif');
+  }
+  var h = 0;
+  try{
+    var ctx = hintLineHeight._c || (hintLineHeight._c = document.createElement('canvas').getContext('2d'));
+    ctx.font = font;
+    var m = ctx.measureText('国Ag');
+    h = (m.fontBoundingBoxAscent || 0) + (m.fontBoundingBoxDescent || 0);
+  }catch(e){ h = 0; }
+  if(!(h > 0)) h = 12 * 1.36;              /* 字体度量接口不可用时按 12px 字号的常规行高兜底 */
+  lineClearCache = Math.ceil(h + 0.5);     /* 向上取整并留 0.5px 亚像素余量 */
+  return lineClearCache;
+}
+
+/* R57：关系线上的文字/符号统一走"真实字体度量 + 碰撞表"排布。
+   盒子用画布字体度量算（不受 fit 缩放影响），撞了就沿所在线段水平滑动，
+   滑不开再换到线的另一侧；仍放不下才保留原位并记入"被迫"清单。 */
+var tagBoxes = [], tagForced = [];
+function resetTagBoxes(){ tagBoxes = []; tagForced = []; }
+function measureFont12(t){
+  var font = '400 12px "PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif';
+  try{
+    var ctx = measureFont12._c || (measureFont12._c = document.createElement('canvas').getContext('2d'));
+    ctx.font = font;
+    var m = ctx.measureText(t || '');
+    return { w: m.width, asc: m.fontBoundingBoxAscent || 11, desc: m.fontBoundingBoxDescent || 3.6 };
+  }catch(e){ return { w: (t || '').length * 11, asc: 11, desc: 3.6 }; }
+}
+/* R58：用真实 SVG 文本度量取宽度（画布字体在中文回退上比 SVG 窄，不能用于碰撞判定） */
+function svgTextW(t){
+  t = String(t == null ? '' : t);
+  var cache = svgTextW._c || (svgTextW._c = {});
+  if(cache[t] != null) return cache[t];
+  var w = 0, host = null;
+  try{
+    var world = document.querySelector('#world');
+    var proto = world && world.querySelector('text');
+    if(proto){
+      host = proto.cloneNode(false);
+      host.removeAttribute('style');
+      host.removeAttribute('transform');
+      host.setAttribute('class', 'gx-relname');
+      host.setAttribute('visibility', 'hidden');
+      host.textContent = t;
+      world.appendChild(host);
+      w = host.getComputedTextLength();
+    }else w = measureFont12(t).w;
+  }catch(e){ w = measureFont12(t).w; }
+  try{ if(host && host.parentNode) host.parentNode.removeChild(host); }catch(e2){}
+  cache[t] = w;
+  return w;
+}
+function boxOverlap(a, b, pad){
+  pad = pad || 0;
+  return !(a.x1 + pad <= b.x0 || a.x0 - pad >= b.x1 || a.y1 + pad <= b.y0 || a.y0 - pad >= b.y1);
+}
+function tagFree(box, pad){
+  pad = pad == null ? 1 : pad;
+  for(var i = 0; i < tagBoxes.length; i++){ if(boxOverlap(box, tagBoxes[i], pad)) return false; }
+  return true;
+}
+function tagHitObstacle(box, obstacles, pad){
+  if(!obstacles) return false;
+  pad = pad == null ? 1 : pad;
+  for(var i = 0; i < obstacles.length; i++){ if(boxOverlap(box, obstacles[i], pad)) return true; }
+  return false;
+}
+function tagCommit(box, meta){
+  box.meta = meta;
+  tagBoxes.push(box);
+  if(meta.forced || meta.dx || meta.lift) tagForced.push(meta);
+}
+/* 取折线中点附近那一段水平线的可滑动范围 */
+function hSegAtMid(pts, p){
+  for(var i = 1; i < pts.length; i++){
+    var a = pts[i-1], b = pts[i];
+    if(Math.abs(a.y - b.y) < 0.6){
+      var x0 = Math.min(a.x, b.x), x1 = Math.max(a.x, b.x);
+      if(p.x >= x0 - 0.6 && p.x <= x1 + 0.6) return { y:a.y, x0:x0, x1:x1 };
+    }
+  }
+  return null;
+}
+/* 折线本身也当障碍：竖向折返段可能从文字盒里穿过（水平段因贴线间距天然不冲突） */
+function polyObstacles(pts){
+  var out = [];
+  for(var i = 1; i < pts.length; i++){
+    var a = pts[i-1], b = pts[i];
+    out.push({ x0:Math.min(a.x, b.x) - 1.5, y0:Math.min(a.y, b.y) - 1.5,
+               x1:Math.max(a.x, b.x) + 1.5, y1:Math.max(a.y, b.y) + 1.5 });
+  }
+  return out;
+}
+/* 线上的文字：默认贴在线上方 hug px（基线到线），可换到下方；沿线段滑动找空位 */
+function placeLineText(opt){
+  var m = measureFont12(opt.text);
+  var seg = opt.seg || opt.span;
+  var half = opt.anchor === 'start' ? 0 : m.w / 2;
+  var sides = [opt.prefer || -1, -(opt.prefer || -1)];
+  var maxSlide = Math.min(70, Math.max(0, (seg.x1 - seg.x0) / 2 - 2));
+  var best = null;
+  function byOf(sd){
+    return sd < 0 ? (seg.y - (opt.hug == null ? 8 : opt.hug))
+                  : (seg.y + (opt.hugBelow == null ? m.asc + 5 : opt.hugBelow));
+  }
+  for(var si = 0; si < 2 && !best; si++){
+    var sd = sides[si], by = byOf(sd);
+    for(var d = 0; d <= maxSlide && !best; d += 3){
+      var offs = d ? [d, -d] : [0];
+      for(var k = 0; k < offs.length; k++){
+        var cx = opt.x + offs[k];
+        var x0 = opt.anchor === 'start' ? cx : cx - half;
+        var box = { x0:x0, y0:by - m.asc, x1:x0 + m.w, y1:by + m.desc };
+        if(opt.span && (box.x0 < opt.span.x0 - 0.5 || box.x1 > opt.span.x1 + 0.5)) continue;
+        if(tagHitObstacle(box, opt.obstacles)) continue;
+        if(!tagFree(box)) continue;
+        best = { x:cx, y:by, box:box, dx:offs[k], side:sd };
+        break;
+      }
+    }
+  }
+  var forced = false;
+  if(!best){
+    /* 整段没有干净位置：逐格打分取"最不坏"的一格——先不压线（障碍权重最高），
+       再求离中点最近、尽量留在首选侧，最后才允许和其他文字轻微相交 */
+    var worst = null;
+    for(var s2 = 0; s2 < 2; s2++){
+      var sd2 = sides[s2], by2 = byOf(sd2);
+      for(var d2 = 0; d2 <= maxSlide; d2 += 4){
+        var o2 = d2 ? [d2, -d2] : [0];
+        for(var k2 = 0; k2 < o2.length; k2++){
+          var cx2 = opt.x + o2[k2];
+          var bx2 = opt.anchor === 'start' ? cx2 : cx2 - half;
+          var box2 = { x0:bx2, y0:by2 - m.asc, x1:bx2 + m.w, y1:by2 + m.desc };
+          if(opt.span && (box2.x0 < opt.span.x0 - 0.5 || box2.x1 > opt.span.x1 + 0.5)) continue;
+          var cost = 0;
+          for(var q = 0; q < tagBoxes.length; q++) if(boxOverlap(box2, tagBoxes[q], 1)) cost += 1;
+          if(opt.obstacles) for(var q2 = 0; q2 < opt.obstacles.length; q2++) if(boxOverlap(box2, opt.obstacles[q2], 1)) cost += 4;
+          var score = cost * 10000 + Math.abs(o2[k2]) + (sd2 !== (opt.prefer || -1) ? 60 : 0);
+          if(!worst || score < worst.score) worst = { x:cx2, y:by2, box:box2, dx:o2[k2], side:sd2, score:score };
+        }
+      }
+    }
+    best = worst;
+    forced = true;
+    if(!best){
+      /* 线段本身太短，连一格都放不下：只能留在中点原位（仍记入被迫清单） */
+      var sd3 = opt.prefer || -1, by3 = byOf(sd3);
+      var bx3 = opt.anchor === 'start' ? opt.x : opt.x - half;
+      best = { x:opt.x, y:by3, dx:0, side:sd3,
+        box:{ x0:bx3, y0:by3 - m.asc, x1:bx3 + m.w, y1:by3 + m.desc } };
+    }
+  }
+  tagCommit(best.box, { owner:opt.owner, text:opt.text, dx:best.dx, side:best.side, forced:forced });
+  return '<text class="' + (opt.cls || 'gx-relname') + '" x="' + r2(best.x) + '" y="' + r2(best.y) + '"' +
+    (opt.anchor === 'start' ? ' text-anchor="start"' : ' text-anchor="middle"') +
+    (opt.rel ? ' data-relname="1"' : '') + '>' + esc(opt.text) + '</text>';
+}
+/* ---- R58：关系线标签块 ----
+   名称与日期合成一个不可分割的块，落点取「折线实际路径长度的中点」，
+   块贴在线的外侧（近端离线 hug px），撞车只沿当前所在的那一段滑动，不换段。 */
+var REL_BLOCK_GAP = 4;
+var REL_HIT_PAD = 2;
+function relBlockParts(u){
+  var parts = [], spec = CPL_BY_STATUS[u.status];
+  if(relLabelsOn() && spec && spec.zh) parts.push({ t:String(spec.zh), cls:'gx-relname' });
+  var since = u.since ? String(u.since) : '';
+  var until = u.until ? ((u.status === 'divorced' ? 'd. ' : '') + u.until) : '';
+  var dates = since && until ? since + '—' + until : (since || until);
+  if(dates) parts.push({ t:dates, cls:'gx-yr' });
+  return parts;
+}
+function relBlockW(parts){
+  var w = 0;
+  for(var i = 0; i < parts.length; i++) w += svgTextW(parts[i].t) + (i ? REL_BLOCK_GAP : 0);
+  return w;
+}
+/* 伴侣线标签块所需的中心距：两端端口外皮 + 两段 14px 引线 + 块宽 + 两侧各 3px 余量 */
+function partnerLabelNeedDX(ia, ib){
+  var best = 0;
+  doc.unions.forEach(function(u){
+    if(!u.b) return;
+    if(!((u.a === ia && u.b === ib) || (u.a === ib && u.b === ia))) return;
+    var parts = relBlockParts(u);
+    if(!parts.length) return;
+    var pa = personById(u.a), pb = personById(u.b);
+    if(!pa || !pb) return;
+    var oa = portHalfAt(personCode(pa), symbolOuterPx(pa), 0, 'l');
+    var ob = portHalfAt(personCode(pb), symbolOuterPx(pb), 0, 'r');
+    var need = Math.ceil(relBlockW(parts) + 6 + oa + ob + 2*ORTHO_STUB);
+    if(need > best) best = need;
+  });
+  return best;
+}
+/* 路径长度中点所在的那一段；中点落在拐角时顺到相邻较长的一段，离拐角留 inset */
+function arcMidSeg(pts, inset){
+  if(!pts || pts.length < 2) return null;
+  var total = arcLen(pts), half = total / 2, acc = 0, hit = null;
+  for(var i = 1; i < pts.length; i++){
+    var a = pts[i-1], b = pts[i], d = dist(a, b);
+    if(!hit && d > 0.01 && acc + d >= half - 0.01){
+      hit = { i:i, k:clamp((half - acc) / d, 0, 1) };
+    }
+    acc += d;
+  }
+  if(!hit) return null;
+  var i0 = hit.i, atCorner = (hit.k < 0.02 || hit.k > 0.98);
+  if(atCorner){
+    var ops = [];
+    if(i0 > 1) ops.push(i0 - 1);
+    if(i0 < pts.length - 1) ops.push(i0 + 1);
+    var bestLen = dist(pts[i0-1], pts[i0]), bi = i0;
+    ops.forEach(function(ix){ var L = dist(pts[ix-1], pts[ix]); if(L > bestLen){ bestLen = L; bi = ix; } });
+    i0 = bi;
+  }
+  var A = pts[i0-1], B = pts[i0];
+  var ori = Math.abs(A.y - B.y) < 0.6 ? 'h' : 'v';
+  var t = (i0 === hit.i) ? hit.k : (i0 < hit.i ? 1 : 0);
+  var px = A.x + (B.x - A.x) * t, py = A.y + (B.y - A.y) * t;
+  var seg = { ori:ori, i:i0 };
+  if(ori === 'h'){
+    seg.x0 = Math.min(A.x, B.x); seg.x1 = Math.max(A.x, B.x); seg.y = A.y;
+    var lo = seg.x0 + inset, hi = seg.x1 - inset;
+    seg.mid = { x: (hi >= lo) ? clamp(px, lo, hi) : (seg.x0 + seg.x1) / 2, y: seg.y };
+    seg.room = Math.max(0, hi - lo);
+  }else{
+    seg.y0 = Math.min(A.y, B.y); seg.y1 = Math.max(A.y, B.y); seg.x = A.x;
+    var lo2 = seg.y0 + inset, hi2 = seg.y1 - inset;
+    seg.mid = { x: seg.x, y: (hi2 >= lo2) ? clamp(py, lo2, hi2) : (seg.y0 + seg.y1) / 2 };
+    seg.room = Math.max(0, hi2 - lo2);
+  }
+  return seg;
+}
+/* 整块排布：块在路径中点，贴线外侧；相交时只沿当前段滑动（横段水平、竖段垂直） */
+function placeBlock(opt){
+  var parts = opt.parts || [];
+  if(!parts.length || !opt.pts || opt.pts.length < 2) return '';
+  var ws = [], W = 0;
+  parts.forEach(function(p, i){ var w = svgTextW(p.t); ws.push(w); W += w + (i ? REL_BLOCK_GAP : 0); });
+  var m = measureFont12(parts[0].t), asc = m.asc, desc = m.desc, hgt = asc + desc;
+  var seg = arcMidSeg(opt.pts, W / 2 + 3);
+  if(!seg) return '';
+  var hug = opt.hug == null ? 4.5 : opt.hug;
+  var hugB = opt.hugBelow == null ? hug : opt.hugBelow;
+  function mk(sd, pos, hg, hgb){
+    var b;
+    if(seg.ori === 'h'){
+      var by = sd < 0 ? (seg.y - hg - desc) : (seg.y + hgb + asc);
+      var tx = pos - W/2;
+      /* 横向多留 4.5px：SVG 中文的实际墨迹/描边比 advance 宽，碰撞按墨迹算 */
+      b = { x0:tx - 4.5, x1:tx + W + 4.5, tx0:tx, y0:by - asc, y1:by + desc,
+            cx:pos, cy:by - (asc - desc)/2, by:by };
+    }else{
+      var x0 = sd < 0 ? (seg.x - hg - W) : (seg.x + hg);
+      var by2 = pos + (asc - desc)/2;
+      b = { x0:x0, x1:x0 + W, tx0:x0, y0:by2 - asc - 4.5, y1:by2 + desc + 4.5,
+            cx:x0 + W/2, cy:pos, by:by2 };
+    }
+    return b;
+  }
+  var lo, hi, base;
+  if(seg.ori === 'h'){ lo = seg.x0 + W/2 + 3; hi = seg.x1 - W/2 - 3; base = seg.mid.x; }
+  else { lo = seg.y0 + hgt/2 + 3; hi = seg.y1 - hgt/2 - 3; base = seg.mid.y; }
+  var hasRoom = hi >= lo;
+  if(hasRoom) base = clamp(base, lo, hi);
+  var sides = [opt.prefer || -1, -(opt.prefer || -1)];
+  var best = null;
+  /* 先按校准贴合量找；仍撞线上符号/文字时，允许整块向线外让 8 / 16px 再试 */
+  var lifts = [0, 8, 16];
+  for(var li = 0; li < lifts.length && !best; li++){
+    var hgL = hug + lifts[li], hgbL = hugB + lifts[li];
+    for(var si = 0; si < 2 && !best; si++){
+      var sd = sides[si];
+      for(var d = 0; d <= (hasRoom ? Math.max(0, Math.max(base - lo, hi - base)) : 0) && !best; d += 3){
+        var offs = d ? [base + d, base - d] : [base];
+        for(var k = 0; k < offs.length; k++){
+          var pos = offs[k];
+          if(hasRoom && (pos < lo - 0.01 || pos > hi + 0.01)) continue;
+          var box = mk(sd, pos, hgL, hgbL);
+          if(tagHitObstacle(box, opt.obstacles, 2)) continue;
+          if(!tagFree(box, 3)) continue;
+          best = box; best.side = sd; best.lift = lifts[li];
+          best.dx = pos - (seg.ori === 'h' ? seg.mid.x : seg.mid.y); best.forced = !hasRoom;
+          break;
+        }
+      }
+    }
+  }
+  if(!best){
+    /* 本段没有干净位置：在本段内逐格打分取最不坏的一格，并如实记入被迫清单 */
+    var worst = null;
+    for(var s2 = 0; s2 < 2; s2++){
+      var sd2 = sides[s2];
+      var from = hasRoom ? lo : (seg.ori === 'h' ? seg.x0 + W/2 : seg.y0 + hgt/2);
+      var to = hasRoom ? hi : (seg.ori === 'h' ? seg.x1 - W/2 : seg.y1 - hgt/2);
+      for(var p2 = from; p2 <= to + 0.01; p2 += 4){
+        var box2 = mk(sd2, p2, hug, hugB), cost = 0;
+        for(var q = 0; q < tagBoxes.length; q++) if(boxOverlap(box2, tagBoxes[q], 3)) cost += 1;
+        if(opt.obstacles) for(var q2 = 0; q2 < opt.obstacles.length; q2++) if(boxOverlap(box2, opt.obstacles[q2], 2)) cost += 4;
+        var score = cost * 10000 + Math.abs(p2 - base) + (sd2 !== (opt.prefer || -1) ? 60 : 0);
+        if(!worst || score < worst.score){
+          worst = box2; worst.score = score; worst.side = sd2;
+          worst.dx = p2 - (seg.ori === 'h' ? seg.mid.x : seg.mid.y); worst.forced = true;
+        }
+      }
+    }
+    best = worst;
+  }
+  if(!best) return '';
+  var who = null;
+  for(var hb = 0; hb < tagBoxes.length; hb++){
+    if(boxOverlap(best, tagBoxes[hb], 1)){ who = tagBoxes[hb].meta; break; }
+  }
+  var txt = parts.map(function(p){ return p.t; }).join(' ');
+  tagCommit(best, { owner:opt.owner, text:txt, side:best.side, dx:best.dx, forced:best.forced,
+    lift:best.lift || 0, hitBy: who ? (who.owner + ':' + who.text) : '' });
+  var out = '<text class="gx-relblock gx-relname" x="' + r2(best.tx0) + '" y="' + r2(best.by) + '"' +
+    ' data-mid="' + r2(seg.mid.x) + ',' + r2(seg.mid.y) + '" data-seg="' + seg.ori + '"' +
+    (opt.rel ? ' data-relname="1"' : '') + '>';
+  var cx = best.tx0;
+  parts.forEach(function(p, i){
+    out += '<tspan class="' + p.cls + '" x="' + r2(cx) + '">' + esc(p.t) + '</tspan>';
+    cx += ws[i] + REL_BLOCK_GAP;
+  });
+  /* R59：整块透明命中层，点字等同点线（同一 <g> 内，落点是同一个关系详情） */
+  return '<rect class="gx-relhit" x="' + r2(best.tx0 - REL_HIT_PAD) + '" y="' + r2(best.by - asc - REL_HIT_PAD) +
+    '" width="' + r2(W + 2*REL_HIT_PAD) + '" height="' + r2(asc + desc + 2*REL_HIT_PAD) +
+    '" fill="transparent" pointer-events="all"/>' + out + '</text>';
+}
+
+function placeGranule(opt){
+  var best = null;
+  for(var d = 0; d <= 46 && !best; d += 4){
+    var offs = d ? [d, -d] : [0];
+    for(var k = 0; k < offs.length; k++){
+      var cx = opt.x + offs[k];
+      var box = { x0:cx - opt.hw, y0:opt.y - opt.hh, x1:cx + opt.hw, y1:opt.y + opt.hh };
+      if(opt.span && (box.x0 < opt.span.x0 - 0.5 || box.x1 > opt.span.x1 + 0.5)) continue;
+      if(!tagFree(box)) continue;
+      best = { cx:cx, dx:offs[k], box:box };
+      break;
+    }
+  }
+  if(!best){
+    best = { cx:opt.x, dx:0, box:{ x0:opt.x - opt.hw, y0:opt.y - opt.hh, x1:opt.x + opt.hw, y1:opt.y + opt.hh } };
+    tagCommit(best.box, { owner:opt.owner, text:'符号', dx:0, side:0, forced:true });
+    return 0;
+  }
+  tagCommit(best.box, { owner:opt.owner, text:'符号', dx:best.dx, side:0, forced:false });
+  return best.dx;
+}
+window.__gxTagReport = function(){
+  return { total: tagBoxes.length, moved: tagForced.filter(function(x){ return !x.forced; }).length,
+    forced: tagForced.filter(function(x){ return x.forced; }).map(function(x){
+      return { owner:x.owner, text:x.text, side:x.side }; }),
+    events: tagForced.map(function(x){
+      return { owner:x.owner, text:x.text, side:x.side, dx:+(x.dx || 0).toFixed(1),
+        lift:x.lift || 0, forced:!!x.forced, hitBy:x.hitBy || '' }; }) };
+};
+
 function relayout(){
   var vis = computeHidden();
   var hidden = vis.hidden;
@@ -1525,10 +1911,14 @@ function relayout(){
   /* ---- R26-2：代间净距按「实际文字占位」自适应 ----
      每代的下边界取该代人真实文字占位底（符号中心 + h - 28，含姓名/年龄/关系名/明细条目）；
      下一代的顶框线取「出生/死亡年份文字上缘」与「兄弟横线上缘」中更高的一条
-     （中继线错层最多 3 档 ×9px → 行线上方 66+27=93）。
+     （中继线错层最多 3 档 × 提示文字行高 → 行线上方 66+3×行高）。
      只有净距不足 GEN_MIN_CLEAR 的那一对相邻代才补差，补完即止，其余代保持原紧凑度。
      已被用户拖离本代带（拖到下一代线以下）的人不参与本对净距，避免排版把他们/整行来回推。 */
   var INK_TOP = 50, INK_BOT = 28, GEN_MIN_CLEAR = 20;
+  /* R33：并行关系线净距 = 关系线中间提示文字（.gx-yr）的实际行高，实测后向上取整；
+     兄弟横线错层（最多 3 档）也按同一净距分层，塞不下就把“那一对代之间”局部加宽。 */
+  var LINE_CLEAR = hintLineHeight();
+  lineClearPx = LINE_CLEAR;
   var rowShift = 0;
   for(var gi = 1; gi <= maxGen; gi++){
     if(rowShift){ rowY[gi] += rowShift; rowsGen[gi].y = rowY[gi]; }
@@ -1537,7 +1927,7 @@ function relayout(){
       if(hasIncoming) return;
       if(visible[l.child] && gen[l.child] === gi) hasIncoming = true;
     });
-    var nextTopFrame = rowY[gi] - (hasIncoming ? 93 : INK_TOP);
+    var nextTopFrame = rowY[gi] - (hasIncoming ? 66 : INK_TOP);
     var prevBot = -Infinity;
     rowsGen[gi-1].persons.forEach(function(p){
       var oy = (p.offset && p.offset.y) || 0;
@@ -1597,6 +1987,8 @@ function relayout(){
     /* 符号边缘净距底线：连线直连 1.5 框宽（84）→ 中心 ≥140；其余 1 框宽 → 中心 ≥126（全局净距 70 更严）。
        文字盒只要不重叠且留 BOX_GAP(28) 即可读，不按「框宽」放大，否则名字长的人会被文字宽度顶得很开。 */
     var symC = linked ? SYMBOL + 84 : MIN_CENTER;
+    /* R58：伴侣线的标签块（名称+日期）要整块落在中间那段可用线上，缺多少补多少 */
+    symC = Math.max(symC, partnerLabelNeedDX(ia, ib));
     var txtC = wa/2 + wb/2 + BOX_GAP;
     return Math.max(symC, txtC, MIN_CENTER);
   }
@@ -1972,7 +2364,12 @@ function relayout(){
   Object.keys(X).forEach(function(id){ baseX[id] = X[id]; });
   doc.persons.forEach(function(p){
     if(!visible[p.id]) return;
-    X[p.id] += (p.offset.x || 0);
+    /* R31：只有用户亲手拖过（或带手工纵向位移）的 offset 才叠加。
+       求解器自己写回的 offset 若再回灌，下次载入会把已居中的子女组整体推偏
+       （M15 实测：u2 组 +14.74px，来源就是上轮求解残差被当成用户位移）。 */
+    if(Math.abs(p.dragX || 0) > 0.5 || Math.abs((p.offset && p.offset.y) || 0) > 0.5){
+      X[p.id] += (p.offset.x || 0);
+    }
   });
 
   var nodes = {};
@@ -2078,6 +2475,48 @@ function relayout(){
      刷新时又在 base 之上二次叠加，每轮只闭合 2/3 → 734.99→755.23→761.97→764.22。
      现在每次载入都把这三个环节跑到残差 <0.02，落盘值即不动点，刷新逐位相同。
      上限 24 轮：实测演示数据从零 offset 冷启需 9 轮收敛，之后每次载入 1 轮即退。 */
+  /* R31：独子贴回中点前先看同排净距。若贴回会撞上邻居，优先把「松父母」整体外移
+     让出空间；否则旧逻辑让 sepPass 去顶邻居，而邻居可能是别组的等间距成员——
+     一顶就把那一组整体推离自己的中继竖线（M15 实测 u2 组 +14.74px 即由此产生）。 */
+  function kidConflictShift(k){
+    var me = nodes[k];
+    if(!me) return 0;
+    var want = 0;
+    Object.keys(nodes).forEach(function(id){
+      if(id === k) return;
+      var nb = nodes[id];
+      if(!nb || !bandOverlap(me, nb)) return;
+      var need = Math.max(minDX(k, id), MIN_CENTER);
+      var dist = Math.abs(nb.x - me.x);
+      if(dist >= need - 0.01) return;
+      var d = (nb.x >= me.x ? -1 : 1) * (need - dist);
+      if(Math.abs(d) > Math.abs(want)) want = d;
+    });
+    return want;
+  }
+  function makeRoomFor(k, aa, bb){
+    for(var it = 0; it < 3; it++){
+      rebuildNodes();
+      var want = kidConflictShift(k);
+      if(Math.abs(want) < 0.02) return true;
+      var cand = [aa, bb].filter(function(id){
+        if(!visible[id] || eqLock[id]) return false;
+        if(doc.parentLinks.filter(function(x){ return x.child === id; }).length) return false;
+        var pp = personById(id);
+        if(pp && Math.abs(pp.dragX || 0) > 0.5) return false;
+        return true;
+      });
+      if(!cand.length) return false;
+      /* 父母各动 want*2，中点正好动 want，独子继续落在中点正下方 */
+      X[cand[0]] += want * 2;
+      X[k] = (X[aa] + X[bb]) / 2;
+      rebuildNodes();
+      pushOffLocked();
+    }
+    rebuildNodes();
+    return Math.abs(kidConflictShift(k)) < 0.02;
+  }
+
   for(var stab = 0; stab < 24; stab++){
     var xSnap = {};
     Object.keys(X).forEach(function(id){ xSnap[id] = X[id]; });
@@ -2108,9 +2547,11 @@ function relayout(){
       X[k2] = mid2;
       rebuildNodes();
       var pa = activeDragId;
-      activeDragId = k2;
-      sepPass();
-      rebuildNodes();
+      if(!makeRoomFor(k2, u.a, u.b)){
+        activeDragId = k2;
+        sepPass();
+        rebuildNodes();
+      }
       /* 让位可能推动父母，中点在变：最后再贴一次中点，保证竖线正落在中点 */
       X[k2] = (X[u.a] + X[u.b]) / 2;
       rebuildNodes();
@@ -2254,6 +2695,72 @@ function relayout(){
     p.offset = p.offset || { x: 0, y: 0 };
     p.offset.x = X[p.id] - baseX[p.id];
   });
+
+  /* ---- R33：兄弟横线错层只按“实际用到的档数”核算 ----
+     x 求解完成后才能知道哪些中继线在同一 x 附近重叠。这里复算每代人实际占用几档，
+     仅当最上面那根横线与上一代文字底的净距不足 GEN_MIN_CLEAR 时，才把“那一对代之间”加宽；
+     不预留空档、不全局放大。 */
+  (function(){
+    var byGen = {}, need = {};
+    doc.unions.forEach(function(u){
+      if(!visible[u.a]) return;
+      if(u.b && !visible[u.b]) return;
+      var kids = linksOfUnion(u.id).filter(function(l){ return l.primary && visible[l.child]; });
+      if(!kids.length) return;
+      var gk = Infinity;
+      kids.forEach(function(l){ if(gen[l.child] < gk) gk = gen[l.child]; });
+      var x;
+      if(u.b) x = (X[u.a] + X[u.b]) / 2;
+      else{
+        var lo = Infinity, hi = -Infinity;
+        kids.forEach(function(l){ lo = Math.min(lo, X[l.child]); hi = Math.max(hi, X[l.child]); });
+        var A0 = nodes[u.a], cx = (lo + hi) / 2;
+        x = A0 ? (cx >= A0.x ? A0.x + A0.w/2 + 10 : A0.x - A0.w/2 - 10) : cx;
+      }
+      (byGen[gk] = byGen[gk] || []).push(x);
+    });
+    Object.keys(byGen).forEach(function(k){
+      var xs = byGen[k], c = 0;
+      xs.forEach(function(x, i){
+        var l = 0;
+        for(var j = 0; j < i; j++){ if(Math.abs(xs[j] - x) < 14) l++; }
+        c = Math.max(c, Math.min(l, 3));
+      });
+      need[k] = c + 1;
+    });
+    var cum = 0, shiftAt = {};
+    for(var g2 = 1; g2 <= maxGen; g2++){
+      rowY[g2] += cum; rowsGen[g2].y += cum;
+      var nlc = need[g2] || 0;
+      if(nlc){
+        var pb = -Infinity;
+        rowsGen[g2-1].persons.forEach(function(p){
+          var oy = (p.offset && p.offset.y) || 0;
+          if(rowY[g2-1] + oy > rowY[g2]) return;
+          var hh = (met[p.id] || { h: 77 }).h;
+          pb = Math.max(pb, rowY[g2-1] + oy + hh - INK_BOT);
+        });
+        if(pb !== -Infinity){
+          var topFrame = rowY[g2] - (66 + (nlc - 1) * LINE_CLEAR);
+          var lack = GEN_MIN_CLEAR - (topFrame - pb);
+          if(lack > 0.5){ rowY[g2] += lack; rowsGen[g2].y += lack; cum += lack; }
+        }
+      }
+      shiftAt[g2] = cum;
+    }
+    if(cum > 0){
+      for(var idg in nodes){
+        if(gen[idg] >= 1) nodes[idg].y += (shiftAt[gen[idg]] || 0);
+      }
+    }
+    /* 吸附空层跟着重算：上方两行沿用首对代距，下方两行沿用末对代距 */
+    if(maxGen >= 1){
+      var pt = rowY[1] - rowY[0], pbm = rowY[maxGen] - rowY[maxGen-1];
+      rowY[-1] = rowY[0] - pt; rowY[-2] = rowY[0] - pt * 2;
+      rowY[maxGen + 1] = rowY[maxGen] + pbm; rowY[maxGen + 2] = rowY[maxGen] + pbm * 2;
+    }
+  })();
+
   var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   /* R12：归一化基准必须用「不含用户偏移」的基准位置。否则拖拽本身移动了内容包围盒，
      PAD 平移会把这段位移原样抵消（两端人物表现为"拖不动 / 越拖越远"）。 */
@@ -2555,6 +3062,9 @@ function segBox(s, box, pad){
   return !(sx1 < box.x0 || sx0 > box.x1 || sy1 < box.y0 || sy0 > box.y1);
 }
 function segRel(a, b){
+  /* 并行净距阈值跟着关系线提示文字的实际行高走：<LC 视为贴线，
+     比贴线（<8）轻、比同一条双线的偏移副本重，让布线去换一条更外侧的路 */
+  var LC = lineClearPx || hintLineHeight();
   var ah = Math.abs(a.y1-a.y2) < 0.5, av = Math.abs(a.x1-a.x2) < 0.5;
   var bh = Math.abs(b.y1-b.y2) < 0.5, bv = Math.abs(b.x1-b.x2) < 0.5;
   if(ah && bh){
@@ -2562,12 +3072,14 @@ function segRel(a, b){
     var lo = Math.max(Math.min(a.x1,a.x2), Math.min(b.x1,b.x2));
     var hi = Math.min(Math.max(a.x1,a.x2), Math.max(b.x1,b.x2));
     if(hi - lo > 4 && dy < 4.5) return 7000;
+    if(hi - lo > 0.5 && dy < LC) return 6000;
     if(hi - lo > 0.5 && dy < 8) return 2000;
   }else if(av && bv){
     var dx = Math.abs(a.x1-b.x1);
     var lo2 = Math.max(Math.min(a.y1,a.y2), Math.min(b.y1,b.y2));
     var hi2 = Math.min(Math.max(a.y1,a.y2), Math.max(b.y1,b.y2));
     if(hi2 - lo2 > 4 && dx < 4.5) return 7000;
+    if(hi2 - lo2 > 0.5 && dx < LC) return 6000;
     if(hi2 - lo2 > 0.5 && dx < 8) return 2000;
   }else{
     var h = ah ? a : (bh ? b : null), v = av ? a : (bv ? b : null);
@@ -2580,16 +3092,67 @@ function segRel(a, b){
   }
   return 0;
 }
+/* R58：「交叉 / 线间净距缺口 / 绕框违规 / 弯折」写成可调系数做整体打分。
+   默认系数让「不穿人物框、17px 净距」保持硬底线（权重远大于其他项），
+   在此前提下把交叉压到尽量低。窗口变量 __GX_EMO_W 可在载入前覆盖任一系数。 */
+var GX_EMO_W = { hit:1e7, cross:9000, net:6000, bend:4000, len:0.02, text:1e7, tag:1e7 };
+(function(){
+  try{
+    var w = window.__GX_EMO_W;
+    if(w) for(var k in w){ if(k in GX_EMO_W && isFinite(+w[k])) GX_EMO_W[k] = +w[k]; }
+  }catch(e){}
+})();
+function segCross(a, b){
+  var ah = Math.abs(a.y1-a.y2) < 0.5, av = Math.abs(a.x1-a.x2) < 0.5;
+  var bh = Math.abs(b.y1-b.y2) < 0.5, bv = Math.abs(b.x1-b.x2) < 0.5;
+  if(ah && bv){
+    var y = a.y1, x = b.x1;
+    if(x > Math.min(a.x1,a.x2)+0.5 && x < Math.max(a.x1,a.x2)-0.5 &&
+       y > Math.min(b.y1,b.y2)+0.5 && y < Math.max(b.y1,b.y2)-0.5) return 1;
+  }
+  if(av && bh){
+    var x2 = a.x1, y2 = b.y1;
+    if(y2 > Math.min(a.y1,a.y2)+0.5 && y2 < Math.max(a.y1,a.y2)-0.5 &&
+       x2 > Math.min(b.x1,b.x2)+0.5 && x2 < Math.max(b.x1,b.x2)-0.5) return 1;
+  }
+  return 0;
+}
+function segNetGap(a, b){
+  var LC = lineClearPx || hintLineHeight();
+  var ah = Math.abs(a.y1-a.y2) < 0.5, av = Math.abs(a.x1-a.x2) < 0.5;
+  var bh = Math.abs(b.y1-b.y2) < 0.5, bv = Math.abs(b.x1-b.x2) < 0.5;
+  if(ah && bh){
+    var dy = Math.abs(a.y1-b.y1);
+    var lo = Math.max(Math.min(a.x1,a.x2), Math.min(b.x1,b.x2));
+    var hi = Math.min(Math.max(a.x1,a.x2), Math.max(b.x1,b.x2));
+    if(hi - lo > 4 && dy < 4.5) return 2;
+    if(hi - lo > 0.5 && dy < LC) return 1;
+  }else if(av && bv){
+    var dx = Math.abs(a.x1-b.x1);
+    var lo2 = Math.max(Math.min(a.y1,a.y2), Math.min(b.y1,b.y2));
+    var hi2 = Math.min(Math.max(a.y1,a.y2), Math.max(b.y1,b.y2));
+    if(hi2 - lo2 > 4 && dx < 4.5) return 2;
+    if(hi2 - lo2 > 0.5 && dx < LC) return 1;
+  }
+  return 0;
+}
 function emoCost(pts, others, A, B){
   var segs = orthoSegs(pts), c = arcLen(pts) * 0.02;
   segs.forEach(function(s){
+    /* R59：已提交的关系标签块（字）是硬禁区——线不许压字。
+       pad 5 = 锯齿最大振幅 3 + 线宽/墨迹余量：折线本体不压，锯齿抖动也不许蹭到字。 */
+    for(var ti = 0; ti < tagBoxes.length; ti++){
+      if(segBox(s, tagBoxes[ti], 5)){ c += GX_EMO_W.tag; break; }
+    }
     for(var id in layout.nodes){
       var n = layout.nodes[id];
       var isEnd = (id === A.id || id === B.id);
       /* 端点符号只检查"向内穿入"：端口贴边出发不算，折回符号内部算 */
       if(segBox(s, { x0:n.x-24, y0:n.y-24, x1:n.x+24, y1:n.y+24 }, isEnd ? 0 : 5)) c += 20000;
+      /* R59：非端点人物的整框（含年份/年龄/事件文字）是硬禁区——线不许穿框或压字 */
+      if(!isEnd && segBox(s, { x0:n.x - n.w/2, y0:n.y - 50, x1:n.x + n.w/2, y1:n.y + Math.max(32, n.h) }, 0)) c += GX_EMO_W.hit;
       var tx = Math.max(28, n.w/2);
-      if(segBox(s, { x0:n.x-tx, y0:n.y+30, x1:n.x+tx, y1:n.y + Math.max(32, n.h - 26) }, 8)) c += 12000;
+      if(segBox(s, { x0:n.x-tx, y0:n.y+30, x1:n.x+tx, y1:n.y + Math.max(32, n.h - 26) }, 8)) c += GX_EMO_W.text;
       /* 贴着符号边框跑（共线于边框）也算看不清，重罚 */
       if(Math.abs(s.y1-s.y2) < 0.5 &&
          (Math.abs(s.y1-(n.y-28)) < 1.5 || Math.abs(s.y1-(n.y+28)) < 1.5)){
@@ -2604,9 +3167,9 @@ function emoCost(pts, others, A, B){
       /* 符号上方的出生/死亡年份文字（±44 起排，y-45~y-34.8），外扩 12 后为禁区 */
       var pp = personById(id);
       if(pp && pp.birthDate &&
-         segBox(s, { x0:n.x-51, y0:n.y-57, x1:n.x, y1:n.y-23 }, 0)) c += 12000;
+         segBox(s, { x0:n.x-51, y0:n.y-57, x1:n.x, y1:n.y-23 }, 0)) c += GX_EMO_W.text;
       if(pp && pp.deceased && pp.deathDate &&
-         segBox(s, { x0:n.x+2, y0:n.y-57, x1:n.x+48, y1:n.y-23 }, 0)) c += 12000;
+         segBox(s, { x0:n.x+2, y0:n.y-57, x1:n.x+48, y1:n.y-23 }, 0)) c += GX_EMO_W.text;
     }
     /* 伴侣状态标签压在中继点上方（since 在 rowY-35、until 在 rowY-15），外扩 12 后为禁区 */
     doc.unions.forEach(function(u){
@@ -2616,8 +3179,12 @@ function emoCost(pts, others, A, B){
       var mx = (na.x + nb.x) / 2;
       if(segBox(s, { x0:mx-32, y0:na.y-55, x1:mx+32, y1:na.y-1 }, 0)) c += 9000;
     });
-    others.forEach(function(o){ c += segRel(s, o); });
+    others.forEach(function(o){
+      c += GX_EMO_W.cross * segCross(s, o) + GX_EMO_W.net * segNetGap(s, o);
+    });
   });
+  /* 绕框违规（第三人符号/文字盒）作为最重的一项，保证默认不牺牲硬底线 */
+  c += GX_EMO_W.hit * emoBoxHits(pts, A, B);
   return c;
 }
 function emoZigzag(p){
@@ -2629,8 +3196,48 @@ function emoZigzag(p){
   }
   return false;
 }
+/* R57：情感线优先不穿任何第三人（符号 ±28 与符号下方文字盒）。
+   优先级：①不穿框 ②弯折最少 ③线间净距；都没有净空候选时退回代价最小并计入冲突。 */
+function emoBoxHits(pts, A, B){
+  var n = 0;
+  for(var i = 1; i < pts.length; i++){
+    var s = { x1:pts[i-1].x, y1:pts[i-1].y, x2:pts[i].x, y2:pts[i].y };
+    for(var id in layout.nodes){
+      if(id === A.id || id === B.id) continue;
+      var nd = layout.nodes[id];
+      if(segBox(s, { x0:nd.x-28, y0:nd.y-28, x1:nd.x+28, y1:nd.y+28 }, 1)) n++;
+      var tw = Math.max(28, nd.w/2);
+      if(segBox(s, { x0:nd.x-tw, y0:nd.y+30, x1:nd.x+tw, y1:nd.y+Math.max(32, nd.h-26) }, 2)) n++;
+    }
+  }
+  return n;
+}
+/* R59：一条水平车道（A.x..B.x）是否同时避开已提交标签块与非端点人物整框 */
+function laneClearY(A, B, y){
+  var s = { x1:Math.min(A.x, B.x), y1:y, x2:Math.max(A.x, B.x), y2:y };
+  for(var ti = 0; ti < tagBoxes.length; ti++){ if(segBox(s, tagBoxes[ti], 5)) return false; }
+  for(var id in layout.nodes){
+    if(id === A.id || id === B.id) continue;
+    var n = layout.nodes[id];
+    if(segBox(s, { x0:n.x - n.w/2, y0:n.y - 50, x1:n.x + n.w/2, y1:n.y + Math.max(32, n.h) }, 0)) return false;
+  }
+  return true;
+}
+/* 上下各找离本体最近的一条干净车道（2px 步进）。常规槽位被标签带堵死时兜底用 */
+function tagClearLanes(A, B){
+  var out = [];
+  [['t', -1], ['b', 1]].forEach(function(d){
+    for(var k = 28; k <= 168; k += 2){
+      var y = A.y + d[1]*k;
+      if(laneClearY(A, B, y)){ out.push({ sd:d[0], y:y }); break; }
+    }
+  });
+  return out;
+}
 function emoRoute(A, B, others){
-  var cands = [], slots = [-18, 18];
+  /* 情感线切向槽位：并行净距以提示文字行高为准，再给波浪状的起伏留 3px，
+     否则波峰会把净距吃掉（实测 18 的槽位只剩 15.6） */
+  var emoSlot = (lineClearPx || hintLineHeight()) + 3, cands = [], slots = [-emoSlot, emoSlot];
   if(Math.abs(A.y - B.y) < 1){
     var dir = B.x >= A.x ? 'r' : 'l', opp = dir === 'r' ? 'l' : 'r';
     slots.forEach(function(o){ cands.push([portOf(A, dir, o), portOf(B, opp, o)]); });
@@ -2645,6 +3252,12 @@ function emoRoute(A, B, others){
     [-44, 44].forEach(function(dy){
       var a = portOf(A, dir, 0), b = portOf(B, opp, 0);
       cands.push([a, { x:a.x, y:a.y+dy }, { x:b.x, y:b.y+dy }, b]);
+    });
+    /* R57：同排中途有人挡路时，整条从符号上沿外侧跨过去（文字盒在符号下方，优先走上侧） */
+    [-36, -48, 66, 78].forEach(function(dy){
+      var sd = dy < 0 ? 't' : 'b';
+      var a2 = portOf(A, sd, 0), b2 = portOf(B, sd, 0);
+      cands.push([a2, { x:a2.x, y:A.y + dy }, { x:b2.x, y:B.y + dy }, b2]);
     });
   }else{
     /* 跨排近同列：上沿/下沿端口对齐后可竖直直连（0 折），按 4px 步进扫描，
@@ -2693,9 +3306,24 @@ function emoRoute(A, B, others){
     if(emoZigzag(dedupePts(p))) return;
     var pts = mergedPts(dedupePts(p));
     if(pts.length < 2 || !isOrthoPts(pts)) return;
-    var c = emoCost(pts, others, A, B);
+    var bends = Math.max(0, pts.length - 2);
+    var c = emoCost(pts, others, A, B) + GX_EMO_W.bend * bends;
     if(c < bestC){ bestC = c; best = pts; }
   });
+  /* R59：全部常规槽位都压到已提交的标签块（硬罚命中）时，说明标签带把通道堵死了，
+     再扫一条标签带外真正空出来的横向车道（常规候选里没有这些 y 槽） */
+  if(bestC >= GX_EMO_W.tag){
+    tagClearLanes(A, B).forEach(function(l){
+      /* 端口横向槽位也要试（±emoSlot）：正对符号中心会压到出生年份文字盒 */
+      slots.forEach(function(o){
+        var a = portOf(A, l.sd, o), b = portOf(B, l.sd, o);
+        var pts = mergedPts(dedupePts([a, { x:a.x, y:l.y }, { x:b.x, y:l.y }, b]));
+        if(pts.length < 2 || !isOrthoPts(pts) || emoZigzag(pts)) return;
+        var c = emoCost(pts, others, A, B) + GX_EMO_W.bend * Math.max(0, pts.length - 2);
+        if(c < bestC){ bestC = c; best = pts; }
+      });
+    });
+  }
   if(!best){
     var a0 = portOf(A, B.x >= A.x ? 'r' : 'l', -18);
     var b0 = portOf(B, A.x >= B.x ? 'r' : 'l', -18);
@@ -2916,28 +3544,32 @@ function partnerSVG(u){
       gxEdgeAttrs('partner', u.id, u.a, u.b, lp) + '/>';
   });
   var mid = pathAt(pts, .5 + (spec.bias || 0));
-  if(spec.mark === 'slash1') s += slash(mid.x, mid.y, -4.5, col);
-  else if(spec.mark === 'slash2') s += slash(mid.x, mid.y, -4.5, col) + slash(mid.x, mid.y, 4.5, col);
-  else if(spec.mark === 'xmid') s += xAt(mid, 5, 1.7, col);
-  else if(spec.mark === 'xmidThick') s += xAt(mid, 6, 2.6, col);
-  else if(spec.mark === 'slash2x') s += slash(mid.x, mid.y, -4.5, col) + slash(mid.x, mid.y, 4.5, col) + xAt(mid, 5, 1.6, col);
-  else if(spec.mark === 'prohib') s += prohibMark(mid.x, mid.y, col);
-  else if(spec.mark === 'boxes2') s += boxes2Mark(mid.x, mid.y, col);
+  /* R57：线上的小符号先登记包围盒，文字随后避让；撞车时符号沿线段滑开 */
+  var markHalf = { slash1:[6,6], slash2:[11,6], xmid:[6,6], xmidThick:[7,7],
+    slash2x:[11,7], prohib:[9,9], boxes2:[11,7] }[spec.mark] || null;
+  var trunkAtMid = linksOfUnion(u.id).some(function(l){ return l.primary && layout.visible[l.child]; });
+  var segM = hSegAtMid(pts, mid);
+  var segBase = segM ? { x0:segM.x0 + 3, x1:segM.x1 - 3, y:segM.y } : { x0:mid.x - 30, x1:mid.x + 30, y:mid.y };
+  /* 中继竖线当障碍：线下方紧贴中点的文字要躲开它 */
+  var obst = trunkAtMid ? [{ x0:mid.x - 2, y0:mid.y, x1:mid.x + 2, y1:mid.y + 46 }] : [];
+  var markDX = markHalf ? placeGranule({ owner:u.id, x:mid.x, y:mid.y, hw:markHalf[0], hh:markHalf[1], span:segBase }) : 0;
+  var mk = '';
+  if(spec.mark === 'slash1') mk += slash(mid.x, mid.y, -4.5, col);
+  else if(spec.mark === 'slash2') mk += slash(mid.x, mid.y, -4.5, col) + slash(mid.x, mid.y, 4.5, col);
+  else if(spec.mark === 'xmid') mk += xAt(mid, 5, 1.7, col);
+  else if(spec.mark === 'xmidThick') mk += xAt(mid, 6, 2.6, col);
+  else if(spec.mark === 'slash2x') mk += slash(mid.x, mid.y, -4.5, col) + slash(mid.x, mid.y, 4.5, col) + xAt(mid, 5, 1.6, col);
+  else if(spec.mark === 'prohib') mk += prohibMark(mid.x, mid.y, col);
+  else if(spec.mark === 'boxes2') mk += boxes2Mark(mid.x, mid.y, col);
+  if(mk) s += '<g class="gx-mark" transform="translate(' + r2(markDX) + ',0)">' + mk + '</g>';
     var sel = selection.type === 'union' && selection.id === u.id;
     var halo = sel ? '<path d="'+polyD(pts)+'" stroke="var(--gx-acc)" stroke-width="9" opacity=".16" fill="none"/>' : '';
     var label = '';
-  /* 有子女时中继竖线正好从伴侣横线中点向下走，年份标签若仍放在线下就会被竖线穿过，
-     此时把 since/until 两条都叠到线上方 */
-  var trunkAtMid = linksOfUnion(u.id).some(function(l){ return l.primary && layout.visible[l.child]; });
-  /* 年份标签左移 1.5px：让它在两人各自的出生/死亡年份标签之间都能留出 ≥12px 净距 */
-  var lx = mid.x - 1.5;
-  if(u.since) label += '<text class="gx-yr" x="'+r2(lx)+'" y="'+r2(mid.y - (trunkAtMid ? 35 : 10))+'" text-anchor="middle">'+u.since+'</text>';
-  if(u.until) label += '<text class="gx-yr" x="'+r2(lx)+'" y="'+r2(mid.y + (trunkAtMid ? -15 : 19))+'" text-anchor="middle">'+
-    (u.status === 'divorced' ? 'd. ' : '') + u.until + '</text>';
-  /* 关系线名称（默认关）：低对比度小字，放在线中点的上方/下方，避开线中图标与年份标签 */
-  if(relLabelsOn() && spec.zh){
-    label += '<text class="gx-relname" x="'+r2(mid.x)+'" y="'+r2(mid.y - (trunkAtMid ? 48 : 14))+'"' +
-      ' text-anchor="middle" data-relname="1">'+esc(spec.zh)+'</text>';
+  /* R58：名称与日期合成一个不可分割的块，落点 = 折线路径长度中点，整块贴线外侧 */
+  var bparts = relBlockParts(u);
+  if(bparts.length){
+    label += placeBlock({ owner:u.id, parts:bparts, pts:pts, rel:true, prefer:-1,
+      hug:4.5, obstacles:obst });
   }
   return '<g class="gx-ulink" data-gx="union" data-kind="partner" data-uid="'+esc(u.id)+'"' +
     ' data-row="'+(layout.gen[u.a]||0)+'" data-anchor-x="'+r2((A.x+B.x)/2)+'"' +
@@ -3041,22 +3673,67 @@ function structureSVG(){
         head:[portOf(A2, side), { x:xs, y:A2.y }], couple:null, kx:kx });
     }
   });
-  // 主干错层
-  var lanes = {};
+  /* 每一代伴侣线的水平段：既用于取这段里最低的伴侣线（兄弟横线的净距基准），
+     也用于取抬高的伴侣线（复婚/离婚/婚外情会往上叠线，兄弟横线不能从它们中间穿过去） */
+  var rowBottom = {}, partnerYs = {};
+  doc.unions.forEach(function(u){
+    if(!u.b || !layout.visible[u.a] || !layout.visible[u.b]) return;
+    var A = layout.nodes[u.a], B = layout.nodes[u.b];
+    var g = layout.gen[u.a];
+    var rp = orthoRoute(A, B, 0, 0).pts;
+    (partnerYs[g] = partnerYs[g] || []);
+    for(var i = 1; i < rp.length; i++){
+      if(Math.abs(rp[i].y - rp[i-1].y) > 0.6) continue;
+      var py = (rp[i].y + rp[i-1].y) / 2;
+      partnerYs[g].push(py);
+      if(rowBottom[g] == null || py > rowBottom[g]) rowBottom[g] = py;
+    }
+  });
+  trunks.forEach(function(t){
+    var g = layout.gen[t.u.a];
+    var base = t.startY;
+    if(!t.single && rowBottom[g] != null && rowBottom[g] > base) base = rowBottom[g];
+    t.floorY = base;
+  });
+  // 主干错层：先算出每条中继线的兄弟横线跨度，水平投影重叠的才需要错层，否则会糊成一条
+  trunks.forEach(function(t){
+    var minX = Infinity, maxX = -Infinity, gc = -1;
+    t.kids.forEach(function(l){
+      var k = layout.nodes[l.child];
+      if(k.x < minX) minX = k.x;
+      if(k.x > maxX) maxX = k.x;
+      var g = layout.gen[l.child];
+      if(g != null && g > gc) gc = g;
+    });
+    t.barL = Math.min(minX, t.x);
+    t.barR = Math.max(maxX, t.x);
+    t.gc = gc;
+  });
+  /* R33：同一代间带里并行的兄弟横线只要水平投影重叠，就按出现顺序逐层错开，
+     层距 = 关系线提示文字行高；不再固定上限 3 层（层数不够时由 render 侧把那一对代局部加宽） */
   trunks.forEach(function(t, i){
     var c = 0;
-    for(var j=0;j<i;j++){ if(Math.abs(trunks[j].x - t.x) < 14 && !lanes[trunks[j].u.id+'_free']) c++; }
-    t.lane = Math.min(c, 3);
+    for(var j = 0; j < i; j++){
+      var o = trunks[j];
+      if(o.gc !== t.gc) continue;
+      if(o.barR - t.barL > 0.5 && t.barR - o.barL > 0.5) c++;
+    }
+    t.lane = c;
   });
   trunks.forEach(function(t){
     var top = Infinity;
     t.kids.forEach(function(l){ top = Math.min(top, layout.nodes[l.child].y - 52); });
-    var sibY = Math.max(t.startY + 18, top - 14 - t.lane*9);
-    var minX = Infinity, maxX = -Infinity;
-    t.kids.forEach(function(l){
-      var k = layout.nodes[l.child];
-      minX = Math.min(minX, k.x); maxX = Math.max(maxX, k.x);
-    });
+    /* 这一段代间带里可能有往上叠的伴侣线（同一对父母的多条关系线），
+       兄弟横线的下沿不能落在它们中间，要整段让到最上面那条再留一个行高 */
+    var gy = layout.nodes[t.kids[0].child].y, py = layout.nodes[t.u.a].y;
+    var gys = partnerYs[t.gc] || [], pmin = Infinity;
+    for(var i = 0; i < gys.length; i++){
+      if(gys[i] < gy - 1 && gys[i] > py && gys[i] < pmin) pmin = gys[i];
+    }
+    var slotY = top - 14;
+    if(isFinite(pmin)) slotY = Math.min(slotY, pmin - lineClearPx);
+    var sibY = Math.max(t.floorY + lineClearPx + 2, slotY - t.lane*lineClearPx);
+    var minX = t.barL, maxX = t.barR;
     /* 中继线：起于 head（伴侣线上的锚点 / 单亲符号侧边），垂直落到兄弟横线 y。
        原"独子正好对齐某位父母就把中继线挪到该父母 x、起点改到文字块底部"的捷径
        会让中继线与伴侣线之间出现几十像素空档，已整段删除 */
@@ -3124,9 +3801,9 @@ function emotionSVG(){
     var body = buildEmotional(A, B, e.type, { halo: sel, pts: pts });
     var eName = '';
     if(relLabelsOn()){
-      var em = pathAt(pts, .5);
-      eName = '<text class="gx-relname" x="'+r2(em.x)+'" y="'+r2(em.y - 11)+'"' +
-        ' text-anchor="middle" data-relname="1">'+esc((emoOf(e.type)||{}).zh || '')+'</text>';
+      var en = (emoOf(e.type)||{}).zh || '';
+      if(en) eName = placeBlock({ owner:e.id, parts:[{ t:en, cls:'gx-relname' }], pts:pts,
+        rel:true, hug:5, prefer:-1, obstacles:polyObstacles(pts) });
     }
     out += '<g class="gx-elink" data-eid="' + esc(e.id) + '" data-gx="edge" data-kind="emotion"' +
       ' data-owner="' + esc(e.id) + '" data-from="' + esc(e.from) + '" data-to="' + esc(e.to) + '"' +
@@ -3314,6 +3991,7 @@ function nodeSVG(p){
 }
 
 function buildInner(){
+  resetTagBoxes();
   var s = '<g class="gx-edges">' + structureSVG() + '</g>';
   s += '<g class="gx-emo">' + emotionSVG() + '</g>';
   var ns = '';
@@ -3365,11 +4043,70 @@ function verifyStructure(world){
   if(broken.length) console.warn('[genogram] 以下亲子线未接到父母身上：' + broken.join('; '));
 }
 
+/* R33：并行关系线净距不足时，只把「那一对代之间」的行距加大。
+   判定口径与 structureSVG 的错层一致：同一对代之间、兄弟横线水平投影重叠的中继线
+   需要逐层抬高，每层净距 = 提示文字实际行高；层数多到塞不下时，
+   把子女这一代及以下整体下移刚够的差额（差额取整，不影响其他代之间的原有行距）。 */
+function widenCrowdedRows(){
+  if(!lastTrunks.length) return false;
+  var LC = lineClearPx || hintLineHeight();
+  var groups = {}, keys = [];
+  lastTrunks.forEach(function(t){
+    if(t.gc == null || t.gc < 0) return;
+    var gp = layout.gen[t.u.a];
+    if(gp == null || t.gc <= gp) return;
+    var key = gp + '>' + t.gc;
+    if(!groups[key]){ groups[key] = { gp:gp, gc:t.gc, items:[] }; keys.push(key); }
+    groups[key].items.push({
+      startY:t.floorY, lane:t.lane,
+      kids:t.kids.map(function(l){ return l.child; })
+    });
+  });
+  if(!keys.length) return false;
+  keys.sort(function(a, b){ return groups[a].gc - groups[b].gc; });
+  var changed = false;
+  keys.forEach(function(key){
+    var g = groups[key], lack = 0;
+    g.items.forEach(function(it){
+      var top = Infinity;
+      it.kids.forEach(function(id){
+        var n = layout.nodes[id];
+        if(n && n.y < top) top = n.y;
+      });
+      if(!isFinite(top)) return;
+      /* 横线最低一档的落点：子女框上缘再上让 52px，留 14px 给子女入线；
+         最上一层（lane）之上还要留一个提示文字行高，最下还要留 19px 给中继起点 */
+      var avail = (top - 52) - it.startY;
+      var want = it.lane * LC + 33;
+      if(avail < want) lack = Math.max(lack, want - avail);
+    });
+    if(lack <= 0.5) return;
+    lack = Math.ceil(lack);
+    changed = true;
+    for(var id in layout.nodes){
+      var nd = layout.nodes[id];
+      if(nd.gen >= g.gc){ nd.y += lack; if(nd.rowY != null) nd.rowY += lack; }
+    }
+    for(var rk in layout.rowY){ if(+rk >= g.gc) layout.rowY[rk] += lack; }
+    /* 后面几对的起点还按旧坐标缓存的，这里同步下移，避免差额被重复计算 */
+    keys.forEach(function(k2){
+      var g2 = groups[k2];
+      if(g2.gp >= g.gc){
+        g2.items.forEach(function(it){ it.startY += lack; });
+      }
+    });
+  });
+  return changed;
+}
+
 function render(animate, skipPanel){
   var world = $('#world');
   applyView();
   var old = renderedPos;
-  world.innerHTML = buildInner();
+  /* 先按标准代间行距布一次；并行关系线层数塞不下时只加宽拥挤的那一对代，再重建一次 */
+  var html = buildInner();
+  if(widenCrowdedRows()) html = buildInner();
+  world.innerHTML = html;
   tagTextBoxes(world);
   /* 空状态提示：只有真的一个人都没有时才出现（删空后也会即时出现，不是只在首次启动显示） */
   var ehint = $('#emptyHint');
@@ -3426,7 +4163,8 @@ function enumDD(attrs, list, cur, cls){
     return '<button type="button" class="dd-it' + (String(r[0]) === String(cur) ? ' sel' : '') +
       '" data-ddv="' + esc(r[0]) + '">' + esc(r[1]) + '</button>';
   }).join('');
-  return '<div class="dd ' + (cls || '') + '">' +
+  var dkey = attrs.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return '<div class="dd ' + (cls || '') + '" data-dd="' + esc(dkey) + '">' +
     '<select class="dd-src" hidden ' + attrs + '>' + opts(list, cur) + '</select>' +
     '<button type="button" class="dd-btn" aria-haspopup="listbox"><span class="dd-cur">' + esc(lbl) +
       '</span><i class="dd-ar">▾</i></button>' +
@@ -3629,7 +4367,7 @@ function catPopBody(p, cur){
     '<div class="cp-list">' + catsOf(p).map(function(c){
     if(catPopDel){
       return '<div class="cp-item cp-row" data-cpid="' + esc(c.id) + '"><span>' + esc(c.name) +
-        '</span><span class="cp-x" data-cpx="' + esc(c.id) + '" title="删除">✕</span></div>';
+        '</span><button type="button" class="cp-x" data-cpx="' + esc(c.id) + '" aria-label="删除类别">✕</button></div>';
     }
     return '<button type="button" class="cp-item' + (c.id === cur ? ' sel' : '') +
       '" data-cpid="' + esc(c.id) + '">' + esc(c.name) + '</button>';
@@ -3907,6 +4645,7 @@ function openNoteFull(nid){
 
 function personPanel(p){
   var h = '';
+  h += '<div class="dangerbar"><button class="big" data-act="delPerson">删除人物</button></div>';
   h += '<div class="sec"><h3>基本信息</h3>';
   h += fld('姓名', '<input type="text" data-field="name" value="' + esc(p.name) + '" placeholder="未命名">');
   h += fld('性别 / 符号', ptypeHTML(p));
@@ -3974,10 +4713,10 @@ function personPanel(p){
       '</div>';
     var kids = linksOfUnion(u.id).sort(function(a,b){ return kidOrderCmp(a, b); });
     kids.forEach(function(l){
-      h += '<div class="crec" style="display:flex;align-items:center;gap:5px;padding:5px 6px">' +
+      h += '<div class="crec" style="display:flex;align-items:center;gap:6px;padding:6px">' +
         '<span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis">' + esc(personName(l.child)) +
         (l.primary ? '' : '<span class="tag">附加</span>') + '</span>' +
-        '<select data-lfield="kind" data-lid="' + esc(l.id) + '" style="flex:0 0 64px;font-size:12px;padding:2px;border:1px solid var(--hair);border-radius:4px;font-family:inherit">' + opts(KIND, l.kind) + '</select>' +
+        '<select data-lfield="kind" data-lid="' + esc(l.id) + '" style="flex:0 0 72px;font-size:13px;min-height:44px;padding:6px 3px;border:1px solid var(--hair);border-radius:4px;font-family:inherit">' + opts(KIND, l.kind) + '</select>' +
         '<button class="mini" data-act="linkUp" data-lid="' + esc(l.id) + '" aria-label="上移">↑</button>' +
         '<button class="mini" data-act="linkDown" data-lid="' + esc(l.id) + '" aria-label="下移">↓</button>' +
         '<button class="mini danger" data-act="delLink" data-lid="' + esc(l.id) + '" aria-label="删除该子女关系">×</button>' +
@@ -4051,35 +4790,36 @@ function personPanel(p){
     '<button class="mini" data-act="newEmo">＋ 新建情感线</button>' +
     '<button class="mini" data-act="pickEmotionFrom">＋ 点选画布人物</button></div></div>';
 
-  h += '<div class="sec"><h3>操作</h3><div style="display:flex;gap:6px;flex-wrap:wrap">';
   /* 索引咨访（双框）开关：全图唯一。已有人选时他人面板不渲染此按钮 */
+  var ops = '';
   if(!doc.probandId || doc.probandId === p.id){
-    h += '<button class="mini" data-act="toggleProband">' +
+    ops += '<button class="mini" data-act="toggleProband">' +
       (isProband(p.id) ? '取消索引咨访' : '设为索引咨访') + '</button>';
   }
   if(hasDescendants(p.id)){
-    h += '<button class="mini" data-act="toggleCollapse">' + (p.collapsed ? '展开后代' : '折叠后代') + '</button>';
+    ops += '<button class="mini" data-act="toggleCollapse">' + (p.collapsed ? '展开后代' : '折叠后代') + '</button>';
   }
-  h += '<button class="mini danger" data-act="delPerson">删除人物</button></div></div>';
+  if(ops) h += '<div class="sec"><h3>操作</h3><div style="display:flex;gap:6px;flex-wrap:wrap">' + ops + '</div></div>';
   return h;
 }
 
 function emotionPanel(e){
   var spec = emoOf(e.type);
-  var h = relHero(spec, esc(personName(e.from)) + ' → ' + esc(personName(e.to)));
+  var h = '<div class="dangerbar"><button class="big" data-act="delEmo" data-eid="' + esc(e.id) + '">删除该情感关系</button></div>';
+  h += relHero(spec, esc(personName(e.from)) + ' → ' + esc(personName(e.to)));
   h += '<div class="sec">';
   h += pickerHTML(EMO_OPTS, emoCode(e.type), 'emo');
   h += fld('备注', '<input type="text" data-efield="note" data-eid="' + esc(e.id) + '" value="' + esc(e.note) + '">');
   h += '<div style="display:flex;gap:6px;margin-top:8px">' +
     '<button class="mini" data-act="swapEmo" data-eid="' + esc(e.id) + '">反转方向</button>' +
-    relToggleBtn() +
-    '<button class="mini danger" data-act="delEmo" data-eid="' + esc(e.id) + '">删除关系</button></div>';
+    relToggleBtn() + '</div>';
   h += '</div>';
   return h;
 }
 function unionPanel(u){
   var spec = CPL_BY_STATUS[u.status] || CPL_BY_STATUS.married;
-  var h = relHero(spec, esc(personName(u.a)) + (u.b ? ' — ' + esc(personName(u.b)) : '（未指定伴侣）'));
+  var h = '<div class="dangerbar"><button class="big" data-act="delUnion" data-uid="' + esc(u.id) + '">删除该关系</button></div>';
+  h += relHero(spec, esc(personName(u.a)) + (u.b ? ' — ' + esc(personName(u.b)) : '（未指定伴侣）'));
   h += '<div class="sec">';
   if(u.b) h += pickerHTML(CPL_OPTS, u.status, 'cpl');
   h += '<div class="row-2">' +
@@ -4088,8 +4828,7 @@ function unionPanel(u){
     '</div>';
   h += '<div style="display:flex;gap:6px;margin-top:8px">' +
     '<button class="mini" data-act="addChildTo" data-uid="' + esc(u.id) + '">＋ 子女</button>' +
-    relToggleBtn() +
-    '<button class="mini danger" data-act="delUnion" data-uid="' + esc(u.id) + '">删除该关系</button></div>';
+    relToggleBtn() + '</div>';
   h += '</div>';
   return h;
 }
@@ -4097,28 +4836,55 @@ function linkPanel(l){
   var spec = KID_BY_KIND[l.kind] || KID_BY_KIND.biological;
   var u = unionById(l.union);
   var par = u ? (personName(u.a) + (u.b ? ' & ' + personName(u.b) : '')) : '未知';
-  var h = relHero(spec, esc(par) + ' → ' + esc(personName(l.child)));
+  var h = '<div class="dangerbar"><button class="big" data-act="delLink" data-lid="' + esc(l.id) + '">删除该亲子关系</button></div>';
+  h += relHero(spec, esc(par) + ' → ' + esc(personName(l.child)));
   h += '<div class="sec">';
   h += pickerHTML(KIND_OPTS, l.kind, 'kid');
   h += '<div style="display:flex;gap:6px;margin-top:8px">' +
-    relToggleBtn() +
-    '<button class="mini danger" data-act="delLink" data-lid="' + esc(l.id) + '">删除该亲子关系</button></div>';
+    relToggleBtn() + '</div>';
   h += '</div>';
   return h;
 }
 
 var lastPanelKey = '';
+/* R32：面板整体重绘后按“稳定签名”找回同一个控件。
+   旧写法按 querySelectorAll 序号恢复，勾选「未出生」后字段组增删会让序号错位，
+   focus() 静默失败 → 焦点掉到 body，遥控器就卡死。 */
+function ctrlToken(el){
+  if(!el || !el.getAttribute) return '';
+  var tg = (el.tagName || '').toLowerCase();
+  var dd = el.closest ? el.closest('.dd') : null;
+  if(dd && dd.getAttribute('data-dd')){
+    var cls = (el.className || '').toString().split(' ')[0];
+    if(cls) return '.dd[data-dd="' + dd.getAttribute('data-dd') + '"] .' + cls;
+  }
+  var attrs = ['data-field','data-lfield','data-ufield','data-efield','data-act','data-uid','data-lid','data-eid','data-cpx','data-nm'];
+  for(var i = 0; i < attrs.length; i++){
+    var v = el.getAttribute(attrs[i]);
+    if(v != null){
+      return tg + '[' + attrs[i] + '="' + String(v).replace(/["\\]/g, '\\$&') + '"]';
+    }
+  }
+  if(el.id) return '#' + el.id;
+  return '';
+}
 function renderPanel(){
   var panel = $('#panel');
   var prevKey = lastPanelKey;
   lastPanelKey = selection.type + ':' + selection.id;
   function paint(html){
-    /* 面板每次提交都会整体重绘；记住当前焦点在面板控件里的序号，重绘后放回去，
-       这样方向键/回车在遥控器或手柄上连续操作时焦点不会掉到 body */
-    var ae = document.activeElement, focusIdx = -1;
+    /* 面板每次提交都会整体重绘；按稳定签名记住焦点控件与同级序号，重绘后放回去，
+       这样方向键/回车/确定键在遥控器或手柄上连续操作时焦点不会掉到 body */
+    var ae = document.activeElement, focusIdx = -1, tok = '', occ = 0, editTok = '';
     if(ae && panel.contains(ae)){
       var list = panel.querySelectorAll('input,select,textarea,button');
       for(var i=0;i<list.length;i++){ if(list[i] === ae){ focusIdx = i; break; } }
+      tok = ctrlToken(ae);
+      if(tok){
+        var same = panel.querySelectorAll(tok);
+        for(var j=0;j<same.length;j++){ if(same[j] === ae){ occ = j; break; } }
+      }
+      if(isNavEditing(ae)) editTok = tok;
     }
     panel.innerHTML = html;
     /* 自绘下拉（伴侣/亲子/情感线状态）：渲染即滚到已选项并临时高亮 */
@@ -4131,9 +4897,20 @@ function renderPanel(){
       else btn.setAttribute('hidden', '');
     });
     if(prevKey !== lastPanelKey) panel.scrollTop = 0;
-    if(focusIdx >= 0){
+    if(navEditEl && !document.contains(navEditEl)) navEditEl = null;
+    var target = null;
+    if(tok){
+      var cand = panel.querySelectorAll(tok);
+      if(cand.length) target = cand[Math.min(occ, cand.length - 1)];
+    }
+    if(!target && focusIdx >= 0){
       var list2 = panel.querySelectorAll('input,select,textarea,button');
-      if(list2.length > focusIdx){ try{ list2[focusIdx].focus(); }catch(e){} }
+      if(list2.length > focusIdx) target = list2[focusIdx];
+    }
+    if(target){
+      if(editTok && tok === editTok) navEditEl = target;
+      try{ target.focus({ preventScroll:true }); }catch(e){ try{ target.focus(); }catch(e2){} }
+      markNav(target);
     }
     syncPanelOpen();
   }
@@ -4951,7 +5728,15 @@ function onPanelClick(ev){
     return;
   }
   if(act === 'addPartner'){ addPartner(); return; }
-  if(act === 'addChildTo'){ addChild(selection.id, b.getAttribute('data-uid')); return; }
+  if(act === 'addChildTo'){
+    /* R31：关系面板里 selection 是 union，selection.id 不是人物 id——
+       旧写法把 union id 当父人物传给 addChild，被 personById 挡回“未选中人物”。 */
+    var uc = unionById(b.getAttribute('data-uid'));
+    var pidAdd = (selection.type === 'union') ? (uc ? uc.a : null) : selection.id;
+    if(!pidAdd) pidAdd = uc ? uc.a : null;
+    addChild(pidAdd, b.getAttribute('data-uid'));
+    return;
+  }
   if(act === 'delUnion'){
     pushHistory();
     var uidv = b.getAttribute('data-uid');
@@ -5442,6 +6227,18 @@ function edgeSelOf(g){
   if(g.classList.contains('gx-ulink')) return { type:'union', id:g.getAttribute('data-uid') };
   return { type:'link', id:g.getAttribute('data-lid') };
 }
+/* R59：关系标签块被人物框/年份文字压住时，命中层要压过人物——找出该点下方的标签命中矩形所属的关系组 */
+function relHitUnder(x, y){
+  var out = null;
+  (document.elementsFromPoint(x, y) || []).forEach(function(el){
+    if(out || !el.closest) return;
+    if(el.classList && el.classList.contains('gx-relhit')){
+      var g = el.closest('.gx-lkin') || el.closest('.gx-elink') || el.closest('.gx-ulink');
+      if(g) out = g;
+    }
+  });
+  return out;
+}
 /* R14：找出指针所在的那一对「同一行、紧邻、中间确有空白」的人物。
    只在这两框之间的空白带里生效，用于直接拖动两人的间距。 */
 function gapPairAt(wp){
@@ -5527,6 +6324,8 @@ function applyNodeDragMove(dr, dx, dy){
         [ua, ub].forEach(function(id){
           var q = personById(id); if(!q) return;
           q.offset = { x: (dr.unitOx[id] || 0) + dxu, y: (q.offset && q.offset.y) || 0 };
+          /* R31：整单元跟拖也算用户位移，标 dragX 才能跨刷新保持落点 */
+          q.dragX = q.offset.x;
         });
       }else{
         var xa2 = dr.unitBase[ua] + (p.id === ua ? nx : (dr.unitOx[ua] || 0));
@@ -5605,6 +6404,16 @@ function onPointerDown(ev){
   var linkEl = ev.target.closest ? ev.target.closest('.gx-elink') : null;
   var uEl = ev.target.closest ? ev.target.closest('.gx-ulink') : null;
   var lEl = ev.target.closest ? ev.target.closest('.gx-lkin') : null;
+  /* R59：标签块命中层在本组内、被人物框压住时，命中被人物抢走——这里改判到关系，走线选中同一条路 */
+  if(nodeEl){
+    var rh = relHitUnder(ev.clientX, ev.clientY);
+    if(rh){
+      nodeEl = null;
+      if(rh.classList.contains('gx-elink')) linkEl = rh;
+      else if(rh.classList.contains('gx-ulink')) uEl = rh;
+      else lEl = rh;
+    }
+  }
   /* 交叉/重叠的线：按住 Alt 点击，在这一点上的线里循环切换，否则只能选中 z 序最上层那条 */
   if(ev.altKey && !nodeEl && (linkEl || uEl || lEl) && edgeStackAt && edgeSelOf){
     var st = edgeStackAt(ev.clientX, ev.clientY);
@@ -6714,6 +7523,13 @@ function moveFocus(dir){
   return setNavFocus(best);
 }
 function navActivate(){
+  /* 面板已展开（人物/结婚/亲子/情感）时，确定键直接进入该面板并停靠到第一个控件，
+     不把选定对象改写为人物——否则关系面板会被顶掉，遥控器就走不进去 */
+  var pe = $('#panel'), ae0 = document.activeElement;
+  if(selection && selection.type && pe && !pe.hidden &&
+     !(ae0 && ae0.closest && ae0.closest('#panel'))){
+    enterPanelNav(); return;
+  }
   var id = navFocusId;
   if(!id && selection && selection.type === 'person') id = selection.id;
   if(!id || !layout.nodes[id]) id = branchRoot();
@@ -6740,13 +7556,38 @@ function visibleCtrl(el){
   if(el.getAttribute && el.getAttribute('aria-hidden') === 'true') return false;
   return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
 }
-/* 面板里可被遥控器停靠的控件：按钮/下拉/勾选；纯文本输入一律跳过（不识字时输入中文不现实） */
+/* 面板里可被遥控器停靠的控件：按钮/下拉/勾选/文本（文本先停靠，确定键再进入编辑态） */
 function panelNavList(){
   var p = $('#panel');
   if(!p) return [];
-  return Array.prototype.slice.call(p.querySelectorAll('button,select,input,textarea')).filter(function(el){
-    return !isTextControl(el) && visibleCtrl(el);
-  });
+  return Array.prototype.slice.call(p.querySelectorAll('button,select,input,textarea')).filter(visibleCtrl);
+}
+/* R32：遥控器/键盘的“停靠 vs 编辑”双态。文本控件只有进入编辑态才吞掉方向键与字符键，
+   停靠态下方向键照常换控件，确定键进入编辑态并在里面打字，返回键退出编辑态。 */
+var navEditEl = null;
+/* Tab 键触发的聚焦：浏览器默认行为在 keydown 之后移动焦点，
+   用标志位让紧随其后的 focusin 把文本控件直接置于编辑态（鼠标点击走 pointerdown） */
+var navTabPending = false;
+function isNavEditing(el){ return !!el && el === navEditEl && document.contains(el); }
+function beginNavEdit(el){
+  if(!el) return;
+  navEditEl = el;
+  try{ el.focus({ preventScroll:false }); }catch(e){ try{ el.focus(); }catch(e2){} }
+  if(el.value != null && el.setSelectionRange && el.type !== 'number'){
+    try{ el.setSelectionRange(el.value.length, el.value.length); }catch(e){}
+  }
+  /* 日期字段：进入编辑态同时展开简洁选择器，遥控器可以只靠十字键挑年月日 */
+  if(el.classList && el.classList.contains('din')){
+    try{ el.click(); }catch(e){}
+  }
+  markNav(el);
+}
+/* 退出编辑态但保留焦点：焦点仍在同一控件上，方向键随即恢复“换控件”语义 */
+function endNavEdit(){
+  var el = navEditEl;
+  navEditEl = null;
+  if(el) markNav(el);
+  return !!el;
 }
 function toolbarNavList(){
   var t = $('#toolbar');
@@ -6817,13 +7658,18 @@ function movePanelFocus(dir){
 function activatePanelControl(el){
   if(!el) return;
   var tag = (el.tagName || '').toLowerCase();
+  /* 已在编辑态：确定键 = 完成输入，退回停靠态（不收起面板） */
+  if(isNavEditing(el)){ endNavEdit(); return; }
   /* 自绘下拉：OK 展开列表并把焦点落到当前值（列表内 ↑/↓ 选，OK 确认，Esc 收起） */
   if(el.closest && el.closest('.dd-btn')){ openDDFromBtn(el); return; }
   if(el.closest && el.closest('.dd-it')){ pickDDItem(el); return; }
   if(tag === 'select'){
-    try{ el.focus(); }catch(e){}
+    /* 原生下拉：有 showPicker 就直接弹层；否则聚焦后左右键循环取值 */
+    try{ if(el.showPicker){ el.showPicker(); el.focus(); return; } }catch(e){}
+    try{ el.focus(); }catch(e2){}
     return;
   }
+  if(isTextControl(el)){ beginNavEdit(el); return; }
   if(tag === 'input'){ el.click(); return; }
   el.click();
 }
@@ -6886,6 +7732,7 @@ function cycleDD(btn, delta){
 function navLayer(){
   var x = $('#xprev'); if(x && x.classList.contains('open')) return x;
   var h = $('#help'); if(h && h.classList.contains('open')) return h;
+  var cp = $('#catPop'); if(cp && !cp.hasAttribute('hidden')) return cp;
   var m = $('#menu'); if(m && m.classList.contains('open')) return m;
   if(actBarIsOpen()) return $('#actbar');
   return null;
@@ -6914,11 +7761,15 @@ function layerStep(root, dir){
   focusCtrl(list[i]);
   return true;
 }
-/* 面板已开、焦点却在画布/body：方向键先回到面板，不移动画布人物 */
+/* 面板已开、焦点却在画布/body：方向键先回到面板，不移动画布人物。
+   入口跳过顶部整条危险操作（删除），避免一进面板就停在“删除”上误触。 */
 function enterPanelNav(){
   var list = panelNavList(), target = null;
   for(var i = 0; i < list.length; i++){
-    if(list[i].closest && list[i].closest('.dd-btn')){ target = list[i]; break; }
+    var cl = (list[i].className || '').toString();
+    if(/(^|\s)(big|danger)(\s|$)/.test(cl)) continue;
+    target = list[i];
+    break;
   }
   if(!target) target = list[0] || null;
   if(target){ focusCtrl(target); return true; }
@@ -6937,6 +7788,18 @@ function navStep(dir){
   }
   if(inPanel){
     var tag = (ae.tagName || '').toLowerCase();
+    /* 文本控件编辑态：左右键移光标；上下键退出编辑并继续换控件（日期选择器就靠这条下钻） */
+    if(isNavEditing(ae)){
+      if(dir === 'left' || dir === 'right'){
+        var pos = ae.selectionStart == null ? 0 : ae.selectionStart;
+        var np = dir === 'left' ? Math.max(0, pos - 1) : Math.min((ae.value || '').length, pos + 1);
+        try{ ae.setSelectionRange(np, np); }catch(e){}
+        return;
+      }
+      endNavEdit();
+      movePanelFocus(dir);
+      return;
+    }
     /* 展开的自绘下拉：方向键只在这一层里选，不跳到相邻字段 */
     if(ae.closest && ae.closest('.dd-it')){
       var pop = ae.closest('.dd-pop');
@@ -6970,6 +7833,9 @@ function navStep(dir){
 }
 function navConfirm(){
   var ae = document.activeElement;
+  /* 浮层（类别菜单等）里的项：确定键直接触发该项 */
+  var lay = navLayer();
+  if(lay && ae && lay.contains && lay.contains(ae) && ae.tagName === 'BUTTON' && !ae.disabled){ ae.click(); return; }
   if(ae && ae.closest && ae.closest('#toolbar')){
     if(ae.tagName === 'BUTTON' && !ae.disabled) ae.click();
     return;
@@ -6980,9 +7846,18 @@ function navConfirm(){
 function navBack(){
   if(actBarIsOpen()){ hideActBar(); return; }
   var ae = document.activeElement;
+  /* 文本编辑态：返回键先退出编辑，再按一次才离开该区域 */
+  if(isNavEditing(ae)){ endNavEdit(); return; }
   /* 自绘下拉展开时，返回键先收起列表回到该字段，再按一次才退画布 */
   if(closeDDPopFocus()) return;
-  if(ae && ae.closest && ae.closest('#panel')){ exitToCanvas(); return; }
+  var cp = $('#catPop');
+  if(cp && !cp.hasAttribute('hidden')){ catPopClose(); return; }
+  if(ae && ae.closest && ae.closest('#panel')){
+    /* 返回键在面板内 = 收起面板并退出选定（与「退出选定状态」口径一致） */
+    selection = { type:null, id:null }; showMeaning = false; commit(false,{ noSave:true });
+    if(navFocusId) setNavFocus(navFocusId);
+    return;
+  }
   if(ae && ae.closest && ae.closest('#toolbar')){ exitToCanvas(); return; }
   if($('#xprev').classList.contains('open')){ closeExport(); return; }
   if($('#help').classList.contains('open')){ closeHelp(); return; }
@@ -7287,23 +8162,50 @@ function bindEvents(){
   });
 
   var escHold = { t0:0, done:false };
+  /* 鼠标/触屏按下面板文本控件：直接算编辑态（方向键移光标、可直接打字）。
+     遥控器的聚焦不经过 pointerdown，仍然停在“停靠态”以便继续换控件 */
+  document.addEventListener('pointerdown', function(ev){
+    var t = ev.target;
+    if(!t || !t.closest) return;
+    if(isTextControl(t) && t.closest('#panel') && !t.closest('.dd-pop') && !t.closest('#catPop')){
+      navEditEl = t;
+    }
+  }, true);
   document.addEventListener('focusin', function(ev){
     if(!ev.target || !ev.target.closest) return;
+    /* Tab 键移动过来的焦点：同样直接算编辑态 */
+    if(navTabPending){
+      navTabPending = false;
+      if(isTextControl(ev.target) && ev.target.closest('#panel') &&
+         !ev.target.closest('.dd-pop') && !ev.target.closest('#catPop')){
+        navEditEl = ev.target;
+        markNav(ev.target);
+      }
+    }
     var n = ev.target.closest('.gx-node');
     if(n){ navFocusId = n.getAttribute('data-id'); applyNavFocus(); }
+  });
+  document.addEventListener('focusout', function(ev){
+    if(ev.target === navEditEl) navEditEl = null;
   });
 
   document.addEventListener('keydown', function(ev){
     panelHold = false;
+    if(ev.key === 'Tab') navTabPending = true;
     var tag = (ev.target.tagName || '').toLowerCase();
-    var typing = tag === 'input' || tag === 'textarea' || tag === 'select' || ev.target.isContentEditable;
+    var textCtl = isTextControl(ev.target);
+    /* R32：文本控件分“停靠/编辑”两态。只有编辑态（或不在面板里）才把按键留给输入法；
+       停靠态下方向键照常换控件，确定键进入编辑 —— 这样手柄/键盘语义一致，也不会卡死 */
     var inTB = !!(ev.target.closest && ev.target.closest('#toolbar'));
     var inPanel = !!(ev.target.closest && ev.target.closest('#panel'));
+    var typing = textCtl && (!inPanel || isNavEditing(ev.target));
     if(ev.key === 'Escape'){
       /* 浮动动作条优先收起（遥控器返回键同理，见 navBack） */
       if(actBarIsOpen()){ ev.preventDefault(); hideActBar(); return; }
       /* 自绘下拉展开时：Esc 只收起列表并回到该字段，不退出面板 */
       if(closeDDPopFocus()){ ev.preventDefault(); return; }
+      /* 文本编辑态：Esc 先退出编辑态（保留已输入内容），再按一次才走回滚/关闭 */
+      if(textCtl && isNavEditing(ev.target)){ ev.preventDefault(); endNavEdit(); return; }
       /* 遥控器只有方向键+确认+返回：长按返回 900ms 删除当前焦点人物（可撤销） */
       if(ev.repeat && navFocusId && !escHold.done && performance.now() - escHold.t0 > 900){
         escHold.done = true;
@@ -7312,7 +8214,7 @@ function bindEvents(){
       }
       if(!ev.repeat){ escHold.t0 = performance.now(); escHold.done = false; }
       /* 面板输入框里按 Esc：撤销这次编辑（回滚到聚焦前快照），不关面板 */
-      if(typing && ev.target.getAttribute && ev.target.getAttribute('data-field') && ev.target.__docSnap){
+      if(textCtl && ev.target.getAttribute && ev.target.getAttribute('data-field') && ev.target.__docSnap){
         try{ doc = JSON.parse(ev.target.__docSnap); }catch(e){}
         ev.target.__docSnap = null;
         commit(false);
@@ -7358,8 +8260,14 @@ function bindEvents(){
       }
       return;
     }
-    /* 文本类字段（输入框）不参与分区导航：按键留给输入法/光标，不卡住焦点 */
-    if(typing && !(inPanel && tag === 'select')) return;
+    /* 编辑态的文本控件：按键留给输入法/光标；上下键例外——退出编辑并继续换控件 */
+    if(typing && isNavEditing(ev.target) && (ev.key === 'ArrowUp' || ev.key === 'ArrowDown')){
+      ev.preventDefault();
+      endNavEdit();
+      movePanelFocus(ev.key === 'ArrowUp' ? 'up' : 'down');
+      return;
+    }
+    if(typing) return;
     if(!ev.ctrlKey && !ev.metaKey && !ev.altKey &&
        (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' || ev.key === 'ArrowUp' || ev.key === 'ArrowDown')){
       var dir2 = ev.key === 'ArrowLeft' ? 'left' : ev.key === 'ArrowRight' ? 'right' : ev.key === 'ArrowUp' ? 'up' : 'down';
@@ -7388,8 +8296,16 @@ function bindEvents(){
         if(ddBtn && (dir2 === 'left' || dir2 === 'right')){
           ev.preventDefault(); cycleDD(ddBtn, dir2 === 'left' ? -1 : 1); return;
         }
-        /* 原生下拉：左右键改值，上下键在字段间移动 */
-        if(tag === 'select' && (dir2 === 'left' || dir2 === 'right')) return;
+        /* 原生下拉：左右键改值（与手柄一致），上下键在字段间移动 */
+        if(tag === 'select' && (dir2 === 'left' || dir2 === 'right')){
+          ev.preventDefault();
+          var nsi = ev.target.selectedIndex + (dir2 === 'left' ? -1 : 1);
+          if(nsi >= 0 && nsi < ev.target.options.length && !ev.target.options[nsi].disabled){
+            ev.target.selectedIndex = nsi;
+            ev.target.dispatchEvent(new Event('change', { bubbles:true }));
+          }
+          return;
+        }
         ev.preventDefault();
         movePanelFocus(dir2);
         return;
@@ -7407,6 +8323,9 @@ function bindEvents(){
     if(ev.key === 'Enter' && inTB && !typing){
       ev.preventDefault(); ev.target.click(); return;
     }
+    if(ev.key === 'Enter' && inPanel && textCtl && isNavEditing(ev.target)){
+      ev.preventDefault(); endNavEdit(); return;
+    }
     if(ev.key === 'Enter' && inPanel && !typing){
       ev.preventDefault(); activatePanelControl(ev.target); return;
     }
@@ -7423,6 +8342,11 @@ function bindEvents(){
     if(ev.key === '0'){ resetZoom(); return; }
     if(ev.key === '+' || ev.key === '='){ zoomBy(1.15); return; }
     if(ev.key === '-'){ zoomBy(1/1.15); return; }
+    /* 画布焦点由方向键移动时 DOM 焦点可能仍在 body：Enter 直接激活当前导航焦点人物 */
+    if(ev.key === 'Enter' && navFocusId && !inTB && !inPanel &&
+       !(document.activeElement && document.activeElement.closest && document.activeElement.closest('.gx-node'))){
+      ev.preventDefault(); navActivate(); return;
+    }
     /* 键盘可达：Tab 聚焦到人物符号后，Enter / 空格 = 选中该人物并开面板 */
     var foc = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.gx-node') : null;
     if(foc && (ev.key === 'Enter' || ev.key === ' ')){
@@ -7431,11 +8355,11 @@ function bindEvents(){
       navActivate();
       return;
     }
-    if(ev.key === 'Enter' && selection.type === 'person'){
+    if(ev.key === 'Enter' && selection.type === 'person' && !inTB && !inPanel){
       var firstCtrl = panelNavList()[0];
       if(firstCtrl) focusCtrl(firstCtrl);
     }
-    if(ev.key === ' ' && selection.type === 'person'){ ev.preventDefault(); toggleCollapse(selection.id); }
+    if(ev.key === ' ' && selection.type === 'person' && !inTB && !inPanel){ ev.preventDefault(); toggleCollapse(selection.id); }
   });
 
   $('#help').addEventListener('click', function(ev){
