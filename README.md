@@ -20,6 +20,7 @@
 
 | 下载 | 说明 |
 | --- | --- |
+| [在线版](https://37kas22cc0s1dgwhe7l.traesite.cn) | 不想下载就直接打开：国内可访问，不需要科学上网；功能与单文件版一致，数据只存在你自己的浏览器本地 |
 | [index.html](https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.4.0/index.html) | 主程序，下载后双击即可打开 |
 | [v1.4.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.4.0) | 版本说明与 Release 附件 |
 
@@ -341,6 +342,8 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 ## English Summary
 
 A **single-file, zero-dependency, fully offline** editor for psychological genograms. Open `index.html` in any modern browser — no install, no build, no network calls.
+
+**Online version (no download)**: https://37kas22cc0s1dgwhe7l.traesite.cn — opens straight in the browser and is reachable from mainland China without a VPN. Same features as the downloadable single file; all data stays in your own browser's local storage.
 
 **Why another genogram tool**: most online family-tree tools are trees — a node branches downward, but two lines can never merge into one and then split again. A clinical genogram needs exactly that: the couple relationship (union) is a first-class entity, and each child's parent link points at the union rather than at a person, so one person can carry several unions (marriage, cohabitation, affair, separation, divorce, remarriage), each with its own children. The underlying model is a directed graph with merges, not a tree. That drives the layout (the parents' centre distance equals the span from the first to the last child, the relay line sits on the union's midpoint, siblings share one horizontal line, ≥70px symbol clearance, orthogonal routing with no diagonal edges, automatic re-layout after any edit or collapse) and the notation (16 couple statuses, 8 parent–child types, 39 emotional line types, where stroke widths, dash patterns and mid-line glyphs carry the meaning). It ships as one offline HTML file because client data is sensitive and clinical work often happens on machines that should not upload anything.
 
