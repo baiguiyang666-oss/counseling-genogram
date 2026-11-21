@@ -16,15 +16,15 @@
 
 ## 下载（只放最新版）
 
-**最新版本：v1.4.0（2026-11-10）**
+**最新版本：v1.5.0（2026-11-21）**
 
 | 下载 | 说明 |
 | --- | --- |
 | [在线版](https://37kas22cc0s1dgwhe7l.traesite.cn) | 不想下载就直接打开：国内可访问，不需要科学上网；功能与单文件版一致，数据只存在你自己的浏览器本地 |
-| [index.html](https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.4.0/index.html) | 主程序，下载后双击即可打开 |
-| [v1.4.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.4.0) | 版本说明与 Release 附件 |
+| [index.html](https://github.com/baiguiyang666-oss/counseling-genogram/releases/download/v1.5.0/index.html) | 主程序，下载后双击即可打开 |
+| [v1.5.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.5.0) | 版本说明与 Release 附件 |
 
-> 旧版本（v1.3.0 及更早）不再占用主下载位置，统一列在文末[历史版本](#历史版本)。旧 Release 与下载链接永久有效，不会被删除。
+> 旧版本（v1.4.0 及更早）不再占用主下载位置，统一列在文末[历史版本](#历史版本)。旧 Release 与下载链接永久有效，不会被删除。
 
 ## 为什么又造一个家谱图工具
 
@@ -42,7 +42,7 @@
 
 ## 截图
 
-> 三张截图均于 2026-11-10 用 v1.4.0 当前构建重新生成（1440×900），44px 控件、左上角删除按钮、工具栏形态与现在的界面一致。
+> 三张截图均于 2026-11-21 用 v1.5.0 当前构建重新生成（1440×900），工具栏右侧的扫帚图标（三人骨架）、44px 控件、左上角删除按钮与现在的界面一致。
 
 ![主界面：三代示例家谱图](docs/screenshot-overview.png)
 *首次打开载入的三代示例（12 人、4 组伴侣关系、7 条亲子关系、4 条情感线），符号内的数字是依出生年份实时计算的年龄；已故者打叉并显示寿年。*
@@ -87,7 +87,7 @@
 - 拖动人物做微调后，连线自动贴合重排；「排版」一键复位
 - 支持一对多子女、多段婚姻、跨代嵌套；子树可**折叠 / 展开**，画布实时自适应
 - 拖动吸附行为全代 + 上下各 2 条空白吸附带：三代示例共 7 条吸附行，拖到空白代带也能吸住对齐
-- 视口 ≤ 760px 时面板改为底部抽屉、工具栏单行横向滚动；「只看选中分支」改为手动触发（画布右键菜单），首次打开不再自动聚焦分支
+- 视口 ≤ 760px 时面板改为底部抽屉、工具栏自动折行（不再横向滚动），480 宽下压成两行；「只看选中分支」改为手动触发（画布右键菜单），首次打开不再自动聚焦分支
 
 ### 记录与界面
 
@@ -97,7 +97,10 @@
 - 标签输入按微信的方式：中英文标点与换行都会切成标签，标签以 chip 展示、点 chip 上的 × 即可删除并立即持久化；输入框为空时按退格，最后一个标签回到输入框继续编辑
 - 每人可挂多条「重要事件 / 经历」：时间、地点、事件，可增删改
 - 撤销 / 重做、5 套主题色卡（符号填充与画布底色可手动覆盖）
-- localStorage 自动存档：文档、视图、主题分三个键保存，刷新或关掉浏览器再打开数据还在
+- **撤销 / 重做历史落盘**：撤销栈与重做栈单独存到 `genogram.v1.history`，刷新或重开浏览器后仍可继续撤销；落盘只保留最近 24 步，总字节超过 256 KB 时从最旧的一端淘汰，不会撑爆 localStorage
+- **破坏性动作全部走页面内确认层**：删除人物 / 关系、删除信息类别、换三人骨架、恢复示例、新建空白图都在页面内弹一层确认，不用宿主 `confirm` / `alert` / `prompt`（源码中这三类调用为 0），遥控器与手柄也能直接操作该层
+- **三人骨架**：工具栏右侧扫帚图标一键换成「父（方块）· 母（圆）· 子（菱形）」最小结构，保留图标题与创建时间，可撤销、有确认
+- localStorage 自动存档：文档、视图、主题、撤销历史分四个键保存，刷新或关掉浏览器再打开数据还在
 - 键盘可达：Tab 可聚焦到人物符号，Enter / 空格 即选中
 - 遥控器 / 手柄全链路：确定键能勾选复选框、进文本框输入、展开下拉、切换开关、展开日期；返回键每次只回退一层，面板内单次返回即收起
 - 触屏三态互斥：短按出详情页；按住超过 1 秒不动、松手只出工具栏动作条；拖动全程（含松手后）都不弹任何浮层
@@ -114,11 +117,13 @@
 
 导出面板里可以预览第 2 页明细；除打印外，导出前都会先弹出预览，**预览即所得**：预览与最终文件走同一份 SVG 序列化路径。
 
+导出菜单底部还有两个换图入口：**恢复示例数据**（用内置「张氏三代家庭」覆盖当前图）与**新建空白图**，两者都会先弹页面内确认层，且都可以撤销。
+
 ## 怎么用
 
 1. 从上面[「下载」](#下载只放最新版)一节拿到最新版 `index.html`（就一个文件）
 2. **双击打开**，或在浏览器里把文件**拖进窗口**
-3. 首次打开会载入一张三代示例图，可以直接在它上面改；想从零开始就点「导出 → 新建空白图」（会二次确认）
+3. 首次打开会载入一张三代示例图，可以直接在它上面改；想从零开始就点「导出 → 新建空白图」，想先要一个最小结构就点工具栏右侧的扫帚图标换成「父 · 母 · 子」三人骨架（两者都会先弹页面内确认，且都可以撤销）
 
 不需要安装、不需要联网、不需要跑任何命令。想放到内网共享也只要把这个文件放上去，别人下载即用。
 
@@ -142,7 +147,7 @@
 
 - **滚轮缩放**（以光标位置为中心），**空白处拖动平移**
 - 拖动人物符号可微调位置，再用「排版」复位
-- 工具栏：`＋ 人物`、`伴侣`、`子女`、`删除`、`排版`、缩放、`撤销`、`重做`、`导出`、`主题`、`图例`
+- 工具栏：`＋ 人物`、`伴侣`、`子女`、`删除`、`排版`、缩放、`撤销`、`重做`、`导出`、`主题`、`图例`、扫帚（三人骨架）；窄屏下自动折行，不再横向滚动
 - 建立情感线：选中人物后点面板里的「＋ 新建情感线」，再点另一个目标人物（按 `Esc` 可取消）
 - 图例面板里点任意一行，会把它应用到当前选中的那条关系上
 
@@ -199,7 +204,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 - `unions[].status` 取 16 种结构状态之一；`parentLinks[].kind` 取 8 种亲子类型之一；`emotionalLinks[].type` 取 39 种情感线型之一
 - `notes[].type`：`occupation` 职业、`diagnosis` 诊断、`event` 重大事件、`tag` 标签、`quote` 原话、`note` 备注
 - 导入时会自动规范化与迁移：补齐缺省字段、丢弃重复 `id`、清理非法日期、把未知枚举回退到默认值
-- 浏览器里存三个键：`genogram.v1.doc`（文档）、`genogram.v1.view`（视图）、`genogram.v1.theme`（主题）
+- 浏览器里存四个键：`genogram.v1.doc`（文档）、`genogram.v1.view`（视图）、`genogram.v1.theme`（主题）、`genogram.v1.history`（撤销 / 重做历史，最多 24 步、256 KB 上限）
 
 ## 浏览器兼容性
 
@@ -213,7 +218,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 ## 关于「单文件零依赖」
 
-- 全部 HTML / CSS / JS / SVG 都在 `index.html` 里，约 417 KB（426,694 字节），**没有第二个文件**
+- 全部 HTML / CSS / JS / SVG 都在 `index.html` 里，约 426 KB（436,553 字节），**没有第二个文件**
 - 没有 CDN、没有 `import`、没有 `fetch`、没有 Web Font、没有外部图片；源码里搜不到任何外链
 - 源码中 SVG 命名空间常量写作 `'http' + '://www.w3.org/2000/svg'`（拼接而非字面量）：这是为了让静态检查脚本不把这串字符误判成「外部链接」，运行时行为与字面量完全一致
 - 因此断网、内网、离线 U 盘环境都能用；也不存在「某个依赖包更新把页面搞坏」的风险
@@ -222,8 +227,8 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 [`docs/genogram-ai-prompt.md`](docs/genogram-ai-prompt.md) 是一份**可以直接整段粘给任意 AI** 的开发提示词：别人拿到它，用 AI 就能从零复刻出一个结构、行为与本项目等价的家谱图工具。
 
-- **前半是需求规格**：硬约束、符号体系（人物、伴侣 16 型、亲子 8 型、情感 39 型）、数据模型与一致性约束、排版与布线（含全部数值阈值）、拖动、交互、输入设备、信息条目、导出、主题与持久化
-- **后半是验收清单**：83 项可勾选检查，每项都写了「怎么测」与「什么算通过」，可以直接当交付验收表用
+- **前半是需求规格**：硬约束（含「禁止宿主弹窗」）、符号体系（人物、伴侣 16 型、亲子 8 型、情感 39 型）、数据模型与一致性约束、排版与布线（含全部数值阈值）、拖动、交互、输入设备、信息条目、导出、主题与持久化（撤销历史落盘 24 步 / 256 KB）
+- **后半是验收清单**：88 项可勾选检查，每项都写了「怎么测」与「什么算通过」，可以直接当交付验收表用
 - **数值与当前实现一致**：符号 56px、相邻净距 70px、有连线直连 84px、代间 96px、代间净距下限 20px、控件 44px 下限、关系线之间 17px、接点贴符号外缘、求解收敛 0.02px / 最多 24 轮、刷新后坐标逐位相同
 - **写成需求而不是源码解说**：正文不出现本仓库的文件名、路径与行号（仅文件头的用途注释除外），换一个模型、换一种实现方式也能照着做
 
@@ -239,7 +244,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 ## 已知限制
 
-- **单文档**：一个浏览器只维护一张图（localStorage 单键）。多个案例请各自导出 JSON / HTML 保存；「新建空白图」会清空当前内容（有确认弹窗）
+- **单文档**：一个浏览器只维护一张图（localStorage 单键）。多个案例请各自导出 JSON / HTML 保存；「新建空白图」会清空当前内容（有页面内确认层，且可撤销）
 - **婚外情支的中继偏移**：婚外情支线在个别紧凑布局下，中继竖线会有小幅偏移，不影响符号与文字的可读性，但视觉上不如标准婚姻支严格居中
 - **小屏默认看全图**：视口 ≤ 760px 时面板变为底部抽屉，画布高度变小；想看某一支可手动选「只看选中分支」，其余分支需要拖动查看
 - **PDF 走浏览器打印通道**：页边距、页眉页脚、分页由浏览器决定，不同浏览器字体渲染也略有差异；想固定版式建议用「HTML 单文件」导出
@@ -248,9 +253,19 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 ## 版本与更新
 
-每次更新的流程只有四步：修改 `index.html` → 提交 → 递增 tag（`v1.3.0` / `v1.4.0` …）→ 发新 Release。**最新版本只出现在顶部[「下载」](#下载只放最新版)一节**；旧版本的 tag、Release 与下载链接永久有效，统一列在下方[「历史版本」](#历史版本)，不会因为新版本发布而失效。
+每次更新的流程只有四步：修改 `index.html` → 提交 → 递增 tag（`v1.4.0` / `v1.5.0` …）→ 发新 Release。**最新版本只出现在顶部[「下载」](#下载只放最新版)一节**；旧版本的 tag、Release 与下载链接永久有效，统一列在下方[「历史版本」](#历史版本)，不会因为新版本发布而失效。
 
-### v1.4.0 更新要点
+### v1.5.0 更新要点
+
+- **一键三人骨架**：工具栏右侧新增扫帚图标，点一下把当前图换成「父（方块）· 母（圆）· 子（菱形）」最小结构（一条婚姻、一条亲生亲子边，不设索引咨访），图标题与创建时间保留；执行前弹页面内确认，执行后可撤销
+- **恢复示例数据**：导出菜单新增「恢复示例数据」，用内置的「张氏三代家庭（演示）」覆盖当前图，同样先确认、可撤销，方便演示与误改后找回初始样张
+- **撤销 / 重做可以跨刷新**：撤销栈与重做栈额外落盘到新键 `genogram.v1.history`，刷新或关掉浏览器再打开后仍能继续撤销 / 重做；落盘只保留最近 24 步，总字节超过 256 KB 时从最旧的一端淘汰（内存栈仍是 60 步），不会撑爆 localStorage
+- **所有破坏性动作改用页面内确认层**：删除人物 / 关系、删除信息类别、换三人骨架、恢复示例、新建空白图统一走页面内的确认层，不再调用宿主 `confirm` / `alert` / `prompt`（源码中这三类调用为 0）；确认层有焦点管理与返回焦点，遥控器、手柄、键盘都能直接操作
+- **修复：删除信息类别点确定后静默失效**：之前「删除类别」确认后没有任何变化，现在会真正删除该类别，并把其下条目转入剩余类别（一个不剩时自动建「未分类」承接），不会静默丢条目；另加了防重入，连点不会重复删
+- **窄屏工具栏折行**：视口 ≤ 760px 时工具栏改为自动折行、去掉横向滚动条，480 宽下压成两行，所有按钮都在视野内
+- **兼容性**：数据模型、导出格式、快捷键均与 v1.4.0 一致，可直接打开 v1.4.0 及更早版本的 JSON 备份；localStorage 只新增 `genogram.v1.history` 一个键，其余三个键含义不变
+
+### v1.4.0 更新要点（存档）
 
 - **控件全部放大到 44px**：工具栏按钮、输入框、下拉与下拉项、日期字段、chip 的 ×、浮动动作条、菜单项、勾选框的点击区一律不小于 44×44px，触屏和遥控器下都更容易按准，界面也因此整体更疏朗
 - **删除按钮挪到面板左上角**：从原先占满一行的宽按钮改成左上角一个 44px 高的短按钮，误触面小了很多，面板内容也不再被一个大红块切开展示
@@ -277,6 +292,7 @@ JSON 备份是一个纯文本对象，可直接读、可手工改、可进版本
 
 | 版本 | 日期 | 说明 | Release |
 | --- | --- | --- | --- |
+| v1.4.0 | 2026-11-10 | 控件统一 44px、删除按钮移到面板左上角、遥控器全链路、关系线 17px 净距与整块贴线标签 | [v1.4.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.4.0) |
 | v1.3.0 | 2026-11-09 | 接点贴轮廓、触屏三态、标签 chip 输入、7 条吸附带 | [v1.3.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.3.0) |
 | v1.2.0 | 2026-11-08 | 视觉与键盘导航：14px 字号、19 个颜色令牌、方向键分层导航 | [v1.2.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.2.0) |
 | v1.1.0 | 2026-11-08 | 交互与编辑重构：性别符号合并、完整日期、信息条目、跨代吸附、手柄 / 触屏、导出单页 | [v1.1.0 发布页](https://github.com/baiguiyang666-oss/counseling-genogram/releases/tag/v1.1.0) |
@@ -348,6 +364,8 @@ A **single-file, zero-dependency, fully offline** editor for psychological genog
 **Why another genogram tool**: most online family-tree tools are trees — a node branches downward, but two lines can never merge into one and then split again. A clinical genogram needs exactly that: the couple relationship (union) is a first-class entity, and each child's parent link points at the union rather than at a person, so one person can carry several unions (marriage, cohabitation, affair, separation, divorce, remarriage), each with its own children. The underlying model is a directed graph with merges, not a tree. That drives the layout (the parents' centre distance equals the span from the first to the last child, the relay line sits on the union's midpoint, siblings share one horizontal line, ≥70px symbol clearance, orthogonal routing with no diagonal edges, automatic re-layout after any edit or collapse) and the notation (16 couple statuses, 8 parent–child types, 39 emotional line types, where stroke widths, dash patterns and mid-line glyphs carry the meaning). It ships as one offline HTML file because client data is sensitive and clinical work often happens on machines that should not upload anything.
 
 **Features**: 8 person symbols plus overlays for index client, deceased, pregnancy/miscarriage, and auto-computed age (unborn children show gestational months/weeks); 16 couple/structure statuses, 8 parent–child types and 39 emotional relationship line types, all drawn as inline SVG; sibling alignment, centre-aligned couple lines, orthogonal routing with no diagonal edges, ≥70px symbol clearance, edge terminals projected onto each symbol's actual outline, ≥17px clearance between parallel relationship lines, a single unbreakable label block (name plus dates) hugging the line at the path-length midpoint, and weights that resolve crossings, clearance and obstacle avoidance together so that lines, labels, glyphs and person boxes never overlap; collapsible branches and drag-to-reposition with auto re-layout; per-person notes and timed life events, with WeChat-style tag chips that split on any Chinese or English punctuation; a searchable 63-row symbol/line legend; export to PNG (1x/2x), two-page PDF/print, self-contained HTML, or JSON backup/import, all with live preview; undo/redo, five colour themes, and autosave to `localStorage`. Every control is at least 44×44px, which keeps the UI usable with a TV remote or gamepad (OK activates checkboxes, text fields, dropdowns, switches and date pickers; Back unwinds one layer at a time). On touch screens the three gestures are mutually exclusive: a short tap opens the detail panel, a 1000 ms press-and-release opens only the action bar, and dragging never raises any overlay.
+
+**What's new in v1.5.0**: a broom icon in the toolbar replaces the current chart with a minimal "father · mother · child" skeleton (undoable, with confirmation); the export menu gains "Restore sample data"; undo/redo history is persisted to a separate `genogram.v1.history` key so it survives a reload (last 24 steps and a 256 KB cap on disk); every destructive action now uses an in-page confirmation layer, so the code calls no host `confirm` / `alert` / `prompt` at all — the layer is keyboard-, remote- and gamepad-operable; a bug where confirming the deletion of a note category silently did nothing is fixed (entries are moved to a remaining category instead of being lost); and on viewports ≤ 760px the toolbar wraps onto multiple lines instead of scrolling horizontally (two rows at 480px).
 
 **Licence**: MIT, © 2025-2026 白贵阳 (Bai Guiyang). Personal use is attribution-free by design — the UI, exported PNG / PDF / HTML and print pages show no author, project or licence marks. Commercial use **must** keep the copyright notice and the full licence text, and credit the author with a link to this repository (see [NOTICE.md](NOTICE.md)). The rule itself lives in the source header of `index.html`; a Chinese reference translation is in [LICENSE.zh-CN.md](LICENSE.zh-CN.md), while the English [LICENSE](LICENSE) prevails.
 

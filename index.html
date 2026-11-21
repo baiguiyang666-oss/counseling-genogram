@@ -32,9 +32,9 @@ body{
 }
 #app{display:flex;flex-direction:column;height:100%}
 #toolbar{
-  display:flex;align-items:center;gap:8px;padding:0 14px;min-height:58px;background:var(--panel);
-  border-bottom:1px solid var(--hair);flex:0 0 auto;overflow-x:auto;overflow-y:hidden;
-  white-space:nowrap;scrollbar-width:thin;box-shadow:0 1px 0 rgba(20,30,40,.02);z-index:5;
+  display:flex;flex-wrap:wrap;align-content:center;align-items:center;gap:2px 8px;padding:0 14px;min-height:58px;background:var(--panel);
+  border-bottom:1px solid var(--hair);flex:0 0 auto;overflow:visible;
+  white-space:nowrap;box-shadow:0 1px 0 rgba(20,30,40,.02);z-index:5;
 }
 .brand{font-size:17px;font-weight:600;letter-spacing:.01em;flex:0 0 auto}
 .brand .sub{font-weight:400;color:var(--muted);font-size:9px;margin-left:7px;letter-spacing:.08em}
@@ -202,6 +202,26 @@ button.big:active{background:#8a2a26;border-color:#8a2a26}
   align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);
 }
 #help.open{display:flex}
+/* 应用内确认层：替代宿主 confirm，四条输入路径（鼠标 / 键盘 / 手柄 / 触屏）共用 */
+#gxConfirm{
+  position:fixed;inset:0;background:rgba(24,32,38,.36);z-index:95;display:none;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);
+}
+#gxConfirm.open{display:flex}
+.gxc-box{
+  background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-lg);box-shadow:var(--sh-2);
+  width:100%;max-width:420px;padding:22px 24px 18px;
+}
+.gxc-msg{margin:0 0 18px;font-size:14px;line-height:1.65;color:var(--ink)}
+.gxc-acts{display:flex;justify-content:flex-end;gap:8px}
+#gxConfirm button{
+  font-family:inherit;font-size:14px;font-weight:450;min-height:44px;height:44px;padding:0 20px;
+  border-radius:var(--r-sm);border:1px solid var(--hair);background:var(--panel);color:var(--ink-2);cursor:pointer;
+}
+#gxConfirm button:hover{background:var(--surface-hover);color:var(--ink)}
+#gxConfirm button.primary{background:var(--accent);border-color:var(--accent);color:var(--panel);font-weight:500}
+#gxConfirm button.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--panel)}
+#gxConfirm button:focus{outline:2px solid var(--accent);outline-offset:2px}
 .help-box{
   background:var(--panel);border-radius:var(--r-lg);max-width:860px;width:100%;max-height:88vh;overflow:auto;
   padding:22px 26px 28px;box-shadow:var(--sh-2);
@@ -420,8 +440,8 @@ button.big:active{background:#8a2a26;border-color:#8a2a26}
 }
 #printHead{display:none}
 @media (max-width:760px){
-  /* 小屏工具栏不再折成三行：保持单行、横向滚动，把高度留给画布 */
-  #toolbar{gap:6px;padding:8px;min-height:0;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:thin}
+  /* 小屏工具栏按行折行，全部按钮保持可见；行距收紧，避免横向滚动 */
+  #toolbar{gap:2px 6px;padding:2px 8px;min-height:0;flex-wrap:wrap;overflow:visible;white-space:nowrap}
   .brand{font-size:14px}
   .brand .sub{display:none}
   #title{width:104px;font-size:12px}
@@ -437,11 +457,20 @@ button.big:active{background:#8a2a26;border-color:#8a2a26}
   button.tb{height:44px}
   #panelBtn{display:inline-block}
 }
-/* R21：≤430 窄屏单行横向滚动；R32 触控尺寸不缩水（44×44），靠滚动而非压缩换取可点性 */
+/* R21：≤430 窄屏 44×44 触控尺寸不缩水；换行显示，不再横向滚动 */
 @media (max-width:430px){
-  #toolbar{gap:2px;padding:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
+  #toolbar{gap:2px;padding:2px 6px;overflow:visible}
   .brand{display:none}
   #title{display:none}
+  #toolbar .sep{display:none}
+  #toolbar .tb-group{gap:2px}
+  #toolbar button.tb{height:44px;min-height:44px;padding:0 8px;font-size:13px;border-radius:8px}
+  #toolbar button.tb.icon{width:44px;padding:0}
+  #toolbar button.tb.icon::after{left:0;right:0;top:0;bottom:0}
+}
+/* 431–480：保留品牌与标题，收起分隔线与按钮内边距，稳定压到两行 */
+@media (min-width:431px) and (max-width:480px){
+  #toolbar{gap:2px 6px;padding:2px 8px}
   #toolbar .sep{display:none}
   #toolbar .tb-group{gap:2px}
   #toolbar button.tb{height:44px;min-height:44px;padding:0 8px;font-size:13px;border-radius:8px}
@@ -493,6 +522,7 @@ button.big:active{background:#8a2a26;border-color:#8a2a26}
       <button class="tb icon" data-cmd="exportMenu" aria-label="导出"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.2v8.2"/><path d="M4.8 7.2L8 10.4l3.2-3.2"/><path d="M2.6 13.6h10.8"/></svg></button>
       <button class="tb icon" data-cmd="themeMenu" aria-label="主题"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><path d="M8 2.4a5.6 5.6 0 0 1 0 11.2z" fill="currentColor" stroke="none"/></svg></button>
       <button class="tb icon" data-cmd="help" aria-label="图例"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="1.2"/><path d="M5 6h6M5 8h6M5 10h3.5"/></svg></button>
+      <button class="tb icon" data-cmd="skeleton" aria-label="三人骨架"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.9 3.1L7.5 8.5"/><path d="M5.5 6.5l3.6 3.6-2.5 2.5L3 9z"/><path d="M6.4 7.4l2.6 2.6"/></svg></button>
     </div>
   </header>
   <div id="stage">
@@ -593,6 +623,15 @@ button.big:active{background:#8a2a26;border-color:#8a2a26}
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="help" role="dialog" aria-modal="true" aria-label="图例">
   <div class="help-box" id="helpBox"></div>
+</div>
+<div id="gxConfirm" role="dialog" aria-modal="true" aria-labelledby="gxcMsg">
+  <div class="gxc-box">
+    <p class="gxc-msg" id="gxcMsg"></p>
+    <div class="gxc-acts">
+      <button type="button" id="gxcCancel">取消</button>
+      <button type="button" class="primary" id="gxcOk">确定</button>
+    </div>
+  </div>
 </div>
 <input type="file" id="file" accept=".json,application/json" style="display:none">
 <script>
@@ -1011,6 +1050,27 @@ function demoDoc(){
   d.probandId = 'p3';
   return d;
 }
+/* 最小三人骨架：父（方块）+ 母（圆）→ 子（菱形），不设索引咨访，其余信息全空 */
+function minimalDoc(){
+  var d = emptyDoc();
+  d.persons = [P('p1','父','male'), P('p2','母','female'), P('p3','子','unknown')];
+  d.unions = [{id:'u1', a:'p1', b:'p2', status:'married', since:null, until:null, order:0, note:''}];
+  d.parentLinks = [{id:'l1', child:'p3', union:'u1', kind:'biological', order:0, primary:true}];
+  return d;
+}
+function applyMinimalSkeleton(btn){
+  askConfirm('将用「父 · 母 · 子」三人骨架替换当前图，确定？', function(){
+    pushHistory();
+    var t = doc.meta.title, ca = doc.meta.createdAt;
+    doc = minimalDoc();
+    doc.meta.title = t; doc.meta.createdAt = ca;
+    selection = { type:null, id:null };
+    commit(true);
+    fitToContent();
+    updateToolbar();
+    toast('已换为三人骨架');
+  }, btn);
+}
 
 /* ============ 4. 规范化 / 迁移 ============ */
 var docMigrated = false;   /* R16：载入时若有「未出生却带出生日期」的旧数据，修正后回写一次磁盘 */
@@ -1202,6 +1262,7 @@ function saveNow(){
   }catch(err){
     toast('本地存档写入失败（可能超出容量），请导出 JSON 备份');
   }
+  persistHistory();
 }
 function autosave(){
   if(saveTimer) clearTimeout(saveTimer);
@@ -1230,6 +1291,52 @@ function loadDoc(){
 }
 
 /* ============ 6. 历史 ============ */
+/* 撤销/重做历史持久化：单独一个键，不改动 K_DOC/K_VIEW 的含义。
+   内存栈上限仍为 MAX_HIDE_STEP(60)；落盘只保留最近 HIST_STORE_MAX 条，
+   且总字节超过 HIST_STORE_BYTES 时从最旧的一端淘汰，避免撑爆 localStorage。 */
+var K_HIST = 'genogram.v1.history';
+var HIST_STORE_MAX = 24, HIST_STORE_BYTES = 262144;
+function histBytes(str){
+  try{ return new Blob([str]).size; }catch(err){ return str.length * 3; }
+}
+function validSnaps(arr){
+  var out = [], i, o;
+  if(!arr || !arr.length) return out;
+  for(i = 0; i < arr.length; i++){
+    if(typeof arr[i] !== 'string') continue;
+    try{
+      o = JSON.parse(arr[i]);
+      if(o && o.persons instanceof Array && o.unions instanceof Array &&
+         o.parentLinks instanceof Array && o.emotionalLinks instanceof Array) out.push(arr[i]);
+    }catch(err){}
+  }
+  return out;
+}
+function persistHistory(){
+  try{
+    var u = undoStack.slice(-HIST_STORE_MAX);
+    var r = redoStack.slice(-HIST_STORE_MAX);
+    var payload = JSON.stringify({ v: 1, undo: u, redo: r });
+    while(histBytes(payload) > HIST_STORE_BYTES && (u.length > 1 || r.length > 1)){
+      if(u.length >= r.length && u.length > 1) u.shift(); else r.pop();
+      payload = JSON.stringify({ v: 1, undo: u, redo: r });
+    }
+    localStorage.setItem(K_HIST, payload);
+  }catch(err){}
+}
+function loadHistory(){
+  var raw = null;
+  try{ raw = localStorage.getItem(K_HIST); }catch(err){}
+  if(!raw) return;
+  try{
+    var o = JSON.parse(raw);
+    if(!o || o.v !== 1) return;
+    var u = validSnaps(o.undo), r = validSnaps(o.redo), i;
+    undoStack.length = 0; redoStack.length = 0;
+    for(i = 0; i < u.length; i++) undoStack.push(u[i]);
+    for(i = 0; i < r.length; i++) redoStack.push(r[i]);
+  }catch(err){}
+}
 function snapshot(){
   return JSON.stringify({
     persons: doc.persons, unions: doc.unions,
@@ -4499,23 +4606,30 @@ function catDelete(cid){
   var c = cats.filter(function(x){ return x.id === cid; })[0];
   if(!c) return;
   var used = p.notes.filter(function(n){ return n.type === cid; }).length;
-  /* 叉掉 / 选「否」= 保留：直接返回，不写文档、不进撤销栈 */
-  if(!confirm('是否删除此项？' + (used ? '\n（该类别下还有 ' + used + ' 条信息，将转入其他类别，不会丢失）' : ''))) return;
-  catDeleteBusy = true;
-  try{
-  pushHistory();
-  var rest = cats.filter(function(x){ return x.id !== cid; });
-  /* 不静默丢条目：转入剩余的第一个类别；一个都不剩时新建「未分类」承接 */
-  var into = rest[0] || { id: 'c_uncat', name: '未分类' };
-  p.notes.forEach(function(n){
-    if(n.type === cid){ n.type = into.id; n.label = into.name; }
-  });
-  p.cats = rest.length ? rest : [into];
-  if(noteCatSel === cid) noteCatSel = into.id;
-  var keepDel = catPopDel;
-  commit(true);
-  if(keepDel) catPopPaint(); else catPopClose();
-  } finally { catDeleteBusy = false; }
+  /* 取消 = 保留：不写文档、不进撤销栈；确认后才执行删除 */
+  askConfirm('是否删除此项？' + (used ? '\n（该类别下还有 ' + used + ' 条信息，将转入其他类别，不会丢失）' : ''), function(){
+    if(catDeleteBusy) return;
+    var pp = personById(catPopPid);
+    if(!pp) return;
+    var cs = catsOf(pp);
+    var cc = cs.filter(function(x){ return x.id === cid; })[0];
+    if(!cc) return;
+    catDeleteBusy = true;
+    try{
+      pushHistory();
+      var rest = cs.filter(function(x){ return x.id !== cid; });
+      /* 不静默丢条目：转入剩余的第一个类别；一个都不剩时新建「未分类」承接 */
+      var into = rest[0] || { id: 'c_uncat', name: '未分类' };
+      pp.notes.forEach(function(n){
+        if(n.type === cid){ n.type = into.id; n.label = into.name; }
+      });
+      pp.cats = rest.length ? rest : [into];
+      if(noteCatSel === cid) noteCatSel = into.id;
+      var keepDel = catPopDel;
+      commit(true);
+      if(keepDel) catPopPaint(); else catPopClose();
+    } finally { catDeleteBusy = false; }
+  }, function(){ return catPopEl && catPopEl.querySelector ? catPopEl.querySelector('.cp-x[data-cpx="' + cid + '"]') : null; });
 }
 function noteRowHTML(p, n, catOpts){
   return '<div class="ntrow" data-nid="' + esc(n.id) + '">' +
@@ -5618,7 +5732,19 @@ function onPanelClick(ev){
     var code = pt.getAttribute('data-pt');
     if(code === personCode(ptype)) return;
     /* 更安全的做法：改男性且已有孕产状态时先确认，避免静默丢数据；取消则整次切换作废 */
-    if(code === 'person_male' && ptype.pregnancy && !confirm('该人物已标记孕产状态，改为男性会清除该标记。是否继续？')) return;
+    if(code === 'person_male' && ptype.pregnancy){
+      var gpid = selection.id;
+      askConfirm('该人物已标记孕产状态，改为男性会清除该标记。是否继续？', function(){
+        var gp = personById(gpid);
+        if(!gp) return;
+        pushHistory();
+        gp.symbol = code;
+        gp.gender = PTYPE_MAP[code] || 'unknown';
+        gp.pregnancy = null;
+        commit(false);
+      }, function(){ return document.querySelector('#panel .pt-btn[data-act="ptToggle"]'); });
+      return;
+    }
     pushHistory();
     ptype.symbol = code;
     ptype.gender = PTYPE_MAP[code] || 'unknown';
@@ -5774,7 +5900,13 @@ function onPanelClick(ev){
     commit(true);
     return;
   }
-  if(act === 'delPerson'){ if(confirm('确定删除该人物及其全部关系？')) deletePerson(selection.id); return; }
+  if(act === 'delPerson'){
+    var dpid = selection.id;
+    if(!dpid) return;
+    askConfirm('确定删除该人物及其全部关系？', function(){ deletePerson(dpid); },
+      function(){ return document.querySelector('.gx-node[data-id="' + dpid + '"]'); });
+    return;
+  }
   if(act === 'newEmo'){ newEmotionFrom(); return; }
   if(act === 'delEmo'){
     pushHistory();
@@ -6734,7 +6866,10 @@ function personMenuItems(pid){
     '-',
     { label: isProband(pid) ? '取消索引咨访' : '设为索引咨访', run: function(){ setProband(isProband(pid) ? null : pid); } },
     { label:'新建情感线…', run: newEmotionFrom },
-    { label:'删除人物', run: function(){ if(confirm('确定删除该人物及其全部关系？')) deletePerson(pid); }, danger:true }
+    { label:'删除人物', run: function(){
+      askConfirm('确定删除该人物及其全部关系？', function(){ deletePerson(pid); },
+        function(){ return document.querySelector('.gx-node[data-id="' + pid + '"]'); });
+    }, danger:true }
   ];
 }
 function canvasMenuItems(){
@@ -7337,6 +7472,43 @@ function openHelp(){
 }
 function closeHelp(){ $('#help').classList.remove('open'); }
 
+/* ============ 17a-2. 应用内确认层 ============ */
+/* 所有「破坏性替换」都走这里：先弹层，用户确认后才执行回调，取消则什么都不做。
+   四条输入路径收口到同一个 open/close：鼠标/触屏点按钮、键盘 Enter/Esc、手柄 A/B。 */
+var gxcOnOk = null, gxcReturn = null;
+function gxConfirmOpen(){ var b = $('#gxConfirm'); return !!(b && b.classList.contains('open')); }
+function askConfirm(msg, onOk, returnEl){
+  if(gxConfirmOpen()) return false;          /* 只允许一层，重复调用直接忽略 */
+  var box = $('#gxConfirm');
+  if(!box) return false;
+  gxcOnOk = (typeof onOk === 'function') ? onOk : null;
+  gxcReturn = returnEl || document.activeElement || null;
+  $('#gxcMsg').textContent = msg;
+  box.classList.add('open');
+  var ok = $('#gxcOk');
+  if(ok){
+    try{ ok.focus({ preventScroll:true }); }catch(e){ try{ ok.focus(); }catch(e2){} }
+    markNav(ok);
+  }
+  return true;
+}
+function closeConfirm(ok){
+  var box = $('#gxConfirm');
+  if(!box || !box.classList.contains('open')) return;
+  box.classList.remove('open');
+  var cb = ok ? gxcOnOk : null;
+  gxcOnOk = null;
+  var back = gxcReturn; gxcReturn = null;
+  if(cb) cb();
+  if(typeof back === 'function'){ try{ back = back(); }catch(e){ back = null; } }
+  if(back && document.contains(back) &&
+     (back.offsetWidth || back.offsetHeight || back.getClientRects().length)){
+    focusCtrl(back);
+  }else{
+    $$('.navring').forEach(function(x){ x.classList.remove('navring'); });
+  }
+}
+
 /* ============ 17b. 主题 ============ */
 var K_THEME = 'genogram.v1.theme';
 var THEMES = [
@@ -7407,6 +7579,7 @@ function handleCmd(cmd, btn){
     case 'addPartner': addPartner(); break;
     case 'addChild': addChild(); break;
     case 'del': deleteSelected(); break;
+    case 'skeleton': applyMinimalSkeleton(btn); break;
     case 'layout': autoLayout(); break;
     case 'fit': fitToContent(); break;
     case 'zoomIn': zoomBy(1.15); break;
@@ -7427,17 +7600,31 @@ function handleCmd(cmd, btn){
         { label:'数据备份 (JSON)', run:function(){ openExport('json'); } },
         { label:'导入数据 (JSON)…', run: function(){ $('#file').click(); } },
         '-',
+        { label:'恢复示例数据', run: function(){
+          askConfirm('将用内置的「张氏三代家庭（演示）」替换当前图，确定？', function(){
+            pushHistory();
+            var ca = doc.meta.createdAt;
+            doc = normalizeDoc(demoDoc());
+            doc.meta.createdAt = ca;
+            selection = { type:null, id:null };
+            commit(true);
+            fitToContent();
+            updateToolbar();
+            toast('已恢复示例数据');
+          }, $('#toolbar button[data-cmd="exportMenu"]'));
+        } },
         { label:'新建空白图', run: function(){
-          if(!confirm('将清空当前内容并开始空白图，确定？')) return;
-          pushHistory();
-          var t = doc.meta.title, ca = doc.meta.createdAt;
-          doc = emptyDoc();
-          doc.meta.title = t; doc.meta.createdAt = ca;
-          selection = { type:null, id:null };
-          var p = newPerson('', 'unknown');
-          selection = { type:'person', id:p.id };
-          commit(true); updateToolbar();
-          toast('已新建空白图');
+          askConfirm('将清空当前内容并开始空白图，确定？', function(){
+            pushHistory();
+            var t = doc.meta.title, ca = doc.meta.createdAt;
+            doc = emptyDoc();
+            doc.meta.title = t; doc.meta.createdAt = ca;
+            selection = { type:null, id:null };
+            var p = newPerson('', 'unknown');
+            selection = { type:'person', id:p.id };
+            commit(true); updateToolbar();
+            toast('已新建空白图');
+          }, $('#toolbar button[data-cmd="exportMenu"]'));
         }, danger:true }
       ]);
       break;
@@ -7730,6 +7917,7 @@ function cycleDD(btn, delta){
 }
 /* 顶层浮层（导出预览 / 图例与主题 / 工具栏菜单 / 浮动动作条）：方向键只在层内移动 */
 function navLayer(){
+  var gc = $('#gxConfirm'); if(gc && gc.classList.contains('open')) return gc;
   var x = $('#xprev'); if(x && x.classList.contains('open')) return x;
   var h = $('#help'); if(h && h.classList.contains('open')) return h;
   var cp = $('#catPop'); if(cp && !cp.hasAttribute('hidden')) return cp;
@@ -7832,6 +8020,8 @@ function navStep(dir){
   if(!moved && dir === 'up') enterToolbar();
 }
 function navConfirm(){
+  /* 确认层：手柄 A 直接确认（与键盘 Enter 语义一致） */
+  if(gxConfirmOpen()){ closeConfirm(true); return; }
   var ae = document.activeElement;
   /* 浮层（类别菜单等）里的项：确定键直接触发该项 */
   var lay = navLayer();
@@ -7844,6 +8034,8 @@ function navConfirm(){
   navActivate();
 }
 function navBack(){
+  /* 确认层：手柄 B 取消（与键盘 Esc 语义一致） */
+  if(gxConfirmOpen()){ closeConfirm(false); return; }
   if(actBarIsOpen()){ hideActBar(); return; }
   var ae = document.activeElement;
   /* 文本编辑态：返回键先退出编辑，再按一次才离开该区域 */
@@ -8136,6 +8328,10 @@ function bindEvents(){
     handleCmd(b.getAttribute('data-cmd'), b);
   });
 
+  /* 应用内确认层：鼠标 / 触屏点按钮；键盘 Enter/Esc、手柄 A/B 在各自的统一入口处理 */
+  $('#gxcCancel').addEventListener('click', function(){ closeConfirm(false); });
+  $('#gxcOk').addEventListener('click', function(){ closeConfirm(true); });
+
   $('#title').addEventListener('input', function(){
     doc.meta.title = this.value;
     $('#printTitle').textContent = this.value;
@@ -8191,6 +8387,23 @@ function bindEvents(){
 
   document.addEventListener('keydown', function(ev){
     panelHold = false;
+    /* 确认层打开时按键不落到画布/工具栏：Enter 确认、Esc 取消、方向键/Tab 在层内移动 */
+    if(gxConfirmOpen()){
+      if(ev.key === 'Escape'){ ev.preventDefault(); closeConfirm(false); return; }
+      if(ev.key === 'Enter'){ ev.preventDefault(); closeConfirm(true); return; }
+      if(ev.key === 'Tab'){
+        ev.preventDefault();
+        layerStep($('#gxConfirm'), ev.shiftKey ? 'up' : 'down');
+        return;
+      }
+      if(ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' || ev.key === 'ArrowUp' || ev.key === 'ArrowDown'){
+        ev.preventDefault();
+        layerStep($('#gxConfirm'), ev.key === 'ArrowLeft' ? 'left' : ev.key === 'ArrowRight' ? 'right' :
+                                                    ev.key === 'ArrowUp' ? 'up' : 'down');
+        return;
+      }
+      return;
+    }
     if(ev.key === 'Tab') navTabPending = true;
     var tag = (ev.target.tagName || '').toLowerCase();
     var textCtl = isTextControl(ev.target);
@@ -8419,7 +8632,7 @@ function bindEvents(){
     var t = ev.target, inPanel = !!(t.closest && t.closest('#panel'));
     /* 类别浮层：点在它和触发按钮之外 → 立即收起 */
     if(catPopEl && !catPopEl.hasAttribute('hidden') &&
-       !t.closest('#catPop') && !t.closest('[data-act="catPopAdd"]')){
+       !t.closest('#catPop') && !t.closest('[data-act="catPopAdd"]') && !t.closest('#gxConfirm')){
       catPopClose();
       if(!inPanel) popupSwallow = true;
     }
@@ -8472,6 +8685,7 @@ function bindEvents(){
 var savedViewLoaded = false;
 function boot(){
   doc = loadDoc();
+  loadHistory();
   loadTheme();
   $('#title').value = doc.meta.title;
   $('#printTitle').textContent = doc.meta.title;
